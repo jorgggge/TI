@@ -1,6 +1,6 @@
 # ICA - Intelligence Capacity Approach
 
-Mysql,XAMPP, Node.js, Git Instalados.
+Mysql,XAMPP, Node.js, Git, Composer Instalados.
 
 - Tener los servidores listos y encendidos 
 - Usar la terminal o consola en la ubicacion del proyecto
