@@ -1,0 +1,164 @@
+[33mcommit 7019d2bbf2e589e9ed7cacd942bb160f665e8982[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 395eb2a 4eefa6c
+Author: Juanito <42331842+jpimentel45@users.noreply.github.com>
+Date:   Fri Oct 11 09:04:57 2019 -0700
+
+    Merge pull request #6 from RiggelDZ/adminMigrationController
+    
+    adding admins views/controller/model
+
+[33mcommit 4eefa6cce0d9877debacbf9533a950502238568f[m[33m ([m[1;31morigin/adminMigrationController[m[33m)[m
+Merge: dd97172 395eb2a
+Author: Juanito <42331842+jpimentel45@users.noreply.github.com>
+Date:   Thu Oct 10 16:32:45 2019 -0700
+
+    Merge branch 'master' into adminMigrationController
+
+[33mcommit dd971720ac2bfdfc309f6c2f57de3cbfd983ff61[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 16:26:49 2019 -0700
+
+    added minor text to admins index, admins route on layouts
+
+[33mcommit 395eb2a7de720bd0c0989350425fb9f958fe9549[m
+Author: Jesus Beltran <jesus.beltran@tectijuana.edu.mx>
+Date:   Thu Oct 10 14:27:19 2019 -0700
+
+    Back to plural names in the tables
+
+[33mcommit 44a8524e2ab891e66ec48c1f50885d8e13ff9d7a[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 10:59:22 2019 -0700
+
+    adding admins views/controller/model
+    currently admins views: able to view index and create view /admins, /admins/create, currently I am not able to add admins since it has a key constraing for companyId, so I am submitting what I have so far, I won't be able to verify if the data will post to databse until companyid model  is set
+
+[33mcommit a4b485b4869ba0b1faaf3fb7bf2afee9d8dbd7b5[m
+Author: Jesus Beltran <jesus.beltran@tectijuana.edu.mx>
+Date:   Thu Oct 10 09:52:42 2019 -0700
+
+    Se corrigieron los nombres de las tablas en el metodo down
+
+[33mcommit 6eb65fa7f2ebe683f96b55899d7db2f28af016bd[m
+Merge: 7cdfd16 cdb8a47
+Author: Juanito <42331842+jpimentel45@users.noreply.github.com>
+Date:   Thu Oct 10 09:29:33 2019 -0700
+
+    Merge pull request #5 from RiggelDZ/passwordMigrations
+    
+    adding migrations for password reset
+
+[33mcommit cdb8a4704cdaef748a74b61f70d44dbd1658a581[m[33m ([m[1;31morigin/passwordMigrations[m[33m)[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 09:24:55 2019 -0700
+
+    adding migrations for password reset
+
+[33mcommit 7cdfd1649ec7fca0af5cdea17225f9c45ddfcf1e[m
+Merge: 4c1dfe0 c4094df
+Author: Juanito <42331842+jpimentel45@users.noreply.github.com>
+Date:   Thu Oct 10 09:13:24 2019 -0700
+
+    Merge pull request #4 from RiggelDZ/userController/resource
+    
+    User controller/resource
+
+[33mcommit 4c1dfe0379244d3793a6421c5cec73968675b1c7[m
+Merge: 382a2a7 e403117
+Author: Juanito <42331842+jpimentel45@users.noreply.github.com>
+Date:   Thu Oct 10 09:12:54 2019 -0700
+
+    Merge pull request #3 from RiggelDZ/loginUsername
+    
+    Login username
+
+[33mcommit c4094df0306632bdcc58e2484da3179a6baff26e[m[33m ([m[1;31morigin/userController/resource[m[33m)[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 08:55:49 2019 -0700
+
+    Adding show for users
+    for each user display their info on show.blade later we can have tasks assigned for them to complete to show up for each user on show view
+
+[33mcommit 1eead636916c2818a5588a8112eb6d1eada5ac94[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 07:48:52 2019 -0700
+
+    changed default root link
+    instead of returning welcome view, at root link, we return view auth.login so user must signign to start navigating
+
+[33mcommit 4b67541125f82c6a5d702a59f9d39fc144ab3807[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 07:46:03 2019 -0700
+
+    user/home routes on dropdown menu
+    added routes to home, and users on the dropdown menu containing the logout section, once we get more authentication we can protect the routes so only the required user can access their required links
+
+[33mcommit de40592d3b4a4ecb2bec95823ac33170a5a90af9[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Thu Oct 10 07:09:06 2019 -0700
+
+    created resource route for users to have all available routes possbile for user like post add delete update, created a folder in views called users which will contain views like index, show, create, store, update, and destroy which will be utilized by the Usercontroller, currently only displaying all users, and able to delete users
+
+[33mcommit 0f6a665cbe663f0b3e94c8f65227628b2db2144c[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Wed Oct 9 21:42:18 2019 -0700
+
+    able to delete users now
+
+[33mcommit 2811ac414b33f72eccb26768e4d0bf152a838f71[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Wed Oct 9 21:18:27 2019 -0700
+
+     created route to display current users
+    currently all users are being displayed on users.blade.php, set up the button to delete users but i still need to set up functionality to actually delete them
+
+[33mcommit e403117900f48d5ecdbaf146e3b352e8da587fd5[m[33m ([m[1;31morigin/loginUsername[m[33m)[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Wed Oct 9 19:31:40 2019 -0700
+
+    adding css to the login page
+
+[33mcommit d5175f2b583a5b65d73bf2fea8aa355d788d6e2c[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Wed Oct 9 18:25:08 2019 -0700
+
+    modified login page so it reflects original mockup, instead of email, user should be able to log in using username modified log in blade to to have input as username, on login controller i created public function username to return userName, and allow validation with username instead of email
+
+[33mcommit 382a2a7bbe3d9ea7fe27a6af9b344f37ecf52eef[m[33m ([m[1;31morigin/SA_AddCostumer[m[33m)[m
+Merge: c28d732 229f13d
+Author: MidGsus <55570667+MidGsus@users.noreply.github.com>
+Date:   Wed Oct 9 11:18:38 2019 -0700
+
+    Merge pull request #1 from RiggelDZ/vendor
+    
+    Register User with migrations
+
+[33mcommit 229f13d913049ace8c69f49cd685127a22d5713b[m
+Author: Jesus Beltran <jesus.beltran@tectijuana.edu.mx>
+Date:   Wed Oct 9 11:16:37 2019 -0700
+
+    Me pidio commit el workspace
+
+[33mcommit e96933169aecb7d488ca51d0dbf5d70e8062c1d3[m
+Author: Jesus Beltran <jesus.beltran@tectijuana.edu.mx>
+Date:   Wed Oct 9 11:04:30 2019 -0700
+
+    Dabatase migration working ando login working.
+
+[33mcommit faa75a8848d01366c6c57a0ac9d3fc2f79f2cadd[m
+Author: jpimentel45 <jpimentel45@gmail.com>
+Date:   Tue Oct 8 19:34:21 2019 -0700
+
+     added an errors blade template for when browser redirects to current page, but doesn't display any errors, updated users table, to be able to log in, user is able to add all the requirements by migrations, when user registers, it will go to home page, and display their  username and should be able to logout from home page, currently user has the register section available will need to update when we create the admin, and only give admin access to the register route, if there is any problem with my push we can always revert to the previous stage
+
+[33mcommit c28d732298df3a35ad5c9254e285f27188f2cabc[m
+Author: Jesus Beltran <jesus.beltran@tectijuana.edu.mx>
+Date:   Tue Oct 8 12:52:55 2019 -0700
+
+    Primer commit
+
+[33mcommit 14410a736091cf578f2057ed83390912b61a0c6f[m
+Author: Riggel <45084443+RiggelDZ@users.noreply.github.com>
+Date:   Tue Oct 8 12:27:57 2019 -0700
+
+    Initial commit
