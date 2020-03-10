@@ -3,152 +3,104 @@
 @section('content')
 
 
+<div id="Contenr-CreateAdmin">
 
-<main class="py-4 py-5-mod">
+    <div style="text-align: left;">
+        <div class="card-body" >
+            <center><h3>Agregar Administrador</h3></center>
+            <h5>Llena los campos con los datos de Administrador: <br>(*) Datos obligatorios</h5>
+        <form id="Form_Admin" method="POST" action="/CreateAdmin/superAdmin">
+        @csrf
+         
+        <br><b>* Usuario:</b>
+        <input id="name" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username" autofocus>
 
-    <div class="container contain">
+        @error('username')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        <br><b>* Contraseña:</b>
+        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
-        <div class="justify-content-center">
-            <section class="addArea">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">
-                            <p>Agregar Administrador</p>
-                        </div>
-                        <div class="card-body">
-                            <form method="POST" action="/CreateAdmin/superAdmin">
-                                @csrf
-                                <table>
-                                    <tr>
-                                        <th id="name">Nombre de Usuario</th>
-                                        <td> <input id="name" type="text"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                name="username" value="{{ old('username') }}" required
-                                                autocomplete="username" autofocus>
+        @error('password')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
 
-                                            @error('username')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="address">Contraseña</th>
-                                        <td> <input id="password" type="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                name="password" required autocomplete="new-password">
+        <br><b>* Confirma Contraseña:</b>            
+        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
 
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
+        @error('password-confirmation')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+                  
+        <br><b>* Correo electronico:</b>  
+        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
-                                    <tr>
-                                        <th id="address">Confirmar Contraseña</th>
-                                        <td> <input id="password-confirm" type="password" class="form-control"
-                                                name="password_confirmation" required autocomplete="new-password">
+        @error('email')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+                    
+        
+        <br><b>* Nombre:</b>        
+        <input id="name" type="text" class="form-control @error('firstName') is-invalid @enderror" name="firstName" value="{{ old('firstName') }}" required autocomplete="firstName" autofocus>
 
-                                            @error('password-confirmation')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="email">Correo Electrónico</span></th>
-                                        <td>
-                                            <input id="email" type="email"
-                                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                                value="{{ old('email') }}" required autocomplete="email">
+        @error('firstName')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
 
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
+        <br><b>* Apellido</b>
+         <input id="name" type="text" class="form-control @error('lastName') is-invalid @enderror" name="lastName" value="{{ old('lastName') }}" required autocomplete="lastName" autofocus>
 
-                                    <tr>
-                                        <th id="email">Nombre</span></th>
-                                        <td>
-                                            <input id="name" type="text"
-                                                class="form-control @error('firstName') is-invalid @enderror"
-                                                name="firstName" value="{{ old('firstName') }}" required
-                                                autocomplete="firstName" autofocus>
+        @error('lastName')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
+        
+        <br><b>* Empresa Asignada</b>
+                    
+        <select type='text'required id="name"
+            class="custom-select @error('name') is-invalid @enderror"
+            name="companyId">
+            <option disabled selected>Selecciona la empresa...</option>
+            @php($count=0)
 
-                                            @error('firstName')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
+            @foreach($companies as $company)
+            @if ($company->companyId !=1)
+            <option value="{{ $company->companyId }}">{{ $company->name }}</option>
+            @endif
+            @php($count++)
+            @endforeach
 
-                                    <tr>
-                                        <th id="apellido">Apellido</span></th>
-                                        <td>
-                                            <input id="name" type="text"
-                                                class="form-control @error('lastName') is-invalid @enderror"
-                                                name="lastName" value="{{ old('lastName') }}" required
-                                                autocomplete="lastName" autofocus>
+            @if($count ==1)
+            <option disabled selected>No hay empresas</option>
+            @endif
+        </select>
+        @error('name')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
 
-                                            @error('lastName')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th for="inputGroupSelect01">Empresa Asignada</span></th>
-                                        <td>
-                                            <select type='text'required id="name"
-                                                class="custom-select @error('name') is-invalid @enderror"
-                                                name="companyId">
-                                                <option disabled selected>Selecciona la empresa...</option>
-                                                @php($count=0)
-
-                                                @foreach($companies as $company)
-                                                @if ($company->companyId !=1)
-                                                <option value="{{ $company->companyId }}">{{ $company->name }}</option>
-                                                @endif
-                                                @php($count++)
-                                                @endforeach
-
-                                                @if($count ==1)
-                                                <option disabled selected>No hay empresas</option>
-                                                @endif
-                                            </select>
-                                            @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-                                <div class="form-group row mb-0 buttMarg">
-                                    <div class="col-md-8">
-                                        <button type="submit" class="btn btn-add btn-primary">Agregar</button>
-
-                                    </div>
-                                </div>
-                            </form>
-                            @include('errors')
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+            <div>
+                    <br>
+                    <button type="submit" class="btn btn-primary" style="margin-left: 45%;">Agregar</button>
+            </div>
+        </form>
+        @include('errors')
     </div>
-</main>
+    </div>
+    <div style="margin: auto;">
+        <center><h4><img src="{{ asset('imagenes/Alerta.png') }}" height="100px"><br>Nota: Verifica si el usuario a registrar, existan su empresa.</h4></center>
+    </div>
+</div>
 @endsection

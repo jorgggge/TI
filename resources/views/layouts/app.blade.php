@@ -4,6 +4,7 @@
 use App\User;
 use App\MaturityLevel;
 ?>
+
 <head>
     @yield('head')
     <meta charset="utf-8">
@@ -16,6 +17,7 @@ use App\MaturityLevel;
 
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="{{ asset('js/customer.js') }}" defer></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -30,8 +32,8 @@ use App\MaturityLevel;
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('bts4/css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ asset('bts4/css/layout.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Admin.css') }}" rel="stylesheet">
 
     {{--Required for TableScrolling--}}
     <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
@@ -41,120 +43,120 @@ use App\MaturityLevel;
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@4.x/css/materialdesignicons.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/Admin.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/code.js') }}" defer></script>
+
 </head>
-
-<div class="navbar-ica bg-ica">
+<body onresize="CambioPantalla();" id="_body" onload="CambioPantalla()"> 
     @if(Auth::user()->hasRole('superadmin'))
-                <a class="navbar-brand ml-auto" href="{{ url('/superAdmin') }}">
-                    @elseif(Auth::user()->hasRole('admin'))
-                        <a class="navbar-brand" href="{{ url('/admin') }}">
-                            @elseif(Auth::user()->hasRole('analista'))
-                                <a class="navbar-brand" href="{{ url('/analista') }}">
-                                    @elseif(Auth::user()->hasRole('comun'))
-                                        <a class="navbar-brand" href="{{ url('/comun') }}">
-                                            @endif
-                                            @if(Auth::user()->hasRole('superadmin'))
-                                                <i class="material-icons" style="    vertical-align: bottom;">person</i>
-                                                <h6>Super Administrador {{ Auth::user()->username }}</h6>
-                                            @elseif (Auth::user()->hasRole('admin'))
-                                                <i class="material-icons" style="    vertical-align: bottom;">person</i>
-                                                <h6>Administrador {{ Auth::user()->username }}</h6>
-                                            @elseif (Auth::user()->hasRole('analista'))
-                                                <i class="material-icons" style="    vertical-align: bottom;">person</i>
-                                                <h6>Analista {{ Auth::user()->username }}</h6>
-                                            @elseif (Auth::user()->hasRole('comun'))
-                                                <i class="material-icons" style="    vertical-align: bottom;">person</i>
-                                                <h6>Usuario {{ Auth::user()->username }}</h6>
-                                            @endif
-                                        </a>
-                                </a>
-                        </a>
-                </a>
-</div>
-<div class="sidebar">
-    @auth
-        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-              style="display: none;">
-            @csrf
-        </form>
-    <!-- ROUTES FOR SUPERADMIN -->
-        @if(Auth::user()->hasRole('superadmin'))
-            <a class="" href="{{ url('/superAdmin') }}"><i class="material-icons" style="vertical-align: bottom;">
-                    dashboard
-                </i> Inicio</a>
-            <a class="" href="{{ url('CreateCompany/addCompany/create') }}"><i class="material-icons" style="vertical-align: bottom;">
-                    business
-                </i> Añadir Compañia</a>
-            <a class="" href="{{ url('CreateAdmin/addAdmin/create' ) }}"><i class="material-icons" style="vertical-align: bottom;">
-                    person_add
-                </i> Administrador</a>
-            <a class="" href="{{ url('/superAdmin/viewCompanies/create') }}"><i class="material-icons" style="vertical-align: bottom;">
-                    remove_red_eye
-                </i> Ver Compañías</a>
-            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                <i class="material-icons" style="vertical-align: bottom;">
-                    power_settings_new
-                </i> {{ __('Salir') }}
-            </a>
+    <div style="width: 100%;" id="grid-naveg">
+            <div style="background-color: #343a40;color: white;">
+                <center><img src="{{ asset('imagenes/Logo.png') }}" style="width: 50%;">
+                    <h5>Intelligent Capacity Approach</h5>
+                    <hr style="width: 80%;background-color: white;">
+                </center>
+                <nav class="navbar bg-dark" style="width: 80%;">
+                  <ul class="navbar-nav" style="margin: auto;">
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/superAdmin' ) }}"> 
+                        <img src="{{ asset('imagenes/inicio.png') }}" height="30px">        Inicio
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/superAdmin/viewCompanies/create' ) }}"> 
+                        <img src="{{ asset('imagenes/empresa.png') }}" height="30px">        Compañias
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                       <a class="navbar-brand" href="{{ url('/superAdmin' ) }}"> 
+                        <img src="{{ asset('imagenes/admistrador.png') }}" height="30px">        Administradores
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/superAdmin' ) }}"> 
+                        <img src="{{ asset('imagenes/historial.png') }}" height="30px">        Historial
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">   
+                        <img src="{{ asset('imagenes/salir.png') }}" height="30px">        Salir
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+            </div>
+            <div>
+                <nav class="navbar navbar-expand-sm " style="background-color: #112d4e;">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/superAdmin') }}" style="color:white;" >Super Administrador {{ Auth::user()->username }}</a>
+                    </li>
+                  </ul>
+                </nav>
+                    <div style="overflow: scroll;" id="contenido">
+                        @yield('content')
+                    </div>  
+            </div>
 
-            <!-- ROUTES FOR ADMIN -->
-        @elseif(Auth::user()->hasRole('admin'))
-            <?php
-            $user = auth()->user();
-            $userId = $user->companyId;
-            $admins = User::all();
-            $CountMaturity = MaturityLevel::where('companyId', '=', $userId)->count();
-            if ($CountMaturity == 0) { ?>
-            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                {{ __('Salir') }}
-            </a>
-            <?php
-            }
-            else {
-            ?>
-            <a class="" href="{{ url('/admin') }}">Inicio</a>
-            <a class="" href="{{ url('/admins/user/index') }}">Lista de
-                Usuarios</a>
-            <a class="" href="{{ url('/admins/area/addArea') }}">Añadir
-                Área</a>
-            <a class="" href="{{ url('/addUser/create') }}">Añadir
-                Usuario</a>
-            <a class="" href="{{ url('/admins/area/test/create') }}">Crear
-                Prueba</a>
-            <a class="" href="{{ url('/admins/area/concept_test/create') }}">Agregar
-                Conceptos a Pruebas</a>
-            <a class="" href="{{url('/admins/maturity/editML')}}">Editar Niveles de Madurez</a>
-            <a class="" href="{{url('/admins/area/test/edit')}}">Editar Test</a>
-            <a class="" href="{{url('/admins/history')}}">Historial</a>
-            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">
-                {{ __('Salir') }}
-            </a>
-            <?php }
-            ?>
-        <!-- ROUTES FOR ANALISTA -->
-        @elseif (Auth::user()->hasRole('analista'))
-            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                {{ __('Salir') }}
-            </a>
-            <!-- ROUTES FOR COMUN -->
-        @elseif(Auth::user()->hasRole('comun'))
-            <a class="" href="{{ url('/comun') }}">Home</a>
-            <a class="" href="{{ url('/upload') }}">Upload</a>
-            <a class="" href="{{ url('/upload/show') }}">View Uploads</a>
-            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
-                document.getElementById('logout-form').submit();">
-                {{ __('Salir') }}
-            </a>
-        @endauth
+    </div>
     @endif
-</div>
-<div class="fixContainer mb-4">
-    @yield('content')
-</div>
+
+    @if(Auth::user()->hasRole('admin'))
+    <div style="width: 100%;" id="grid-naveg">
+            <div style="background-color: #343a40;color: white;">
+                <center><img src="{{ asset('imagenes/Logo.png') }}" style="width: 50%;">
+                    <h5>Intelligent Capacity Approach</h5>
+                    <hr style="width: 80%;background-color: white;">
+                </center>
+                <nav class="navbar bg-dark" style="width: 80%;">
+                  <ul class="navbar-nav" style="margin: auto;">
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/admin') }}"> 
+                        <img src="{{ asset('imagenes/inicio.png') }}" height="30px">        Inicio
+                      </a>
+                    </li>
+                    
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">   
+                        <img src="{{ asset('imagenes/salir.png') }}" height="30px">        Salir
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+            </div>
+            <div>
+                <nav class="navbar navbar-expand-sm " style="background-color: #112d4e;">
+                  <ul class="navbar-nav">
+                    <li class="nav-item">
+                      <a class="navbar-brand" href="{{ url('/admin') }}" style="color:white;" >Administrador {{ Auth::user()->username }}</a>
+                    </li>
+                  </ul>
+                </nav>
+                    <div style="overflow: scroll;" id="contenido">
+                        @yield('content')
+                    </div>  
+            </div>
+
+    </div>
+    @endif
+    
     @yield('script')
+    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
+
+<script type="text/javascript">
+    function CambioPantalla() {
+        var h = window.innerHeight
+        document.getElementById('grid-naveg').style.height = h+"px";
+        document.getElementById('contenido').style.height = (h-50)+"px";
+    }
+
+</script>
+</body>
 </html>

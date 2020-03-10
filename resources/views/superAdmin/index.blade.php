@@ -1,79 +1,120 @@
 @extends('layouts.app')
-@section('content')
-        <div class="container mb-4">
-            <div class="row">
-                <div class="col text-center">
-                    <a href="{{url('CreateCompany/addCompany/create')}}" class="btn border-light">
-                        <div><i class="material-icons">location_city</i></div>
-                        <div>Añadir Empresa</div>
-                    </a>
-                </div>
-                <div class="col text-center">
-                    <a href="{{url('CreateAdmin/addAdmin/create')}}" class="btn border-light">
-                        <div><i class="material-icons">person_add</i></div>
-                        <div>Añadir Administrador</div>
-                    </a>
-                </div>
-                <div class="col text-center">
-                    <a href="{{url('/superAdmin/viewCompanies/create')}}" class="btn border-light">
-                        <div><i class="material-icons">remove_red_eye</i></div>
-                        <div>Empresas Creadas</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="container mb-4">
-            <div class="col text-center">
-                <input class="form-control" id="myInput" type="text" placeholder="Buscar..." style="display: unset !important; width: 60%">
-            </div>
-        </div>
 
-        <div class="container">
-            <div data-simplebar class="table-responsive">
-            <div class="col text-center">
-            <table class="table CompanyList table-bordered tt">
-                <thead class="ShowCompanyH">
-                <tr>
-                    <th class="compTD">ESTADO</th>
-                    <th class="compTD">EMPRESA</th>
-                    <th class="compTD">ADMINISTRADOR</th>
-                    <th class="compTD">USUARIO</th>
-                    <th class="compTD">TELÉFONO</th>
-                    <th class="compTD">CORREO</th>
-                    <th class="compTD">REGISTRO</th>
-                </tr>
-                </thead>
-                <tbody class="ShowCompanyB" id ="ShowCompanyB">
-                @foreach($Admins as $users)
-                    <tr>
-                        <td >
-                            <form class='viewCompany form' method="POST" action="{{ route('DeleteCustomer',$users->companyId) }}">
-                                @method('PUT')
-                                @csrf
-                                @if ($users->status == 0)
-                                    <input type="hidden" name="status" style="width: 0px;border:none; " readonly value="1">
-                                    <input type="submit" value="Deshabilitado" class="btn"
-                                           style="background-color: red;color:white;">@endif
-                                @if ($users->status != 0)
-                                    <input type="hidden" name="status" style="width: 0px;border:none; " readonly value="0">
-                                    <input type="submit" value="Habilitado" class="btn"
-                                           style="background-color: #5cb85c;color:white;">
-                                @endif
-                            </form>
-                        </td>
-                        <td class="td">{{$users->name }}</td>
-                        <td class="td">{{ $users->firstName." ".$users->lastName }}</td>
-                        <td class="td">{{$users -> username}}</td>
-                        <td class="td">{{$users->phoneNumber }}</td>
-                        <td class="td">{{$users->email}}</td>
-                        <td class="td">
-                            <a href="{{ route('ViewCustomer',$users->id) }}" class="Button_See btn"> Ver </a>
-                        </td>
-                    </tr>
-                @endforeach
-                </tbody>
-            </table>
+
+@section('content')
+
+        <div id="Panel" style="background-color: white;">
+
+            <div id="Cabezara" class="Item">
+               
+                <div style="width: 100%;background-color: white;">
+                            <br>
+                    <div style="width: 98%;margin: auto;display: grid;grid-template-columns: 20% 68% 10%;grid-gap: 10px;">
+                            <div>
+                                <table class="table" style="background-color: #E0F3F3;" >
+                                    <thead style="background-color: #112d4e;color: white;">
+                                        <tr>
+                                            <td>
+                                                Se encuenta en: 
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>
+                                            <center>
+                                                <img src="{{ asset('imagenes/admistrador.png') }}" height="100px">
+                                            <h4>Administradores</h4>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <table class="table" style="background-color: #E0F3F3;" >
+                                    <thead style="background-color: #112d4e;color: white;">
+                                        <tr>
+                                            <td>
+                                                Busquedad
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td><br>
+                                            <p>Se mostrar los administadores de cada emprsa registrada.Podra buscar los administadores por su compania o nombre:</p>
+                                            <input class="form-control" id="anythingSearch" type="text" placeholder="Busquedad por Compañia o Administrador" style="width: 100%;">
+                                        </td>
+                                    </tr>
+                                </table>
+                                
+                            </div>
+                            <div> 
+                                <table class="table" style="background-color: #E0F3F3;" >
+                                    <thead style="background-color: #112d4e;color: white;">
+                                        <tr>
+                                            <td>
+                                                Herramientas
+                                            </td>
+                                        </tr>
+                                    </thead>
+                                    <tr>
+                                        <td>
+                                            <button class="btn btn-danger"> Agregar </button>
+                                            <button class="btn btn-danger"> Editar </button>
+                                            <button class="btn btn-danger"> Eliminar </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                    </div>
+                    
+                    <div id="area_admins">
+                        <div id="area" style="width: 100%;text-align: center;">                   
+                            <table class="table table-hover" style="background-color: #E0F3F3;">
+                                <thead style="background-color: #112d4e;color: white;">
+                                  <tr>
+                                    <td>Habilitado</td>
+                                    <td>Compañia</td>
+                                    <td>Nombre</td>
+                                    <td class="Datos">Telefono</td>
+                                    <td class="Datos">Correo</td>
+                                    <td id="Datos_P">Datos personales</td>
+                                    <td>Actulizacion</td>
+                                  </tr>
+                                </thead>
+                                <tbody id="Mytable">
+                                @foreach($Admins as $users)
+                                    <tr>
+                                        <td>
+                                             @if ($users->S == 1)
+                                               <img id="A{{ $users->id }}" class="Si" src="{{ asset('imagenes/Si.png') }}" onclick="Admin_Activa({{ $users->id }},'{{ csrf_token() }}')" height="50px">
+                                                @else
+                                                <img id="A{{ $users->id }}" class="No" src="{{ asset('imagenes/No.png') }}" onclick="Admin_Activa({{ $users->id }},'{{ csrf_token() }}')" height="50px">
+                                                @endif
+                                        </td>
+                                        <td>
+                                            {{$users->name }}
+                                        </td>
+                                        <td style="margin: auto;">
+                                            {{ $users->firstName." ".$users->lastName }}
+                                        </td>
+                                        <td class="Datos">
+                                            {{ $users->phoneNumber }}
+                                        </td>
+                                        <td class="Datos">
+                                           {{ $users->email }}
+                                        </td>
+                                        <td id="Ver_Datos">
+                                             <button class="btn btn-primary" onclick="Admin({{ $users->id }});"> Ver </button>
+                                        </td>
+                                        <td> <a href="/superAdmin/viewcustomersuperadmin/{{ $users->id }}" class="btn btn-primary"> Editar</a></td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>    
+                    </div>
+                </div>
             </div>
-            </div>
+            
         </div>
 @endsection

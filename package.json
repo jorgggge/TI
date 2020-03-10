@@ -25,7 +25,9 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootbox": "^5.4.0",
         "save": "^2.4.0",
+        "sweetalert": "^2.1.2",
         "vuetify": "^2.2.6"
     }
 }

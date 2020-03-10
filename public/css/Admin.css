@@ -1,0 +1,191 @@
+body::-webkit-scrollbar {
+ display: none;
+}
+
+body{
+      background-color: white;
+}
+
+div::-webkit-scrollbar {
+  width: 5px;
+}
+div::-webkit-scrollbar-thumb{
+  background-color: #112d4e;
+
+  border-radius: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+button{
+  width: 100%;
+  margin: 3px;
+}
+
+#List_SA li{
+  border: 10px;
+  border-radius: 5px;
+
+}
+
+#grid-naveg{
+  display: grid;
+  grid-template-columns: 15%  85%;
+  background-size: 100% 100%;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover; 
+  height: 1000px;
+}
+
+#Panel{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 20px;
+  padding: 20px;
+  padding: 5px;
+}
+
+#Cabezara{
+  text-align: left;
+  display: grid;
+  width: 100%;
+}
+
+
+#area_admins{
+  overflow: auto;
+  height: 730px;
+  width: 100%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#area{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(200px,10);
+  grid-gap:10px;
+}
+
+
+
+.Si:hover{
+  cursor: pointer;
+}
+.No:hover{
+  cursor: pointer;
+}
+
+#area .Item {
+  border-radius: 7px;
+  border: 3px solid gray;
+  padding: 10px;
+}
+
+#SA_Menu2{
+  margin: unset;
+}
+
+#Part_Navg{
+  font-weight: bold;
+}
+
+
+#Contenr-CreateAdmin{
+  
+  width: 90%;
+  margin: auto;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  grid-gap: 5px;
+  padding: 5px;
+}
+
+#Ver_Datos, #Datos_P {
+  display: none;
+}
+
+.navbar-brand{
+  color: white;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+
+  #grid-naveg{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 10px 50px;
+    background-color: white;
+    height: 1200px;
+    border-radius: 10px;
+  }
+
+  #List_SA li{
+    display:inline;
+  }
+
+  #Cabezara{
+    border:0px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 5px;
+    
+  }
+  #Cabezara image,h2{
+    text-align: center;
+  }
+
+
+
+  #Panel{
+    border-left: 0px;
+  }
+  #area{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(200px,10);
+    grid-gap:10px;
+  }
+
+  #list-group-item{
+    padding:0px;
+  }
+  
+
+  #Part_Navg nav{
+    width: 100%;
+  }
+
+  #area_admins{
+    height: 850px;
+  }
+
+  #SA_Menu2{
+    height: 50px;
+  }
+
+  #Contenr-CreateAdmin{
+  grid-template-columns: 1fr;
+}
+
+  table{
+    width: 90%;
+  }
+
+.Datos{
+display:none;  
+}
+}
+  
+}

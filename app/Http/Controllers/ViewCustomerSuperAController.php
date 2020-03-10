@@ -52,10 +52,11 @@ class ViewCustomerSuperAController extends Controller
 
     }
 
-    public function delete(Request $request,$id)
+    public function delete(Request $request)
     {
-        Company::find($id)->update(['status' => $request->status]);
+        
+            User::find($request->id)->update(['status' => intval($request->status)]);
 
-        return back()->with('mensaje', 'Actulizacion del Status');
+        return "Listos ";
     }
 }

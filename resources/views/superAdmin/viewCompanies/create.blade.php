@@ -2,72 +2,82 @@
 
 @section('content')
 @php($count=1)
-<div class="container" style="margin-bottom: 1em; margin-top: 1em;">
-    <div class="row">
-		<div class="btn-group-toggle">
-			<a href="{{url('/superAdmin')}}" class="ButtonAdd_SA btn border-light">
-				<div><i class="material-icons">home</i></div>
-                <div>Inicio</div>
-            </a>
-            <a href="{{url('CreateAdmin/addAdmin/create')}}" class="ButtonAdd_SA btn border-light">
-                <div><i class="material-icons">person_add</i></div>
-                <div>Agregar Administrador</div>
-            </a>
-            <a href="{{url('CreateCompany/addCompany/create')}}" class="ButtonAdd_SA btn border-light">
-                <div><i class="material-icons">location_city</i></div>
-                <div>Agregar Compañía</div>
-            </a>
+
+<div id="Panel">
+    <div id="Cabezara" class="Item">
+        <div style="width: 100%;background-color: white;">
+            <table style="width: 90%;margin: auto;">
+                        <tr>
+                            <td>
+                                <center>
+                                    <img src="{{ asset('imagenes/empresa.png') }}" height="100px">
+                                <h4>Compañias</h4>
+                                </center>
+                            </td>
+                            <td>
+                                
+                                <p class="text-dark">Se mostrar cada empresa registrada:</p>
+                                <div style="display: grid;grid-template-columns: 1fr 1fr;grid-gap: 10px;">
+                                    <div>
+                                        <input class="form-control" id="anythingSearch" type="text" placeholder="Busquedad por Compañia o Administrador" style="width: 100%;">
+                                    </div>
+                                    <div>
+                                        <a href="{{url('CreateAdmin/addAdmin/create')}}" class="btn btn-success"> Añadir Administrador </a>
+                                    </div>
+                                    
+                                </div>
+                            </td>
+
+                        </tr>
+                    </table>
+                    <br>
+
+                <div id="area_admins">
+                        <div id="area" style="width: 100%;text-align: center;">    
+                    <table class="table table-hover">
+                       <thead style="background-color: #112d4e;color: white;width: 100%;">
+                            <tr style="height: 50px;">
+                                <td >Estado</td>
+                                <td >Empresa</td>
+                                <td >Direccion</td>
+                                <td >Telefono</td>
+                                <td >Correo</td>
+                                <td >Registro</td>
+                            </tr>
+                        </thead>
+                        <tbody id="Mytable">
+                        @foreach($Com as $C)
+                            @if($C->companyId != 1)
+                            <tr style="margin: auto;padding:20px;">
+                                <td>
+                                    <form class='viewCompany form'  method="POST" action="{{ route('status',$C->companyId) }}">
+                                        @method('PUT')
+                                        @csrf
+                                        @if ($C->status == 0)
+                                            <img id="A{{ $C->status }}" class="Si" src="{{ asset('imagenes/Si.png') }}" onclick="Admin_Activa({{ $C->name }},'{{ csrf_token() }}')" height="50px">
+                                        @endif
+                                        @if ($C->status != 0)
+                                            <img id="A{{ $C->status }}" class="No" src="{{ asset('imagenes/No.png') }}" onclick="Admin_Activa({{ $C->name }},'{{ csrf_token() }}')" height="50px">
+                                        @endif
+                                    </form>
+                                    </td>
+                                        <td class="td">{{$C -> name}}</td>
+                                        <td class="td">{{$C -> address}}</td>
+                                        <td class="td">{{$C -> phoneNumber}}</td>
+                                        <td class="td">{{$C -> email}}</td>
+                                        <td class="td"><a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary"> Ver </a></td>
+                            </tr>
+                            @endif
+                            @php($count++)
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                
         </div>
     </div>
 </div>
-<div class="Search">
-    <input class="form-control" id="myInput" type="text" placeholder="Buscar...">
-</div>
-<div class="ShowCompanies">
-    <table class="table CompanyList table-bordered tt">
-		<thead class="ShowCompanyH">
-			<tr>
-				<td class='compTD'>#</td>
-				<td class='compTD'>ESTADO</td>
-				<td class='compTD'>EMPRESA</td>
-			    <td class='compTD'>DIRECCIÓN</td>
-				<td class='compTD'>TELÉFONO</td>
-				<td class='compTD'>CORREO</td>
-				<td class='compTD'>REGISTRO</td>
-			</tr>
-		</thead>
-		<tbody class="ShowCompanyB" id ="ShowCompanyB">
-		@foreach($Com as $C)
-            @if($C->companyId != 1)
-			<tr>
-				<td>{{$count}}</td>
-				<td>
-                    <form class='viewCompany form'  method="POST" action="{{ route('status',$C->companyId) }}">
-                        @method('PUT')
-                        @csrf
-                        @if ($C->status == 0)
-                            <input type="hidden" name="status" style="width: 0px;border:none; " readonly value="1">
-                            <input type="submit" value="Deshabilitado" class="btn"
-                                   style="background-color: red;color:white;">
-                             @endif
-                        @if ($C->status != 0)
-                            <input type="hidden" name="status" style="width: 0px;border:none; " readonly value="0">
-                            <input type="submit" value="Habilitado" class="btn"
-                                style="background-color: #5cb85c;color:white;">
-                        @endif
-                    </form>
-                    </td>
-                        <td class="td">{{$C -> name}}</td>
-                        <td class="td">{{$C -> address}}</td>
-                        <td class="td">{{$C -> phoneNumber}}</td>
-                        <td class="td">{{$C -> email}}</td>
-                        <td class="td"><a href="{{ route('ShowCompanySA',$C->companyId) }}" class="Button_See btn"> Ver </a></td>
-			</tr>
-            @endif
-            @php($count++)
-		@endforeach
-		</tbody>
-    </table>
-</div>
+
 
 @endsection

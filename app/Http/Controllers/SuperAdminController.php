@@ -23,7 +23,7 @@ class SuperAdminController extends Controller
     	$user = User::all();
         $Admins = User::join('companies','companies.companyId','=','users.companyId')
             ->join('role_user','role_user.user_id','=','users.id')
-            ->select('companies.*','users.firstName','users.lastName','users.username','users.id','companies.status')
+            ->select('companies.*','users.firstName','users.lastName','users.username','users.id','users.status as S')
             ->where('role_user.role_id','2')->get();
 
         return view('superAdmin.index', compact('Admins'));
@@ -90,7 +90,8 @@ class SuperAdminController extends Controller
             'lastName' => $data['lastName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'companyId' => $data['companyId']
+            'companyId' => $data['companyId'],
+            'status' => 1
         ]);
 
 
@@ -139,5 +140,13 @@ class SuperAdminController extends Controller
         ]);
 
         return back()->with('mensaje', 'Datos Actualizados');
+    }
+
+    public function DatosAdmin($id){
+        $Admin = User::join('companies','companies.companyId','users.companyId')
+        ->select('users.*','companies.*','users.email as emailuser','companies.email as emailcompany')
+        ->where('users.id',$id)->get();
+
+        return $Admin->toJson();
     }
 }

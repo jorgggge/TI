@@ -12,6 +12,8 @@
                     <div class="card">
                         <div class="card-header">Agregar Niveles de Madurez de la Empresa</div>
                         <div class="card-body">
+                            <p> Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
+                                <br> (*) Datos Obligatorios.</p>
                             <form name="addML" id="addML" method="POST" action="/admins/index">
                                 @csrf
                                 @foreach(range(0,4) as $x)
@@ -33,10 +35,8 @@
                                             $label = 'Muy Alto';
                                         }
                                     ?>
-                                <div class="input-group input-group-lg mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Nivel de Madurez {{$label}}</span>
-                                    </div>
+
+                                        *Nivel de Madurez {{$label}}
                                     <input id="description-[{{$x}}]" type="text"
                                            class="form-control @error('description[{{$x}}]') is-invalid @enderror" name="description[{{$x}}]"
                                            required autocomplete="description[{{$x}}]" autofocus>
@@ -46,7 +46,7 @@
                                             <strong>{{ $message }}</strong>
                                         </span>
                                     @enderror
-                                </div>
+                                    <br>
                                 @endforeach
                                 <div class="form-group row mb-0">
                                     <div class="col-md-6 offset-md-5">

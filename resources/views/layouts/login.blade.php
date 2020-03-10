@@ -21,22 +21,70 @@ use App\MaturityLevel;
 
 
     <!-- Styles Views-->
-    <link href="{{ asset('bts4/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/login.css') }}" rel="stylesheet">
 
     <!-- Styles Login-->
-    <script src="bts4/js/login.js"></script>
-    <link href="{{ asset('bts4/css/login.css') }}" rel="stylesheet">
-    <link href="{{ asset('bts4/css/login.less') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
 
 </head>
-<nav class="navbar navbar-expand-md navbar-light bg-black shadow-sm">
-    <div class="container">
-        <a class="barText">
-            ENFOQUE DE CAPACIDAD INTELIGENTE
-        </a>
-    </div>
+<nav class="navbar navbar-dark" style="background-color:#112d4e;" >
+        <a class="navbar-brand" >Inicio</a>
 </nav>
-<body style="background-color: #525784">
-    @yield('content')
+<body>
+
+    <div id="grid-item" class="item-p">
+        <div class="item" style="grid-column: 1/-1;"> 
+            <img src="{{ asset('imagenes/Logo.png') }}" id="logo" class="logo" >
+              <h1>Intelligent Capacity Approach</h1>
+            <h3>
+                Un sistema enfocado a optimizar la gestión de resultados dentro de las empresas.
+            </h3>
+        </div>  
+        <div id="From" style="background-color:#112d4e;grid-column: 1/-1;" >
+            <div style="margin: auto;width: 80%;">
+             <h4>!! NOTA !!</h4>
+             <h5> Rercuerda, que solo se puede inciar seccion y no resgistrase por su propia cuenta. Su CUENTA debe se crear los adminstradores de la compañía correspodiente.</h5> 
+            </div>
+            <div style="margin: auto;width: 90%;"><br>
+                <h4>Iniciar sesión</h4>
+                @yield("content")
+            </div>
+        </div>
+    </div>
+    <div id="grid-panel">
+        <div id="grid-item" class="item-s"> 
+            <img src="{{ asset('imagenes/Logosite.png') }}" height="150px">
+            <h5>Una aplicación web que permita evaluar el nivel de madurez de las áreas de una compañía</h5>
+        </div>
+        <div id="grid-item" class="item-s">
+            <img src="{{ asset('imagenes/Logocompanyt.png') }}" height="150px">
+            <h5>
+                Permitir el manejo de las compañías afiliadas al servicio, quienes tendrán la capacidad de crear usuarios, áreas y asignar pruebas para su empresa.
+            </h5>
+        </div>
+        <div id="grid-item" class="item-s">
+
+            <img src="{{ asset('imagenes/Logotest.png') }}" height="150px">
+            <h5>
+                Las pruebas son evaluadas por medio de evidencias provee y estas son validadas por un analista.
+            </h5>
+        </div>
+    </div>
+    
 </body>
+
+
+<script>
+var ban = true;
+    
+ setInterval(function(){ 
+    if(ban){
+        ban = false;
+        $("#logo").addClass("Animacion");
+    }else{
+        ban = true;
+        $("#logo").removeClass("Animacion");
+    }
+}, 6000);
+</script>

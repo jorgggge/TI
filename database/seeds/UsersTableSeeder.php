@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
           'password' => Hash::make('asdasdasd'),
           'email' => '-',
           'companyId' => 1,
+          'status' => 1,
           'email_verified_at' => date('Y-m-d H:i:s'),
           'remember_token' => Str::random(10),
           'created_at' => date('Y-m-d H:i:s'),

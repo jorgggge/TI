@@ -16,7 +16,7 @@ Route::resource('superAdmin',"SuperAdminController");
 
 Route::get('/superAdmin/viewcustomersuperadmin/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
 Route::put('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
-Route::put('/superAdmin/viewcustomersuperadmin/delete/{id}', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
+Route::put('/superAdmin/viewcustomersuperadmin/delete/', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
 Route::get('/superAdmin/viewcustomersuperadmin', 'ViewCustomerSuperAController@create');
 Route::get('/superAdmin/create','SuperAdminController@create')->name('createAdmins');
 Route::prefix('CreateCompany')->group(function (){
@@ -98,3 +98,9 @@ Route::get('/Areaf/{request}/{Test}/{concept}/{user}', 'AreaController@show');
 Route::get('/Beta', 'AreaController@beta');
 
 Route::get('/Beta2', "UserAreaController@index");
+
+
+
+ // ---------------------- Nuevas Rutas
+Route::get('/Datos/Admi/{id}','SuperAdminController@DatosAdmin');
+Route::put('/Admins/Activo/{id}', 'AdminsController@Activo');

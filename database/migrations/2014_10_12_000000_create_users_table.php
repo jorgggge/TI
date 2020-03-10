@@ -19,7 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('lastName',255);
             $table->string('username',255)->unique();
             $table->string('password',255);
-            $table->string('email',50)->unique();
+            $table->string('email',100)->unique();
+            $table->unsignedBigInteger('status')->nullable();
 
             $table->unsignedBigInteger('companyId')->nullable();
             $table->foreign('companyId')->references('companyId')->on('companies');
