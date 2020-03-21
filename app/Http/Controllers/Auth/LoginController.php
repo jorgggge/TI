@@ -34,7 +34,7 @@ class LoginController extends Controller
         $companyStatus = Company::where('companyId',$user->companyId)->get();
         if ($companyStatus[0]->status == 1){
             if($user->hasRole('superadmin')) {
-                return redirect('/superAdmin');
+                return redirect('/superAdmin/company');
             } elseif ($user->hasRole('admin')) {
                 History::Logs('Inicio de Sesión Admin');
                 return redirect('/admin');

@@ -7,6 +7,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use App;
 use App\User;
+use App\History;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Validator;
@@ -17,7 +18,7 @@ class SuperAdminController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
-    public function index(Request $request)
+    public function showAdmins(Request $request)
     {
         $request->user()->authorizeRoles(['superAdmin']);
     	$user = User::all();
@@ -148,5 +149,14 @@ class SuperAdminController extends Controller
         ->where('users.id',$id)->get();
 
         return $Admin->toJson();
+    }
+
+
+    public function history()
+    {
+
+        $Historial = History::all();
+
+        return view('superAdmin.history',compact('Historial'));
     }
 }

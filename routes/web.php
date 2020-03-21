@@ -12,7 +12,6 @@ Auth::routes(['verify' => true]);
 //----------------------------------------------SuperAdminRoutes----------------------------------------------------------------------
 Route::resource('superAdmin/addAdmin', 'AdminsController');
 Route::resource('superAdmin/addCompany', 'CompanyController');
-Route::resource('superAdmin',"SuperAdminController");
 
 Route::get('/superAdmin/viewcustomersuperadmin/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
 Route::put('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
@@ -102,5 +101,7 @@ Route::get('/Beta2', "UserAreaController@index");
 
 
  // ---------------------- Nuevas Rutas
+Route::get('/superAdmin/company','SuperAdminController@showCompany');
+Route::get('/superAdmin/admins','SuperAdminController@showAdmins');
 Route::get('/Datos/Admi/{id}','SuperAdminController@DatosAdmin');
 Route::put('/Admins/Activo/{id}', 'AdminsController@Activo');

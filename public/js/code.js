@@ -1,9 +1,10 @@
 
 
+
 $(document).ready(function () {
-  $("#anythingSearch").on("keyup", function () {
+  $("#myInput").on("keyup", function () {
     var value = $(this).val().toLowerCase();
-    $("#Mytable tr").filter(function () {
+    $("#myTable tr").filter(function () {
       $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
     });
   });
@@ -42,7 +43,6 @@ var para = document.createElement("div");
 }
 
 function Admin_Activa(Id,Token) {
-
 swal({
   title: "Atecion",
   text: "Se cambiara el status de este usuario, Estas seguro?!",
@@ -93,3 +93,27 @@ swal({
 	
 }
 
+function AddAdmin() {
+
+	var para = document.createElement("div");
+  	para.innerHTML = 'Nombre: <br> <input id="swal-input1" class="form-control"><br>'+
+  					 'Apellido: <br> <input id="swal-input1" class="form-control"><br>'+
+  					 'Usuario: <br> <input id="swal-input1" class="form-control"><br>'+
+  					 'Email: <br> <input id="swal-input1" class="form-control"><br>'+
+  					 'Telefono: <br> <input id="swal-input1" class="form-control">';
+
+
+    swal({
+		title: 'Datos del Administrador',
+		content: para
+	}).then((willDelete) => {
+
+		if(willDelete){
+			swal(document.getElementById('swal-input1').value);
+		}else{
+
+		}
+
+	});
+	  
+}

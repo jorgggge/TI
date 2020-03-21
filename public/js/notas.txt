@@ -1,0 +1,68 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar " style="background-color: #112d4e;" >
+    @auth
+    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
+    <!-- ROUTES FOR SUPERADMIN -->
+        @if(Auth::user()->hasRole('admin'))
+            <?php
+            $user = auth()->user();
+            $userId = $user->companyId;
+            $admins = User::all();
+            $CountMaturity = MaturityLevel::where('companyId', '=', $userId)->count();
+            if ($CountMaturity == 0) { ?>
+            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                {{ __('Salir') }}
+            </a>
+            <?php
+            }
+            else {
+            ?>
+            <a class="" href="{{ url('/admin') }}">Inicio</a>
+            <a class="" href="{{ url('/admins/user/index') }}">Lista de
+                Usuarios</a>
+            <a class="" href="{{ url('/admins/area/addArea') }}">Añadir
+                Área</a>
+            <a class="" href="{{ url('/addUser/create') }}">Añadir
+                Usuario</a>
+            <a class="" href="{{ url('/admins/area/test/create') }}">Crear
+                Prueba</a>
+            <a class="" href="{{ url('/admins/area/concept_test/create') }}">Agregar
+                Conceptos a Pruebas</a>
+            <a class="" href="{{url('/admins/maturity/editML')}}">Editar Niveles de Madurez</a>
+            <a class="" href="{{url('/admins/area/test/edit')}}">Editar Test</a>
+            <a class="" href="{{url('/admins/history')}}">Historial</a>
+            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
+                    document.getElementById('logout-form').submit();">
+                {{ __('Salir') }}
+            </a>
+            <?php }
+            ?>
+        <!-- ROUTES FOR ANALISTA -->
+        @elseif (Auth::user()->hasRole('analista'))
+            <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                {{ __('Salir') }}
+            </a>
+            <!-- ROUTES FOR COMUN -->
+        @elseif(Auth::user()->hasRole('comun'))
+            <a class="" href="{{ url('/comun') }}">Home</a>
+            <a class="" href="{{ url('/upload') }}">Upload</a>
+            <a class="" href="{{ url('/upload/show') }}">View Uploads</a>
+        @endauth
+    @endif
+
+    @if(Auth::user()->hasRole('superadmin'))
+        
+    </ul>
+    @elseif(Auth::user()->hasRole('admin'))
+        <a class="navbar-brand" href="{{ url('/admin') }}">Administrador {{ Auth::user()->username }}</a>
+    @elseif(Auth::user()->hasRole('analista'))
+        <a class="navbar-brand" href="{{ url('/analista') }}">Analista {{ Auth::user()->username }}</a>
+    @elseif(Auth::user()->hasRole('comun'))
+        <a class="navbar-brand" href="{{ url('/comun') }}">Usuario {{ Auth::user()->username }}</a>
+    @endif
+
+    <a class="navbar-brand" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Salir') }}</a>
