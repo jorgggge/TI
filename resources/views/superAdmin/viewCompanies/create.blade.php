@@ -14,32 +14,17 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header  bg-blue-grey">
-                            <h2>
+                        <div class="header " style="background-color: #112d4e;">
+                            <h2 style="color: white;">
                                 Compañias
                             </h2>
-                            <ul class="header-dropdown m-r-0">
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <i class="material-icons">info_outline</i>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="javascript:void(0);">
-                                        <i class="material-icons">help_outline</i>
-                                    </a>
-                                </li>
-                            </ul>
+                           
                         </div>
                         
                         <div class="body">
                          <div class="row clearfix">
                                 <div class="col-sm-4">
-                                    
-                                        <button type="button" class="btn btn-lg btn-primary waves-effect">
-                                            <i class="material-icons">person_add</i>
-                                            <span>Agregar Compañia</span>
-                                        </button>
+                                    <h5>Se mostrar todas la compañias registradas:</h5>
 
                                 </div>
                                 <div class="col-sm-4"></div>
@@ -75,14 +60,14 @@
                                                     @method('PUT')
                                                     @csrf
                                                     @if ($C->status != 0)
-                                                        <button type="button" class="btn btn-success btn-circle-lg waves-effect waves-circle waves-float">
-                                                            <i class="material-icons">work</i>
+                                                        <button type="button" class="btn btn-success waves-effect " onclick="Company_Activa({{ $C->companyId }}, 0);">
+                                                            Habilitado
                                                         </button>
 
                                                     @endif
                                                     @if ($C->status == 0)
-                                                         <button type="button" class="btn btn-warning btn-circle-lg waves-effect waves-circle waves-float">
-                                                        <i class="material-icons">work_off</i>
+                                                         <button type="button" class="btn btn-warning waves-effect" onclick="Company_Activa({{ $C->companyId }}, 1);"> 
+                                                            Deshabilitado
                                                         </button>
                                                     @endif
                                                 </form>
@@ -91,7 +76,9 @@
                                                     <td>{{$C -> address}}</td>
                                                     <td>{{$C -> phoneNumber}}</td>
                                                     <td>{{$C -> email}}</td>
-                                                    <td><a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons" style="margin: auto;">create</i></a></td>
+                                                    <td><a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary waves-effect">
+                                                        Editar
+                                                    </a></td>
                                         </tr>
                                         @endif
                                         @php($count++)
@@ -107,5 +94,27 @@
         </div>
 <script src="{{ asset('js/code.js') }}"></script>
 
+<script type="text/javascript">
+    $("#Company").addClass('active');
+    $("#CompanySee").addClass('active');
 
+
+    function Company_Activa(Id,A) {
+swal({
+  title: "Atecion",
+  text: "Se cambiara el status de este compañia, Estas seguro?!",
+  icon: "warning",
+  buttons: true,
+  dangerMode: true
+})
+.then((willDelete) => {
+  if (willDelete) {
+    window.location = "/superAdmin/companydelete/delete/"+Id+"/"+A;
+  
+  } else {
+  }
+});
+    
+}
+</script>
 @endsection

@@ -33,7 +33,16 @@ class CreateTestController
         $tests = Test::all();
         $maturity_levels = DB::table('maturity_levels')->where('maturity_levels.companyId','=',$userCompany)->get()->toArray();
 
-        return view('admins.area.test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests') );
+        $List_User = DB::table('user_areas')->join('users','user_areas.userId','users.Id')
+                                                                    ->join('areas','user_areas.areaId','areas.areaId')
+                                                                    ->join('role_user','users.id','role_user.user_id')
+                                                                    ->where([
+                                                                            ['users.companyId',Auth::user()->companyId],
+                                                                            ['role_user.role_id','4']
+                                                                        ])->select('users.Id as userId','users.firstName','users.lastName','areas.name as area','user_areas.areaId as ua')
+                                                                    ->orderby('user_areas.areaId')->get();
+
+        return view('admins.area.test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests','List_User') );
     }
 
     public function store(Request $request)
@@ -130,7 +139,7 @@ class CreateTestController
             $concept_maturity_level = DB::table('concept_maturity_level')->get()->toArray();
             $addAttribute->concept_maturity_level_attribute()->attach(end($concept_maturity_level)->conceptMLId);        }
 
-        return redirect('/admins/user/index');
+        return redirect('/admin/pruebas');
     }
 
     public function validatorConcept()
@@ -154,6 +163,53 @@ class CreateTestController
     public function DeleteTest(Request $request, $id)
     {
         Test::DeleteTest($id);
-        return back();
+        return redirect("/admin/pruebas");
     }
+
+
+    public function EditarPrueba($TestId,$ConceptId,$UserId)
+    {
+        $test  = DB::table('tests') ->where('testId',$TestId)->get();
+
+        $List_User = DB::table('user_areas')->join('users','user_areas.userId','users.Id')
+        ->join('areas','user_areas.areaId','areas.areaId')
+        ->join('role_user','users.id','role_user.user_id')
+        ->where([
+                ['users.companyId',Auth::user()->companyId],
+                ['role_user.role_id','4']
+            ])->select('users.Id as userId','users.firstName','users.lastName','areas.name as area','user_areas.areaId as ua')
+        ->orderby('user_areas.areaId')->get();
+
+        $concept = DB::table('concepts') ->where('conceptId',$ConceptId)->get();
+
+        $mlevel = DB::table('concept_maturity_level as CML')
+        ->select('ML.description','ML.maturityLevelId')
+        ->join('maturity_levels as ML','ML.maturityLevelId','CML.maturityLevelId')
+        ->where('conceptId',$ConceptId)->get();
+
+        $attributes = Attribute::join('concept_maturity_level_attribute as CMLA','attributes.attributeId','CMLA.attributeId')
+        ->join('concept_maturity_level as CML','CMLA.conceptMLId','CML.conceptMLId')
+        ->join('maturity_levels as ML','CML.maturityLevelId','ML.maturityLevelId')
+        ->select('attributes.attributeId','attributes.description as AD','ML.description as ML')
+        ->where('CML.conceptId',$ConceptId)->orderBy('attributes.attributeId')->get();
+
+        return view('admins.area.test.beta',compact('test','List_User','concept','mlevel','attributes','UserId'));
+    }
+
+    public function PruebaEdit(Request $request)
+    {
+
+
+        Test::find($request->testId)->update(['name' => $request->testname]);
+        Concept::find($request->conceptId)->update(['description' => $request->concept]);
+
+        DB::table('test_user')->where('testId',$request->testId)->update(['userId' => $request->user]);        
+
+        for ($i=1; $i < 16; $i++) { 
+            Attribute::find($request->{"Id".$i})->update(['description' => $request->{"Attribute".$i}]);
+        }
+
+        return redirect('/admin/pruebas');
+    }
+
 }

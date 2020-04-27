@@ -7,102 +7,75 @@
             </div>
         </div>
     @else
-        <div class="container mt-1">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle dp-areas" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" style="}">
-                    {{$selectedConcept['description']}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    @foreach($concepts as $concept)
-                        @if($selectedConcept['description'] == $concept->description)
-                        @else
-                            <a href="{{route('analistaTest',[$concept->testId,$concept->conceptId])}}">
-                                <button class="dropdown-item " type="button">{{$concept->description}}
-                                </button>
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div>
-                    <div class="Customer">
-                        <div class="card-header">
-                            <p>{{$test['name']}}</p>
+
+
+<div class="container-fluid">
+            <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Evaluacion</a>
+                            </h2>
                         </div>
-                        <div class="card-body">
+                        <div class="body">
+                            <h3> Prueba: {{$test['name']}} <br> Concepto: {{$selectedConcept['description']}}</h3>
+                     
                             <form method="post" action="/test">
                                 <input type="hidden" name="email" value="{{$email}}">
                                 <input type="hidden" name="commonUserId" value="{{$commonUserId}}">
                                 <input type="hidden" name="username" value="{{$name}} {{$lastName}}">
                                 <input type="hidden" name="testName" value="{{$testName}}">
                                 @csrf
-                                <table>
-                                    <thead>
-                                    <tr class='heady'>
-                                        <th class='bold' id="address addy" scope="col">Usuario: {{$name}} {{$lastName}}</th>
-                                        <th class='bold' id="address addy" scope="col">Correo: {{$email}}</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                                <table>
-                                    <thead>
-                                    <tr class='heady'>
-                                        <th class='bold' id="address addy" scope="col">Atributos</th>
-                                        <th class='bold' id="address addy" scope="col">Descargar</th>
-                                        <th class='bold' id="address addy" scope="col">Validar</th>
-                                    </tr>
-                                    </thead>
-                                        @foreach($maturityLevels as $maturityLevel)
-                                            <tr class='heady'>
-                                                <th class='' id="address addy" >
-                                                    <p class="font-weight-bold">{{$maturityLevel->description}}</p>
-                                                </th>
-                                            </tr>
-                                            @foreach($attributes as $attribute)
+                               <blockquote class="blockquote-reverse"> <h4> Usuario: {{$name}} {{$lastName}}<br> Correo: {{$email}}</h4>   </blockquote>
+                                 @foreach($maturityLevels as $maturityLevel)
+                                                <h3> Nivel: {{$maturityLevel->description}}</h3>
+                                        @foreach($attributes as $attribute)
+                                        <div class="row clearfix">
                                                 @if($attribute->conceptMLId == $maturityLevel->conceptMLId)
-                                                    <tr class="border">
-                                                        <td>{{$attribute->description}}</td>
+                                                 <div class="col-sm-1"></div>
+                                                    <div class="col-sm-4"> 
+                                                             <h4> <i class="material-icons">bookmark</i>{{$attribute->description}}</h4>
+
                                                         <input type="hidden" name="attribute-name[]" value="{{$attribute->attributeId}}">
+                                                    </div>
+                                                        
                                                     @for($i=0;$i < sizeof($attributesWithEvidences);$i++)
                                                         @if($attribute->attributeId == $attributesWithEvidences[$i]->attributeId)
-                                                                <td><a href="/storage/upload/{{$attributesWithEvidences[$i]->link}}" class="btn"><div><i class="material-icons">cloud_download</i></div></a></td>
-                                                                <td>
-                                                                    <div class="form-check">
-                                                                        <label
-                                                                            for="attributeCheck{{$attributesWithEvidences[$i]->attributeId}}">
-                                                                        </label>
-                                                                        <input type="hidden"  name="attributeCheck[{{$attributesWithEvidences[$i]->attributeId}}]" value="off" >
-                                                                        <input type="checkbox" class="form-check-input" name="attributeCheck[{{$attributesWithEvidences[$i]->attributeId}}]" id="attributeCheck{{$attributesWithEvidences[$i]->attributeId}}"
-                                                                               @if($attributesWithEvidences[$i]->verified === 1)
-                                                                               checked
-                                                                        @else
-                                                                            @endif>
-                                                                        <label class="form-check-label" for="exampleCheck1">Validar evidencia</label>
-                                                                    </div>
-                                                                </td>
+                                                                <div class="col-sm-2">
+                                                                    <a href="/storage/app/public/upload/{{$attributesWithEvidences[$i]->link}}" class="btn btn-primary"><div><i class="material-icons">cloud_download</i> Ver</div></a>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <input type="checkbox"  name="attributeCheck[{{$attributesWithEvidences[$i]->attributeId}}]" id="attributeCheck{{$attributesWithEvidences[$i]->attributeId}}"
+                                                                           @if($attributesWithEvidences[$i]->verified === 1)
+                                                                           checked
+                                                                    @else
+                                                                        @endif>
+                                                                    <label class="form-check-label" for="attributeCheck{{$attributesWithEvidences[$i]->attributeId}}">Validar evidencia</label>
+                                                                </div>
                                                             @endif
                                                         @endfor
                                                     </tr>
                                                 @endif
-                                            @endforeach
+                                            
+                                        </div>
                                         @endforeach
-                                </table>
-                                <div class="offset-sm-3 col-sm-9">
-                                    @if(count($attributesWithEvidences) == 0)
-                                        <button type="submit" class="btn btn-primary" hidden>Confirmar</button>
-                                    @else
-                                        <button type="submit" class="btn btn-primary">Confirmar</button>
-                                    @endif
-                                </div>
+                                @endforeach    
+                                <div class="row clearfix">
+                                    <div class="col-sm-10"></div>
+                                    <div class="col-sm-2">
+                                        @if(count($attributesWithEvidences) == 0)
+                                            <button type="submit" class="btn btn-primary" hidden>Confirmar</button>
+                                        @else
+                                            <button type="submit" class="btn btn-primary">Confirmar</button>
+                                        @endif
+                                    </div>
+                                </div>   
                             </form>
                         </div>
                     </div>
-                </div>
             </div>
-        </div>
+</div>
+
     @endif
 @endsection

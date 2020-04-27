@@ -15,7 +15,8 @@ Route::resource('superAdmin/addCompany', 'CompanyController');
 
 Route::get('/superAdmin/viewcustomersuperadmin/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
 Route::put('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
-Route::put('/superAdmin/viewcustomersuperadmin/delete/', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
+Route::get('/superAdmin/companydelete/delete/{id}/{A}', 'ViewCustomerSuperAController@Companydelete');
+Route::get('/superAdmin/viewcustomersuperadmin/delete/{id}/{A}', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
 Route::get('/superAdmin/viewcustomersuperadmin', 'ViewCustomerSuperAController@create');
 Route::get('/superAdmin/create','SuperAdminController@create')->name('createAdmins');
 Route::prefix('CreateCompany')->group(function (){
@@ -38,23 +39,26 @@ Route::put('/superAdmin/viewCompanies/create/status/{id}','CompanyController@sta
 
 
 //---------------------------------------------------Admin----------------------------------------------------------------------------
+
+Route::get('/Admin/Userdelete/delete/{id}/{A}', 'AdminsController@Userdelete');
 Route::get('/admin', 'AdminsController@index');
 Route::get('/admins/area/Edit/editArea/{id}', 'AreaController@showArea')->name('showAreaAD');
-Route::put('/admins/area/Edit/editArea/EditArea/{id}', 'AreaController@EditArea')->name('UpdateArea');
+Route::get('/admins/area/Edit/editArea/EditArea/{id}/{name}', 'AreaController@EditArea')->name('UpdateArea');
 
 Route::get('/admin/viewResults/{id}','AdminsController@viewResults')->name('adminViewResults');
 Route::get('/admins/maturity/addML', 'AdminsController@storeMaturityLevel');
 Route::put('/admins/maturity/editML', 'AdminsController@UpdateMaturity')->name('UpdateMaturity');
 Route::get('/admins/maturity/editML', 'AdminsController@editMaturityLevel')->name('editMaturity');
-Route::get('addUser/create', 'AdminsController@createUser');
+Route::get('/admins/createUser', 'AdminsController@createUser');
+Route::get('/AddArea/{name}','AdminsController@storeArea');
 Route::prefix('createArea')->group(function () {
     Route::post('/admins', 'AdminsController@storeArea');
 });
 Route::get('/admins/area/addArea', 'AdminsController@createArea');
-Route::post('/admins/user/index', 'AdminsController@storeUser');
+Route::post('/admins/user_new', 'AdminsController@storeUser');
 
 Route::post('/admins/index', 'AdminsController@storeMaturityLevel');
-Route::get('/admins/user/index','AdminsController@showUsers')->name('showUsers');
+Route::get('/admins/user','AdminsController@showUsers')->name('showUsers');
 Route::get('/admins/user/delete/{id}','AdminsController@DeleteUsers')->name('DeleteUsers');
 Route::put('/admins/user/{id}', 'AdminsController@UpdateUsers')->name('UpdateUsers'); //Cambios
 Route::get('/admins/user/{id}', 'AdminsController@show')->name('show'); //Mostrar
@@ -101,7 +105,12 @@ Route::get('/Beta2', "UserAreaController@index");
 
 
  // ---------------------- Nuevas Rutas
+Route::get('/superAdmin','SuperAdminController@Home');
 Route::get('/superAdmin/company','SuperAdminController@showCompany');
 Route::get('/superAdmin/admins','SuperAdminController@showAdmins');
 Route::get('/Datos/Admi/{id}','SuperAdminController@DatosAdmin');
 Route::put('/Admins/Activo/{id}', 'AdminsController@Activo');
+Route::get('/admin/pruebas', 'AdminsController@Pruebahome');
+Route::get('/admin/prueba/{TestId}/{ConceptId}/{UserId}', 'CreateTestController@EditarPrueba');
+Route::get('/admin/CreateTest', 'AdminsController@PruebaCreate');
+Route::put('/admin/Edit/Prueba', 'CreateTestController@PruebaEdit');

@@ -2,18 +2,16 @@
 
 @section('content')
 
-<main class="py-4 py-5-mod">
-
-    <div class="container contain">
-
-        <div class="row justify-content-center">
-            <section class="addArea">
-                <div class="col-md-8">
+<div class="container-fluid">
+            <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="card-header">
-                            <p>Selecciona tu evidencia </p>
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Subir evidencias</a>
+                            </h2>
                         </div>
-                        <div class="card-body">
+                        <div class="body">
                             <form action="{{url('/upload')}}" method='POST' enctype="multipart/form-data" id='form'>
                                 @csrf
 
@@ -46,7 +44,8 @@
 
                                 @endif
                                 <div class="buttcontainer">
-                                    <button class="butt " type='submit' id='butform'>Enviar Archivo</button>
+                                    <br>
+                                    <button class="btn btn-primary " type='submit' id='butform'>Enviar Archivo</button>
                                 </div>
 
                             </form>
@@ -65,10 +64,10 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            
         </div>
     </div>
 
-</main>
+
 
 @endsection

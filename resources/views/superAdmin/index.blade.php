@@ -37,11 +37,7 @@
                          <div class="row clearfix">
                                 <div class="col-sm-4">
                                     
-                                        <button type="button" class="btn btn-lg btn-primary waves-effect">
-                                            <i class="material-icons">person_add</i>
-                                            <span>Agregar Administrador</span>
-                                        </button>
-
+                                        <h5>Aqui se mostrar los administradores registrados:</h5>
                                 </div>
                                 <div class="col-sm-4"></div>
                                 <div class="col-sm-4">
@@ -72,12 +68,12 @@
                                     <tr>
                                         <td>
                                              @if ($users->S == 1)
-                                               <button type="button" class="btn btn-success btn-circle-lg waves-effect waves-circle waves-float" onclick="Admin_Activa({{ $users->id }},'{{ csrf_token() }}')">
-                                                    <i class="material-icons">work</i>
+                                               <button type="button" class="btn btn-success  waves-effect" onclick="Admin_Activa({{ $users->id }},0)">
+                                                    Habilitado
                                                 </button>
                                                 @else
-                                                <button type="button" class="btn btn-warning btn-circle-lg waves-effect waves-circle waves-float" onclick="Admin_Activa({{ $users->id }},'{{ csrf_token() }}')">
-                                                    <i class="material-icons">work_off</i>
+                                                <button type="button" class="btn btn-warning waves-effect" onclick="Admin_Activa({{ $users->id }},1)">
+                                                    Deshabilitado
                                                 </button>
                                                 @endif
                                         </td>
@@ -96,7 +92,9 @@
                                         
                                              <!-- button class="btn btn-primary" onclick="Admin({{ $users->id }});"> Ver </button -->
                                         
-                                        <td> <a href="/superAdmin/viewcustomersuperadmin/{{ $users->id }}" class="btn btn-primary btn-circle-lg waves-effect waves-circle waves-float"><i class="material-icons" style="margin: auto;">create</i></a></td>
+                                        <td> <a href="/superAdmin/viewcustomersuperadmin/{{ $users->id }}" class="btn btn-primary waves-effect ">
+                                            Editar
+                                        </a></td>
                                     </tr>
                                     
                                 @endforeach
@@ -111,5 +109,9 @@
         </div>
 <script src="{{ asset('js/code.js') }}"></script>
 
+
+<script type="text/javascript">
+    $("#Administradores").addClass('active');
+    $("#MostrarAdmins").addClass('active');
 </script>
 @endsection

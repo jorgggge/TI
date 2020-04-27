@@ -52,11 +52,21 @@ class ViewCustomerSuperAController extends Controller
 
     }
 
-    public function delete(Request $request)
+    public function delete($Id,$A)
     {
         
-            User::find($request->id)->update(['status' => intval($request->status)]);
+        User::find($Id)->update(['status' => intval($A)]);
 
-        return "Listos ";
+        return redirect("/superAdmin/admins");
     }
+
+    public function Companydelete($Id,$A)
+    {
+        
+        Company::find($Id)->update(['status' => intval($A)]);
+
+        return redirect("/superAdmin/company");
+    }
+    
+
 }

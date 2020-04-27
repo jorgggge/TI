@@ -1,64 +1,73 @@
 @extends('layouts.app')
 
 @section('content')
-
-	<div class="container" >
-        <div class="row justify-content-center">
-            <div class="col-11">
-            	<form method="POST" action="{{ route('HistoryDeleteA') }}" id="fromhistory">
-					@method('PUT')
-					@csrf
-            		<input type="button" class="btn btn-danger Button_Edit" name="delete" value="Borrar Registro" onclick="$('#NoteDeleteHitorial').modal();" style="width: 100px;">
-            	</form>
-                <table class="table table-borderless table-hover">
-				  <thead style="background: #112d4e;color: white;">
-				    <tr>
-				      
-				      <th scope="col">Usurario</th>
-				      <th scope="col">Acción</th>
-				      <th scope="col">Fecha</th>
-				    </tr>
-				  </thead>
-				  <tbody style="background: white;">
-				   
-				      @foreach ($Historial as $History)
-				       <tr>
-				      	<td>{{ $History->username}}</td>
-				      	<td>{{ $History->action }}</td>
-				      	<td>{{ $History->date }}</td>
-				      	
-				      	</tr>
-				      @endforeach
-				    
-				  </tbody>
-				</table>
-
+<div class="container-fluid">
+            <div class="block-header">
+                <h2>
+                    <!-- Administradores -->
+                    <small></small>
+                </h2>
             </div>
+            <!-- Basic Examples -->
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #112d4e;">
+                            
+                            <h2 style="color: white;">
+                                Historial
+                            </h2>
+                        </div>
+                        
+                        <div class="body">
+                         <div class="row clearfix">
+                                <div class="col-sm-4"></div>
+                                <div class="col-sm-6"></div>
+                                <div class="col-sm-1">
+                                    
+                                    <form action="{{ route('HistoryDeleteA') }}" id="fromhistory">
+                                        @method('PUT')
+                                        @csrf
+                                              <input type="submit" class="btn btn-lg btn-danger waves-effect" name="delete" value="Borrar Registro">
+                                  </form>
+                                </div>
+                                
+                            </div>
+                            <div class="table-responsive">
+                                <table id="dtBasicExample" class="table table-hover">
+                                  <thead>
+                      <tr>
+
+                        <th>Usurario</th>
+                        <th>Empresa</th>
+                        <th>Acción</th>
+                        <th>Fecha</th>
+
+                      </tr>
+                    </thead>
+                    <tbody style="background: white;">
+
+                        @foreach ($Historial as $History)
+                         <tr>
+                          <td>{{ $History->username}}</td>
+                          <td>{{ $History->company }}</td>
+                          <td>{{ $History->action }}</td>
+                          <td>{{ $History->date }}</td>
+
+                          </tr>
+                        @endforeach
+
+                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- #END# Basic Examples -->
         </div>
-    </div>
 
-<div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteDeleteHitorial">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content"style="background-color: #D9534F;color: white;">
-      <div class="modal-header ">
-        <h5 class="modal-title"  id="exampleModalLongTitle">Elminación del Historial</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-       <div style="background-color: white;color: black;">
-           <center>
-                 <div class="modal-body">
-                    ¿Desea eliminar los datos del Historial?
-                  </div>
-            </center>
-       </div>
-      <div class="modal-footer" style="background-color: white;color: black;">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-primary" onclick="DeleteHistory();">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+<script type="text/javascript">
+  $("#History").addClass('active');
+</script>
 @endsection

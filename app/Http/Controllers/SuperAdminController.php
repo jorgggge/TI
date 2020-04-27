@@ -18,6 +18,12 @@ class SuperAdminController extends Controller
     {
         $this->middleware(['auth', 'verified']);
     }
+
+    public function Home()
+    {
+        return view('superAdmin.home');
+    }
+
     public function showAdmins(Request $request)
     {
         $request->user()->authorizeRoles(['superAdmin']);
@@ -91,8 +97,7 @@ class SuperAdminController extends Controller
             'lastName' => $data['lastName'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'companyId' => $data['companyId'],
-            'status' => 1
+            'companyId' => $data['companyId']
         ]);
 
 

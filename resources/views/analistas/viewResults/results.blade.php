@@ -1,45 +1,34 @@
 @extends('layouts.app')
 @section('content')
-<div class="container mt-1">
-    <div class="dropdown">
-        <button class="btn dropdown-toggle dp-areas" type="button" id="dropdownMenu2" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false" style="}">
-            {{$areaSeleccionada->name}}
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            @foreach($areas as $area)
-            <a href="{{route('analistaViewResults',$area['areaId'])}}">
-                <button class="dropdown-item " type="button">{{$area['name']}}
-                </button>
-            </a>
-            @endforeach
-        </div>
-    </div>
-</div>
-@foreach($tests as $test)
-<div class="container-fluid m-sm-auto bg-light flow">
-    <div class="row justify-content-center bot">
-        <div class="col-10 max">
-            <h1 class="text-center font-weight-bold">{{$test['name']}}</h1>
-            <div class="row bg-transparent rounded mb-0 column" style="">
-                <div class="col-xl-6 max my-auto ">
-                    <div class="row row2 ">
-                        <table class="result table-light table-striped table-hover">
-                            <thead class="thead-marine" style=".thead-marine">
+
+<div class="container-fluid">
+        <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                 <div class="card">
+                    <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Resultados de {{$areaSeleccionada->name}}</a>
+                            </h2>
+                    </div>
+                    <div class="body">
+                        <div class="table-responsive">
+                            <table  class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <th scope="col">Concepto</th>
-                                    <th scope="col">Puntuaje</th>
-                                    <th scope="col">Nivel de Madurez</th>
+                                    <th>Concepto</th>
+                                    <th>Puntuaje</th>
+                                    <th >Nivel de Madurez</th>
                                 </tr>
                             </thead>
-                            <tbody class="">
+                            <tbody>
+                                @foreach($tests as $test)
                                 @foreach((array)$testsConcepts as $testConcept)
 
                                     @if($testConcept->testId == $test['testId'])
                                         <tr>
-                                            <th>{{$testConcept->description}}</th>
-                                            <th>{{$results[array_search($testConcept,$testsConcepts)]['COUNT(evidenceID)']}}</th>
-                                            <th>
+                                            <td>{{$testConcept->description}}</th>
+                                            <td>{{$results[array_search($testConcept,$testsConcepts)]['COUNT(evidenceID)']}}</td>
+                                            <td>
                                                 @if($results[array_search($testConcept,$testsConcepts)]['COUNT(evidenceID)']===0)
                                                     Test por terminar de completar...
                                                 @endif
@@ -48,7 +37,7 @@
                                                     @case($results[array_search($testConcept,$testsConcepts)]['COUNT(evidenceID)']<3)
                                                         @foreach($maturityLevels as $item)
                                                             @if($item['level']==1)
-                                                                {{$item['description']}} ]
+                                                                {{$item['description']}} 
                                                             @endif
                                                         @endforeach
                                                         @break
@@ -81,41 +70,34 @@
                                                         @endforeach
                                                         @break
                                                     @endswitch
-                                            </th>
+                                            </td>
                                         </tr>
                                     @endif
                                 @endforeach
+                                @endforeach
                             </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="row2 col-xl-6 max my-auto ">
-                    <div class="card bg-transparent" style="border: none; ">
-                        <div class="card-body">
-                            <div class="chart" *ngIf="showchart">
-                                <canvas id="myChart{{array_search($test,$tests)}}"></canvas>
+                            </table>
+                        </div>
+                        <div class="row clearfix">
+                            <div class="col-sm-12">
+                                 <canvas id="myChart"></canvas>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-    @endforeach
-    @endsection
-    @section('script')
+                    </div>    
+                      
+
+
+
+
         <script>
                 @foreach($tests as $test)
-            var ctx = document.getElementById("myChart{{array_search($test,$tests)}}");
+            var ctx = document.getElementById("myChart");
             var lineChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: [
                         @foreach((array)$testsConcepts as $testConcept)
-                            @if($testConcept->testId == $test['testId'])
                             "{{$testConcept->description}}",
-                        @endif
                         @endforeach
                     ],
                     datasets: [{
@@ -134,6 +116,19 @@
                     }]
                 },
                 options: {
+                    title: {
+                        display: true,
+                        text: 'Resultados de las pruebas'
+                    },
+                    scales: {
+                            yAxes: [{
+                                ticks: {
+                                    max: 15,
+                                    min: 0,
+                                    stepSize: 1
+                                }
+                            }]
+                        },
                     legend: {
                         display: false
                     },

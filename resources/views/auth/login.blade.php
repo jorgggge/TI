@@ -4,30 +4,32 @@
 <form id="sign_in" method="POST" action="{{ route('login') }}">
     @csrf  
                     <div class="msg">Inicia sesión para comenzar tu sesión</div>
+                    @error('username')
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <strong>Oh no!</strong> Usuario o contraseña incorrectos
+                            </div>
+                    @enderror 
+                    @error('password')
+                                 <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <strong>Oh no!</strong> Usuario o contraseña incorrectos
+                                </div>
+                    @enderror
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
                         </span>
                         <div class="form-line">
-                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Username" required autofocus>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" placeholder="Usuario" required autofocus>
+                            
                         </div>
+                       
                     </div>
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">lock</i>
                         </span>
                         <div class="form-line">
-                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required>
-                            @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+                            <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Contraseña" required>
                         </div>
                     </div>
                     <div class="row">
@@ -36,7 +38,7 @@
                             <label for="rememberme">Recuerdame </label>
                         </div>
                         <div class="col-xs-4">
-                            <button class="btn btn-block bg-pink waves-effect" type="submit">Iniciar Seccion</button>
+                            <button class="btn  bg-pink waves-effect" type="submit">Entrar</button>
                         </div>
                     </div>
                     <div class="row m-t-15 m-b--20">

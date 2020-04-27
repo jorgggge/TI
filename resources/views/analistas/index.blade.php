@@ -1,76 +1,82 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="margin-bottom: 1em; margin-top: 1em;">
-    <div class="row">
-        <div class="btn-group-toggle">
-            @if(empty($areas))
-            <div class="alert alert-danger">
-                {{ 'Contacta a tu administrador para que te asigne un área' }}
+<div class="container-fluid">
+            <div class="row clearfix">
+            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Resultados</a>
+                            </h2>
+                        </div>
+                        <div class="body">
+                            @if(empty($areas))
+                                <div class="alert alert-danger" >
+                                    {{ 'Agrega un área para empezar a trabajar.' }}
+                                </div>
+                            @else
+                             <div class="table-responsive">
+                                    <table id="dtBasicExample" class="table table-hover">
+                                        <thead> 
+                                                <tr>
+                                                    <th>Área</th>
+                                                    <th>Resultados</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach((array)$areas as $area)
+                                            <tr>
+                                                <td>{{$area['name']}}</td>
+                                                <td> <a href="{{route('analistaViewResults',$area['areaId'])}}" class="btn btn-primary" > Ver </a></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>   
+                                    </table>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
             </div>
-            <a href="" class="ButtonAdd_SA btn border-light">
-                <div><i class="material-icons">insert_chart_outlined</i></div>
-                <div>Ver resultados</div>
-            </a>
-            @else
-            <a href="{{route('analistaViewResults',$areas[0]['areaId'])}}" class="ButtonAdd_SA btn border-light">
-                <div><i class="material-icons">insert_chart_outlined</i></div>
-                <div>Ver resultados</div>
-            </a>
-            @endif
+             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color:white;">Pruebas</h2>
+                        </div>
+                        <div class="body">
+                            @if(empty($areas))
+                                <div class="alert alert-danger" >
+                                    {{ 'Agrega un área para empezar a trabajar.' }}
+                                </div>
+                            @else
+                             <div class="table-responsive">
+                                    <table id="dtBasicExample" class="table table-hover">
+                                        <thead> 
+                                                <tr>
+                                                    <th>Área</th>
+                                                    <th>Prueba</th>
+                                                    <th>Concepto</th>
+                                                    <th>Evaluacion</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                         @foreach((array)$concepts as $concept)
+                                            <tr>
+                                                <td>{{$concept->areaName}}</td>
+                                                <td>{{$concept->testName}}</td>
+                                                <td>{{$concept->description}}</td>
+                                                <td > <a href="{{route('analistaTest',[$concept->testId,$concept->conceptId])}}" class="btn btn-primary"> Ver </a> </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>   
+                                    </table>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+</div>
 
-        </div>
-    </div>
-</div>
-<div class="container">
-    <div class="row justify-content-center analPad">
-        <table class="table table-bordered table-light table-hover table-striped">
-            <thead class="text-white" style="background: #1b4b72;">
-            <tr>
-                <th class="text-center" scope="col">ÁREA</th>
-                <th class="text-center" scope="col">RESULTADOS</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach((array)$areas as $area)
-                <tr>
-                    <td class="td text-center" style="font-size: large">{{$area['name']}}</td>
-                    <td class="td text-center">
-                        <a href="{{route('analistaViewResults',$area['areaId'])}}" class="Button_See btn"> Ver </a>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="container">
-    <div class="row justify-content-center analPad">
-        <table class="table table-bordered table-light table-hover table-striped">
-            <thead class="text-white" style="background: #1b4b72;">
-            <tr>
-                <th class="text-center" scope="col">NOMBRE DEL AREA</th>
-                <th class="text-center" scope="col">NOMBRE DE LA PRUEBA</th>
-                <th class="text-center" scope="col">NOMBRE DEL CONCEPTO</th>
-                <th class="text-center" scope="col">IR A LA PRUEBA</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach((array)$concepts as $concept)
-                <tr>
-                    <td class="td text-center" style="font-size: large">{{$concept->areaName}}</td>
-                    <td class="td text-center" style="font-size: large">{{$concept->testName}}</td>
-                    <td class="td text-center" style="font-size: large">{{$concept->description}}</td>
-                    <td class="td text-center">
-                        <a href="{{route('analistaTest',[$concept->testId,$concept->conceptId])}}"
-                           class="Button_See btn"> Ver </a>
-                    </td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
 
 
 @endsection

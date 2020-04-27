@@ -15,7 +15,7 @@
                         </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de Administrador:</h5> 
+                            <h5>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</h5> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
                             @foreach ($Admin as $A)
                             <form id="from" method="POST" action="{{ route('UpdateCustomer',[$A->id,$A->companyId]) }}" > 
@@ -24,7 +24,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Usuario</b>
+                                        <b>* Usuario</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -37,7 +37,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Email</b>
+                                        <b>* Email</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -51,7 +51,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Telefono</b>
+                                        <b>* Telefono</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -69,7 +69,7 @@
                                 <h2 class="card-inside-title"></h2>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Nombres</b>
+                                        <b>* Nombres</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -104,7 +104,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Compañia</b>
+                                        <b>* Compañia</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -143,8 +143,11 @@
                                     </div>
                                 </div>
                             </div>
-                                        <div>
-                                            <button class="btn btn-info">Guardar</button>
+                                        <div class="row clearfix">
+                                           <div class="col-sm-10"></div>
+                                           <div class="col-sm-2">
+                                                <button class="btn btn-info">Guardar</button>
+                                           </div>
                                         </div>
                                         </td>
                                     </tr>
@@ -156,6 +159,9 @@
                     </div>
             </div>
         </div>
-
+<script type="text/javascript">
+    $("#Administradores").addClass('active');
+    $("#MostrarAdmins").addClass('active');
+</script>
 
 @endsection

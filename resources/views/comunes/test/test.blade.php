@@ -8,72 +8,59 @@
             </div>
         </div>
     @else
-        <div class="container mt-1">
-            <div class="dropdown">
-                <button class="btn dropdown-toggle dp-areas" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" style="}">
-                    {{$selectedConcept['description']}}
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    @foreach($concepts as $concept)
-                        @if($selectedConcept['description'] == $concept->description)
-                        @else
-                            <a href="{{route('comunTest',[$concept->testId,$concept->conceptId])}}">
-                                <button class="dropdown-item " type="button">{{$concept->description}}
-                                </button>
-                            </a>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div>
-                    <div class="Customer C">
-                        <div class="card-header">
-                            <p>{{$test['name']}}</p>
-                        </div>
-                        <div class="card-body">
-                        <div class="message">
-                                @if(session("success"))
-                                <h4 class='alert-success' id='message'>{{session('success')}}</h4>
 
-                                @endif
-                            </div>
-                                <table>
+
+    <div class="container-fluid">
+            <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="card">
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Evaluacion</a>
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <h3> Prueba: {{$test['name']}}</h3>
                                     @foreach($maturityLevels as $maturityLevel)
-                                        <tr class='heady'>
-                                            <td><p class="font-weight-bold">{{$maturityLevel->description}}</p></td>
-                                        </tr>
+                                    <h3>Nivel: {{$maturityLevel->description}}</h3>
                                         @foreach($attributes as $attribute)
+                                             <div class="row clearfix">
                                             @if($attribute->conceptMLId == $maturityLevel->conceptMLId)
-                                                <tr class="border flexy">
-                                                    <td>{{$attribute->description}}</td>
-                                                    <td><a href="/upload/{{$attribute->attributeId}}" class="btn" id="download{{$attribute->attributeId}}"><div><i class="material-icons">backup</i></div></a> </td>
+                                                     <div class="col-sm-1"></div>
+                                                    <div class="col-sm-4">
+                                                        <h4> <i class="material-icons">bookmark</i>{{$attribute->description}}</h4>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <a href="/upload/{{$attribute->attributeId}}" class="btn btn-primary" id="download{{$attribute->attributeId}}"><div><i class="material-icons">backup</i></div> Subir evidencia</a> 
+                                                    </div>
                                                     @for($i=0;$i < sizeof($attributesWithEvidences);$i++)
                                                         @if($attribute->attributeId == $attributesWithEvidences[$i]->attributeId)
-                                                            <td>
-                                                                <a href="/upload/{{$attributesWithEvidences[$i]->evidenceId}}/edit">
-                                                                    <button id="edit{{$attribute->attributeId}}">Reemplazar evidencia</button>
+                                                          <div class="col-sm-2">
+                                                               <a href="/upload/{{$attributesWithEvidences[$i]->evidenceId}}/edit">
+                                                                    <button id="edit{{$attribute->attributeId}}" class="btn btn-primary">
+                                                                    <div><i class="material-icons">backup</i></div>
+                                                                Reemplazar evidencia</button>
                                                                 </a>
-                                                            </td>
-                                                            <td><a href="/storage/upload/{{$attributesWithEvidences[$i]->link}}" class="btn"><div><i class="material-icons">remove_red_eye</i></div></a></td>
+                                                          </div>
+                                                              <div>
+                                                                <a href="/storage/upload/{{$attributesWithEvidences[$i]->link}}" class="btn btn-info"><div><i class="material-icons">remove_red_eye</i></div> Ver evidencia</a>
+                                                            </div>
                                                         @endif
                                                     @endfor
                                                 </tr>
                                             @endif
+                                        </div>
                                         @endforeach
                                     @endforeach
                                 </table>
                         </div>
                     </div>
-                </div>
             </div>
-        </div>
+</div>
+
+
     @endif
-@endsection
-@section('script')
+
     <script>
         @foreach($attributes as $attribute)
             var y = document.getElementById("download{{$attribute->attributeId}}");

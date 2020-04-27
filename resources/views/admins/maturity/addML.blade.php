@@ -1,22 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-    </head>
-    <body class="Body_SupAdmin">
-    <main class="py-4 py-5-mod">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
+<div class="container-fluid">
+            <div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="card-header">Agregar Niveles de Madurez de la Empresa</div>
-                        <div class="card-body">
-                            <p> Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
-                                <br> (*) Datos Obligatorios.</p>
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                            Agregar Niveles de Madurez de la Empresa
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <h5> Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
+                                <br> (*) Datos Obligatorios.</h5>
+
                             <form name="addML" id="addML" method="POST" action="/admins/index">
                                 @csrf
-                                @foreach(range(0,4) as $x)
+
+                                @foreach(range(0,4) as $x)   
+                                <div class="row clearfix">
+
+                                    <div class="col-sm-2"></div>
+
                                     <?php
                                         $label = $x;
                                         if($label == 0){
@@ -35,22 +40,34 @@
                                             $label = 'Muy Alto';
                                         }
                                     ?>
+                                    
+                                    <div class="col-sm-8">
+                                                <p>
+                                                    <b>*Nivel de Madurez {{$label}}</b>
+                                                </p>
+                                                <div class="input-group input-group-lg">
+                                                    <span class="input-group-addon">
+                                                        <i class="material-icons">insert_chart</i>
+                                                    </span>
+                                                    <div class="form-line">
+                                                        <input id="description-[{{$x}}]" type="text"
+                                                       class="form-control @error('description[{{$x}}]') is-invalid @enderror" name="description[{{$x}}]"
+                                                       required autocomplete="description[{{$x}}]" autofocus>
 
-                                        *Nivel de Madurez {{$label}}
-                                    <input id="description-[{{$x}}]" type="text"
-                                           class="form-control @error('description[{{$x}}]') is-invalid @enderror" name="description[{{$x}}]"
-                                           required autocomplete="description[{{$x}}]" autofocus>
-
-                                    @error('description[{{$x}}]')
-                                    <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                    <br>
+                                                            @error('description[{{$x}}]')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                            @enderror
+                                                    </div>
+                                                </div>
+                                        </div>
+                                </div>
                                 @endforeach
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-5">
-                                        <button type="submit" class="btn btn-add btn-primary">Agregar</button>
+                                <div class="row clearfix">
+                                    <div class="col-sm-6"></div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" class="btn btn-primary">Agregar</button>
                                     </div>
                                 </div>
                             </form>
@@ -60,6 +77,4 @@
                 </div>
             </div>
         </div>
-    </main>
-    </body>
 @endsection

@@ -17,7 +17,7 @@ class ComunController extends Controller
 {
     public function __construct(Request $request)
     {
-        $this->middleware(['auth', 'verified']);
+        $this->middleware('auth');
    }
 
     public function index(Request $request)

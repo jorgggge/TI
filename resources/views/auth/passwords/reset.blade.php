@@ -1,64 +1,88 @@
-@extends('layouts.app')
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<?php
+use App\User;
+use App\MaturityLevel;
+?>
+<head>
+    @yield('head')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> ICA </title>
+    <link rel="icon" href="{{ asset('../../favicon.ico') }}" type="image/x-icon">
 
-@section('content')
-<div class="container contain">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Restablecer la contraseña') }}</div>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css" />
 
-                <div class="card-body">
+    <!-- Bootstrap Core Css -->
+    <link href="{{ asset('../../plugins/bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+
+    <!-- Waves Effect Css -->
+    <link href="{{ asset('../../plugins/node-waves/waves.css') }}" rel="stylesheet" />
+
+    <!-- Animation Css -->
+    <link href="{{ asset('../../plugins/animate-css/animate.css') }}" rel="stylesheet" />
+
+    <!-- Custom Css -->
+    <link href="{{ asset('../../css/style.css') }}" rel="stylesheet">
+</head>
+<body class="login-page">
+    <div class="login-box">
+        <div class="logo">
+            <a href="javascript:void(0);"><b>ICA</b></a>
+            <small></small>
+        </div>
+        <div class="card">
+            <div class="body">
+                <div class="msg">Para recuperación de contraseña, ingrese su correo para enviar un mensaje para restablecer su contraseña</div>
+                @error('email')
+                              <div class="alert alert-danger">
+                                  <strong>{{ $message }}</strong>
+                              </div>
+                  @enderror
+                  @error('password')
+                                <div class="alert alert-danger">
+                                    <strong>{{ $message }}</strong>
+                                 </div>
+                    @enderror
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
                         <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group row">
-                            <label for="email"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Dirección de correo electrónico') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">mail</i>
+                            </span>
+                            <div class="form-line">
+                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ $email ?? old('email') }}" required autocomplete="email"
-                                    autofocus>
-
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                    autofocus placeholder="Correo">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password"
+                    </div>
+                    <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">vpn_key</i>
+                            </span>
+                            <div class="form-line">
+                                 <input id="password" type="password"
                                     class="form-control @error('password') is-invalid @enderror" name="password"
-                                    required autocomplete="new-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                    required autocomplete="new-password" placeholder="Contraseña">
                             </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm"
-                                class="col-md-4 col-form-label text-md-right">{{ __('Confirmar Contraseña') }}</label>
-
-                            <div class="col-md-6">
+                    </div>
+                    <div class="input-group">
+                            <span class="input-group-addon">
+                                <i class="material-icons">vpn_key</i>
+                            </span>
+                            <div class="form-line">
                                 <input id="password-confirm" type="password" class="form-control"
-                                    name="password_confirmation" required autocomplete="new-password">
+                                    name="password_confirmation" required autocomplete="new-password" placeholder="Contraseña">
                             </div>
-                        </div>
+                    </div>
 
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                        <div class="row clearfix">
+                            <div class="col-md-12">
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Restablecer Contraseña') }}
                                 </button>
@@ -67,7 +91,22 @@
                     </form>
                 </div>
             </div>
+            </div>
         </div>
-    </div>
-</div>
-@endsection
+
+    <!-- Jquery Core Js -->
+    <script src="{{ asset('../../plugins/jquery/jquery.min.js') }}"></script>
+
+    <!-- Bootstrap Core Js -->
+    <script src="{{ asset('../../plugins/bootstrap/js/bootstrap.js') }}"></script>
+
+    <!-- Waves Effect Plugin Js -->
+    <script src="{{ asset('../../plugins/node-waves/waves.js') }}"></script>
+
+    <!-- Validation Plugin Js -->
+    <script src="{{ asset('../../plugins/jquery-validation/jquery.validate.js') }}"></script>
+
+    <!-- Custom Js -->
+    <script src="{{ asset('../../js/admin.js') }}"></script>
+    <script src="{{ asset('../../js/pages/examples/sign-in.js') }}"></script>
+</body>

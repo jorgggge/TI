@@ -23,7 +23,7 @@ class AnalistaController extends Controller
 {
     public function __construct(Request $request)
     {
-       $this->middleware(['auth', 'verified']);
+       $this->middleware('auth');
     }
 
     public function index(Request $request)
@@ -167,7 +167,7 @@ class AnalistaController extends Controller
             }
         }
 
-        Mail::to($email)->queue(new EvidenceSuggestion($verify, $unverify, $username, $testName));
+        // Mail::to($email)->queue(new EvidenceSuggestion($verify, $unverify, $username, $testName));
 
         /*this line is used to create and return a new instance of the email view, can be used for testing how the email view looks like.
 

@@ -33,26 +33,31 @@ class LoginController extends Controller
     {
         $companyStatus = Company::where('companyId',$user->companyId)->get();
         if ($companyStatus[0]->status == 1){
-            if($user->hasRole('superadmin')) {
-                return redirect('/superAdmin/company');
-            } elseif ($user->hasRole('admin')) {
-                History::Logs('Inicio de Sesión Admin');
-                return redirect('/admin');
-            } elseif ($user->hasRole('analista')) {
-                History::Logs('Inicio de Sesión Analista');
-                return redirect('/analista');
-            }
-            elseif ($user->hasRole('comun')){
-                History::Logs('Inicio de Sesión Común');
-                return redirect('/comun');
-            }
-            else{
-                return redirect('/login');
-            }
+                if ($user->status !=  0) {
+                        if($user->hasRole('superadmin')) {
+                            return redirect('/superAdmin/company');
+                        } elseif ($user->hasRole('admin')) {
+                            History::Logs('Inicio de Sesión Admin');
+                            return redirect('/admin');
+                        } elseif ($user->hasRole('analista')) {
+                            History::Logs('Inicio de Sesión Analista');
+                            return redirect('/analista');
+                        }
+                        elseif ($user->hasRole('comun')){
+                            History::Logs('Inicio de Sesión Común');
+                            return redirect('/comun');
+                        }
+                        else{
+                            return redirect('/login');
+                        }
+                }else{
+                        Auth::logout();
+                        return view('sorry');
+                }
         }
         else{
             Auth::logout();
-            return redirect('/login');
+            return view('sorry');
         }
     }
     /**

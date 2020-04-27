@@ -35,40 +35,18 @@ use App\MaturityLevel;
         </div>
         <div class="card">
             <div class="body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                    @endif
-                    @error('email')
-                                <div class="alert alert-success">
-                                    <strong>{{ $message }}</strong>
-                                </div>
-                    @enderror
-                    <div class="msg">Para recuperación de contraseña, ingrese su correo para enviar un mensaje para restablecer su contraseña</div>
-                    <form method="POST" action="{{ route('password.email') }}">
-                        @csrf
-                         <div class="input-group">
-                            <span class="input-group-addon">
-                                <i class="material-icons">mail</i>
-                            </span>
-                            <div class="form-line">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Correo electronico">
-                            </div>
-                    </div>
-
-                        <div class="row clearfix">
-                            <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Enviar enlace de recuperación de contraseña.') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="alert bg-red">
+                               Lo sentimos, su cuenta ha sido deshabilitada, en caso de que se un error comunicase con los encargados de su compañia.
                 </div>
             </div>
+            <center>
+                <button class="btn btn-primary" onclick="window.location = '/login'">
+                    Regresar
+                </button>
+            </center>
+            <br><br>
         </div>
+    </div>
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('../../plugins/jquery/jquery.min.js') }}"></script>
@@ -86,5 +64,3 @@ use App\MaturityLevel;
     <script src="{{ asset('../../js/admin.js') }}"></script>
     <script src="{{ asset('../../js/pages/examples/sign-in.js') }}"></script>
 </body>
-
-

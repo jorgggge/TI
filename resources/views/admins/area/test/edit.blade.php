@@ -2,43 +2,52 @@
 
 @section('content')
 
-<main class="py-4 py-5-mod">
-    <div class="container contain">
-        <div class="row justify-content-center">
-                <div class="col-md-8">
+<div class="container-fluid">
+<div class="row clearfix">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-    <div class="card-header">
-            @foreach($Comp as $C)
-            <p id="title_test">{{$C -> name}}</p>
-            @endforeach
-        </div>
-        <div class="buttContainer">
-            <div class='bttns'>
-        <input type="button" id="back_area" class="btn Button_Edit bttn" value="Regresar"
-            style="background-color: #25A1F9; display:none;" onclick="BackAreaTest()">
-        <input type="button" id="editTest" class="btn Button_Edit bttn" value="Editar" style="background-color: #25A1F9; display:none;"
-            onclick="ShowEditar()">
-        <input type="button" id="deleteTest" class="btn Button_Edit bttn" value="Eliminar" style="background-color: #d9534f; display:none;"
-            onclick="$('#NoteDeleteTest').modal();">            
-        <input type="button" id="SaveTest" class="btn Button_Edit bttn" value="Guardar" style="background-color: #5cb85c; display:none;"
-            onclick="$('#NoteUpdate').modal();">
-        <input type="button" id="CancelTest" class="btn Button_Edit bttn" value="Cancelar"
-            style="background-color: #d9534f; display:none;" onclick="EditarTest(false)">
-            </div>
-        </div>
-        <form id="form_Etest" method="POST" action="{{ url('/admins/area/test/edit')}}">
-            @method('PUT')
-            @csrf
-            <div id="Area_testShow" class="Area_testShow-Test">
-                <label>Área:</label>
-                <select class="form-control" id="area_test" name="area_test">
-                    <option value="X">--Selección de Área--</option>
-                    @foreach($Area as $A)
-                    <option value="{{$A -> areaId}}">{{$A -> name}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </form>
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                               @foreach($Comp as $C)
+                                <p id="title_test">{{$C -> name}}</p>
+                                @endforeach
+                            </h2>
+                        </div>
+                        <div class="body">
+                            <div class="row clearfix">
+                                <div class="col-sm-2"> 
+                                    <input type="button" id="back_area" class="btn btn-primary" value="Regresar" style="display:none;" onclick="BackAreaTest()">
+                                </div>
+                                <div class="col-sm-2"> 
+                                    <input type="button" id="editTest" class="btn btn-primary" value="Editar" style="display:none;" onclick="ShowEditar()">
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="button" id="deleteTest" class="btn btn-primary" value="Eliminar" style="display:none;" onclick="$('#NoteDeleteTest').modal();"> 
+                                </div>
+                                <div class="col-sm-2">
+                                    <input type="button" id="SaveTest" class="btn btn-primary" value="Guardar" style="display:none;" onclick="$('#NoteUpdate').modal();">
+                                </div>
+                                <div class="col-sm-2">
+                                     <input type="button" id="CancelTest" class="btn btn-primary" value="Cancelar" style=" display:none;" onclick="EditarTest(false)">
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <div class="col-sm-10">
+                                    <form id="form_Etest" method="POST" action="{{ url('/admins/area/test/edit')}}">
+                                    @method('PUT')
+                                    @csrf
+                                    <div id="Area_testShow" class="Area_testShow-Test">
+                                        <label>Área:</label>
+                                        <select class="form-control show-tick" id="area_test" name="area_test">
+                                            <option value="X">--Selección de Área--</option>
+                                            @foreach($Area as $A)
+                                            <option value="{{$A -> areaId}}">{{$A -> name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
         <form id="test">
             <div id="show_Test" style="display: none;">
                 <table class='eval'>
@@ -46,7 +55,7 @@
 
                         <td><label>Prueba</label></td>
                         <td id="nameTestS">
-                            <select type='text' class="form-control" id="list_test">
+                            <select type='text' class="form-control show-tick" id="list_test">                          
                             </select>
                         </td>
                         <td style="display: none;" id="nameTest"><input type="text" id="nameTests" name="nameTest"
@@ -240,8 +249,8 @@
     </div>
 </main>
 
-<div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteLoad">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteLoad">
+  <div class="modal-dialog" role="document">
     <div class="modal-content"style="background-color: #3f72af;color: white;">
       <div class="modal-header ">
         <h5 class="modal-title"  id="exampleModalLongTitle">Cargando ...</h5>
@@ -260,7 +269,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteUpdate">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content" style="background-color: green;color: white;" >
       <div class="modal-header " >
         <h5 class="modal-title"  id="exampleModalLongTitle">Actulizar cambios</h5>
@@ -288,8 +297,8 @@
   </div>
 </div>
 
-<div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteDeleteTest">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal face" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteDeleteTest">
+  <div class="modal-dialog" role="document">
     <div class="modal-content"style="background-color: #D9534F;color: white;">
       <div class="modal-header ">
         <h5 class="modal-title"  id="exampleModalLongTitle">Elminación de Test</h5>
@@ -317,8 +326,8 @@
 </div>
 
 
-<div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteNada">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal face" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteNada">
+  <div class="modal-dialog" role="document">
     <div class="modal-content"style="background-color: #D9534F;color: white;">
       <div class="modal-header ">
         <h5 class="modal-title"  id="exampleModalLongTitle">Atención</h5>
@@ -337,8 +346,8 @@
   </div>
 </div>
 
-<div class="modal show" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteError">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal face" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" id="NoteError">
+  <div class="modal-dialog" role="document">
     <div class="modal-content"style="background-color: #D9534F;color: white;">
       <div class="modal-header ">
         <h5 class="modal-title"  id="exampleModalLongTitle">Atención</h5>

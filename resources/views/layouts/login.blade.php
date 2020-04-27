@@ -8,7 +8,7 @@ use App\MaturityLevel;
     @yield('head')
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <title> ICA </title>
     <link rel="icon" href="{{ asset('../../favicon.ico') }}" type="image/x-icon">
 
     <!-- Google Fonts -->
@@ -27,8 +27,6 @@ use App\MaturityLevel;
     <!-- Custom Css -->
     <link href="{{ asset('../../css/style.css') }}" rel="stylesheet">
 </head>
-<nav class="navbar navbar-dark" style="background-color:#112d4e;" >
-</nav>
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
@@ -58,18 +56,3 @@ use App\MaturityLevel;
     <script src="{{ asset('../../js/admin.js') }}"></script>
     <script src="{{ asset('../../js/pages/examples/sign-in.js') }}"></script>
 </body>
-
-
-<script>
-var ban = true;
-    
- setInterval(function(){ 
-    if(ban){
-        ban = false;
-        $("#logo").addClass("Animacion");
-    }else{
-        ban = true;
-        $("#logo").removeClass("Animacion");
-    }
-}, 6000);
-</script>

@@ -42,7 +42,7 @@ var para = document.createElement("div");
     });
 }
 
-function Admin_Activa(Id,Token) {
+function Admin_Activa(Id,A) {
 swal({
   title: "Atecion",
   text: "Se cambiara el status de este usuario, Estas seguro?!",
@@ -52,42 +52,9 @@ swal({
 })
 .then((willDelete) => {
   if (willDelete) {
-
-  	var ban = $("#A"+Id).hasClass("Si");
- 	
- 	var Status = "1";
-	if(ban) Status = "0";
-
-	$.ajax({
-		type: "PUT",
-		url: "superAdmin/viewcustomersuperadmin/delete",
-		data: { 
-			"_token": Token,
-			"id" : Id,
-			"status" : Status
-		},
-		success: function(response){
-
-			if(ban){
-				$("#A"+Id).removeClass("Si");
-				$("#A"+Id).addClass("No");
-				$("#A"+Id).attr("src", "imagenes/No.png");
-			}else{
-				$("#A"+Id).removeClass("No");
-				$("#A"+Id).addClass("Si");
-				$("#A"+Id).attr("src", "imagenes/Si.png");
-			}
-
-			swal("Se a modificado el status de este usuario", {
-			  icon: "success",
-			});
-
-		}
-
-	});
-
+  	window.location = "/superAdmin/viewcustomersuperadmin/delete/"+Id+"/"+A;
+  
   } else {
-    swal("Okey continua con tu trabajo");
   }
 });
 	

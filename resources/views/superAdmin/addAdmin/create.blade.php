@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="header" style="background-color: #112d4e;">
                             <h2 style="color: white;">
-                                <a href="#" style="color: white;">Administradores</a> > Añadir nuevo administrador
+                                Nuevo administrador
                             </h2>
                             <ul class="header-dropdown m-r--5">
                               
@@ -17,15 +17,14 @@
                         </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de Administrador:</h5> 
+                            <h5>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</h5> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
                             <form id="from" method="POST" action="/CreateAdmin/superAdmin"> 
-                                @method('PUT')
                                 @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Usuario</b>
+                                        <b>* Usuario</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -38,7 +37,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Contraseña</b>
+                                        <b>* Contraseña</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -51,7 +50,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Confirma contraseña</b>
+                                        <b>* Confirma contraseña</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -68,7 +67,7 @@
                                 <h2 class="card-inside-title"></h2>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Nombres</b>
+                                        <b>* Nombres</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -81,7 +80,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Apellidos</b>
+                                        <b>* Apellidos</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -94,7 +93,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Email</b>
+                                        <b>* Email</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -111,7 +110,7 @@
                                 <h2 class="card-inside-title"></h2>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Nombres</b>
+                                        <b>* Compañia</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -139,9 +138,12 @@
                                 
                             </div>
                                   
-                            <div>
-                                <button class="btn btn-info">Guardar</button>
-                            </div>
+                             <div  class="row clearfix">
+                                            <div class="col-sm-10"></div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-info">Guardar</button>
+                                            </div>
+                                        </div>
                           
                         </form>
 
@@ -150,5 +152,8 @@
             </div>
         </div>
 
-
+<script type="text/javascript">
+    $("#Administradores").addClass('active');
+    $("#AgregarAdmin").addClass('active');
+</script>
 @endsection

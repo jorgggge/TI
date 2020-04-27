@@ -16,7 +16,7 @@
                         </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de la compañia:</h5> 
+                            <h5>Llena los campos con los datos de la compañia:< <br> (*) Datos Obligatorios</h5> 
                             <h2 class="card-inside-title">Datos de la Compañia</h2>
                             @foreach ($Admin as $A)
                             <form id="from" method="POST" action="{{  route('EditCompanySA',[$A->companyId]) }}" > 
@@ -25,7 +25,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Nombre</b>
+                                        <b>* Nombre</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -38,7 +38,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Telefono</b>
+                                        <b>* Telefono</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Email</b>
+                                        <b>* Email</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -70,7 +70,7 @@
                                 
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Dirreccion</b>
+                                        <b>* Dirreccion</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -86,11 +86,12 @@
                                 </div>
                                 
                             </div>
-                                        <div>
-                                            <button class="btn btn-info">Guardar</button>
+                                        <div  class="row clearfix">
+                                            <div class="col-sm-10"></div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-info">Guardar</button>
+                                            </div>
                                         </div>
-                                        </td>
-                                    </tr>
                                       
                                     </form>
                                 @endforeach
@@ -101,7 +102,10 @@
         </div>
 
 
-
+<script type="text/javascript">
+    $("#Company").addClass('active');
+    $("#CompanySee").addClass('active');
+</script>
 
 
 @endsection

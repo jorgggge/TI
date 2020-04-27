@@ -249,6 +249,7 @@ $("#area_test").change(function() //come in when there's a choice
 
        if(obj.length != 0 ){
 
+           alert("entre");
            $("#list_test").append('<option value="test">--Selección de Test--</option>');
 
             for (var i = obj.length - 1; i >= 0; i--) {;

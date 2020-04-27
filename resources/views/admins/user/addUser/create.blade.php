@@ -1,154 +1,162 @@
 @extends('layouts.app')
 @section('content')
-<main class="py-4 py-5-mod">
-    <div class="container contain">
-        <div class="row justify-content-center">
-            <section class="addArea">
-                <div class="col-md-8">
+<div class="container-fluid">
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="card-header">
-                            <p>Agregar Usuario a la Empresa</p>
+                        <div class="header" style="background-color: #112d4e;">
+                            <h2 style="color: white;">
+                                <a href="#" style="color: white;">Usuarios</a> > Añadir nuevo Usuario
+                            </h2>
+                            <ul class="header-dropdown m-r--5">
+                              
+                            </ul>
                         </div>
-                        <div class="card-body">
-                            <form method="POST" action="/admins/user/index">
-                                @csrf
-                                <table class="Table_Customer" id="tAdmin">
-                                    <!--TABLA ADMIN-->
-                                    <tr>
-                                        <th id="name">Nombre de Usuario</th>
-                                        <td> <input id="name" type="text"
-                                                class="form-control @error('username') is-invalid @enderror"
-                                                name="username" value="{{ old('username') }}" required
-                                                autocomplete="username" autofocus>
-                                            @error('username')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    <tr>
-                                        <th id="address">Contraseña</th>
-                                        <td> <input id="password" type="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                name="password" required autocomplete="new-password">
-                                            @error('password')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="address">Confirmar Contraseña
-                                        <td> <input id="password-confirm" type="password" class="form-control"
-                                                name="password_confirmation" required autocomplete="new-password">
-                                            @error('password_confirmation')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="email">Correo Electrónico</th>
-                                        <td> <input id="email" type="email"
-                                                class="form-control @error('email') is-invalid @enderror" name="email"
-                                                value="{{ old('email') }}" required autocomplete="email">
-                                            @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="firstName">Nombre</th>
-                                        <td> <input id="firstName" type="text"
-                                                class="form-control @error('firstName') is-invalid @enderror"
-                                                name="firstName" value="{{ old('firstName') }}" required
-                                                autocomplete="firstName" autofocus>
-                                            @error('firstName')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th id="lastName">Apellido</th>
-                                        <td> <input id="lastName" type="text"
-                                                class="form-control @error('lastName') is-invalid @enderror"
-                                                name="lastName" value="{{ old('lastName') }}" required
-                                                autocomplete="lastName" autofocus>
-                                            @error('lastName')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th for="inputGroupSelect01">Rol Asignado</th>
-                                        <td> <select type='text' required id="role"
-                                                class="custom-select @error('role') is-invalid @enderror" name="role">
-                                                <option disabled selected>Selecciona el rol
-                                                </option>
-                                                @foreach($roles as $role)
-                                                @if($role->id == 3 || $role->id == 4)
-                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
-                                                @endif
-                                                @endforeach
-                                            </select>
-                                            @error('role')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <div id='space'>
-                                            <th id='head'>Area Asignada</th>
+                        <div class="body">
+                            
+                            <h5>Llena los campos con los datos del nuevo Usuario: <br> (*) Datos Obligatorios</h5> 
+                            <h2 class="card-inside-title">Datos del Usuario:</h2>
+                            <form method="POST" action="{{ url('/admins/user_new') }}" > 
+                            @csrf
+                            <div class="row clearfix">
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Usuario</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">person</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" name="username" class="form-control" placeholder="Usuario" required>
                                         </div>
-                                        <td>
-                                            <div type='text' class="selectBox custom-select" onclick="showCheckboxes()">
-                                                <div type='text' class='custom-select'>
-                                                    <option>Seleciona Areas</option>
-                                                </div>
-                                                <div type='text' class="overSelect"></div>
-                                            </div>
-                                            <div id="checkboxes">
-                                                @foreach ($areas as $area)
-                                                @if ($area['companyId'] = $userCompany)
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        name="areas[{{$area['name']}}]" value="{{ $area['areaId'] }}">
-                                                    <label class="form-check-label" for="defaultCheck1">
-                                                        {{ $area['name'] }}
-                                                    </label>
-                                                </div>
-                                                @endif
-                                                @endforeach
-                                            </div>
-                                            @error('area')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </td>
-                                    </tr>
-                                </table>
-                                <div class="form-group row mb-0">
-                                    <div class="col-md-6 offset-md-5">
-                                        <button type="submit" class="btn btn-add btn-primary">Agregar</button>
                                     </div>
                                 </div>
+                                 <div class="col-sm-4">
+                                    <p>
+                                        <b>* Contraseña</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">vpn_key</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="password" name="password" required id="phoneNumberCS" class="form-control mobile-phone-number"  placeholder="XXXXXXX">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Comfriar Ccntraseña</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">vpn_key</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="password" name="password_confirmation" required id="firstNameS"  class="form-control" placeholder="XXXXXXX">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <h2 class="card-inside-title"></h2>
+                                
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Nombres</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">assignment</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" name="firstName" required id="lastNameS"  class="form-control" placeholder="Nombres">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Apellidos</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">assignment</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" name="lastName" id="lastNameS"  class="form-control" placeholder="Apellidos" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-sm-4">
+                                     <p>
+                                        <b>* Email</b>
+                                    </p>
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon">
+                                            <i class="material-icons">email</i>
+                                        </span>
+                                        <div class="form-line">
+                                            <input type="text" name="email" id="lastNameS"  class="form-control" placeholder="email" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            <div class="row clearfix">
+                                <h2 class="card-inside-title"></h2>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Rol</b>
+                                    </p>
+                                    <select name="role" class="form-control show-tick">
+                                        <option value="3">Analista</option>
+                                        <option value="4">Comun</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <p>
+                                        <b>* Areas</b>
+                                    </p>
+                                        @php
+                                            $contador = 1;
+                                        @endphp
+                                        @foreach ($areas as $area)
+                                        @if ($area['companyId'] = $userCompany)
+                                            <input class="lever" type="checkbox" id="check{{ $contador }}" 
+                                                name="areas[{{$area['name']}}]" value="{{ $area['areaId'] }}">
+                                            <label for="check{{ $contador }}">
+                                                {{ $area['name'] }}
+                                            </label>
+                                        @endif
+                                        @php
+                                            $contador++;
+                                        @endphp
+                                        @endforeach
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <h2 class="card-inside-title"></h2>
+                                <div class="col-sm-4">
+                                </div>
+                                <div class="col-sm-4">
+                                     <button class="btn btn-info" type="submit">Guardar</button>
+                                </div>
+                            </div>
+                                       
                             </form>
-                            @include('errors')
+
                         </div>
                     </div>
-                </div>
-        </div>
-    </div>
-</main>
+            </div>
+</div>
+
+<script type="text/javascript">
+    $("#Usuarios").addClass('active');
+    $("#AgregarUsuario").addClass('active');
+
+</script>
+
+
 @endsection

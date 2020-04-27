@@ -72,7 +72,9 @@ class AdminsController extends Controller
         {
             $conceptsResults[] = DB::select('call p_fetch_verified_evidences(?)',array($item));
             $results[] = (array)$conceptsResults[array_search($item,$testsConceptsIds)][0];
+    
         }
+
         return view('admins.viewResults.results',compact([
             'areas',
             'areaSeleccionada',
@@ -116,14 +118,15 @@ class AdminsController extends Controller
         $companyId = $user->companyId;
         $areas = $request->input('areas');
 
-        $data = $this->validatorUser();
+
         $userAdd = User::create([
-            'username' => $data['username'],
-            'firstName' => $data['firstName'],
-            'lastName' => $data['lastName'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'companyId' => $companyId
+            'username' => $request['username'],
+            'firstName' => $request['firstName'],
+            'lastName' => $request['lastName'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'companyId' => $companyId,
+            'status' => 1
         ]);
 
         foreach ($areas as $area) {
@@ -131,11 +134,11 @@ class AdminsController extends Controller
         }
 
         Role_User::create([
-            'role_id' => $data['role'],
+            'role_id' => $request['role'],
             'user_id' => $userAdd->id
         ]);
 
-        return redirect('/admins/user/index');
+        return redirect('/admins/user');
     }
 
     public function show(Request $request,$id)
@@ -228,17 +231,18 @@ class AdminsController extends Controller
         return view('admins.area.addArea');
     }
 
-    public function storeArea(Request $request)
+    public function storeArea($name)
     {
-        $request->user()->authorizeRoles(['admin']);
-        $attributes = $this->validator();
+        if ($name != "null") {
+            $attributes['name'] = $name;
         $attributes['companyId'] = Auth::user()->companyId;
         $area = Area::create($attributes);
 
         $userId = Auth::id();
         $companyId = User::giveMeCompany(Auth::user());
         $areas = DB::table('areas')->where('areas.companyId','=',$companyId)->get()->toArray();
-        return view('admins.index', compact('areas'));
+        }
+        return redirect('/admin');
     }
 
     public function showUsers(Request $request)
@@ -392,6 +396,35 @@ class AdminsController extends Controller
         return  $Attributes->toJson();
     }
 
+    public function Pruebahome()
+    {
 
+        $user = auth()->user();
+          $userId = $user->companyId;
+
+        $Pruebas = Area::join('tests','areas.areaId','tests.areaId')
+                                    ->join('test_user','tests.testId','test_user.testId')
+                                    ->join('users','test_user.userId','users.Id')
+                                    ->join('test_concept','tests.testId','test_concept.testId')
+                                    ->join('concepts','test_concept.conceptId','concepts.conceptId')
+                                    ->select('users.username as user','areas.name as area','tests.name as test','concepts.description as concept','users.Id as userId','tests.testId as testId','concepts.conceptId as conceptId')->where('users.companyId',$userId )->get();
+
+
+
+        return view('admins.area.test.index',compact ('Pruebas'));
+    }
+
+    public function PruebaCreate()
+    {
+        return view('admins.area.test.add');
+    }
     
+
+    public function Userdelete($Id,$A)
+    {
+        
+        User::find($Id)->update(['status' => intval($A)]);
+
+        return redirect("/admins/user");
+    }
 }

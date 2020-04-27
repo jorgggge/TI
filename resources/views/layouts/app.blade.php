@@ -3,6 +3,7 @@
 <?php
 use App\User;
 use App\MaturityLevel;
+use Illuminate\Support\Facades\Auth;
 ?>
 
 <head>
@@ -62,8 +63,13 @@ use App\MaturityLevel;
     <link href="{{ asset('../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+  
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
 
 </head>
@@ -120,16 +126,12 @@ use App\MaturityLevel;
               <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
           </div>
           <div class="info-container">
-              <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">John Doe</div>
-              <div class="email">Super Administrator</div>
-              <div class="btn-group user-helper-dropdown">
-                  <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
-                  <ul class="dropdown-menu pull-right">
-                      <li><a href="javascript:void(0);"><i class="material-icons">person</i>Profile</a></li>
-                      <li role="separator" class="divider"></li>
-                      <li><a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="material-icons">input</i>Sign Out</a></li>
-                  </ul>
+              <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @php
+                  echo Auth::user()->firstName." ".Auth::user()->lastName;
+                @endphp
               </div>
+              <div class="email">Super Administrator</div>
           </div>
       </div>
       <!-- #User Info -->
@@ -137,25 +139,19 @@ use App\MaturityLevel;
       <div class="menu">
           <ul class="list">
               <li class="header">MENU</li>
-              <li>
-                  <a href="index.html">
-                      <i class="material-icons">home</i>
-                      <span>Inicio</span>
-                  </a>
-              </li>
-              <li>
+              <li id="Company">
                   <a href="#" class="menu-toggle">
                       <i class="material-icons">apartment</i>
                       <span>Compañias</span>
                   </a>
                   <ul class="ml-menu">
-                      <li>
+                      <li id="CompanySee">
                           <a href="{{ url('/superAdmin/company' ) }}">
                             <i class="material-icons">domain</i>
                               <span>Mostrar compañias</span>
                           </a>
                       </li>
-                      <li>
+                      <li id="CompanyAdd">
                           <a href="{{url('CreateCompany/addCompany/create')}}">
                             <i class="material-icons">group_add</i>
                               <span>Agregar compañia</span>
@@ -163,19 +159,19 @@ use App\MaturityLevel;
                         </li>
                   </ul>
               </li>
-              <li>
+              <li id="Administradores">
                   <a href="#"  class="menu-toggle">
                       <i class="material-icons">supervisor_account</i>
                       <span>Administradores</span>
                   </a>
                   <ul class="ml-menu">
-                      <li>
+                      <li id="MostrarAdmins">
                           <a href="{{ url('/superAdmin/admins' ) }}">
                             <i class="material-icons">supervised_user_circle</i>
                               <span>Mostrar Admins</span>
                           </a>
                       </li>
-                      <li>
+                      <li id="AgregarAdmin">
                           <a href="{{url('CreateAdmin/addAdmin/create')}}">
                             <i class="material-icons">person_add</i>
                               <span>Agregar Admins</span>
@@ -183,10 +179,16 @@ use App\MaturityLevel;
                         </li>
                   </ul>
               </li>
-              <li>
+              <li id="Historial">
                   <a href="{{ url('/superAdmin/history' ) }}">
                       <i class="material-icons">history</i>
                       <span>Hitorial</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <i class="material-icons">input</i>
+                      <span>Salir</span>
                   </a>
               </li>
           </ul>
@@ -217,8 +219,313 @@ use App\MaturityLevel;
 
 
 
-    @endif
+@endif
     
+
+@if(Auth::user()->hasRole('admin'))
+
+<nav class="navbar" style="background-color: #112d4e;">
+    <div class="container-fluid">
+          <div class="navbar-header">
+              <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+              <a href="javascript:void(0);" class="bars"></a>
+              <a class="navbar-brand" href="index.html" style="color: white;">ADMINTRADOR</a>
+          </div>
+      </div>
+</nav>
+<section>
+  <!-- Left Sidebar -->
+  <aside id="leftsidebar" class="sidebar">
+      <!-- User Info -->
+      <div class="user-info">
+          <div class="image">
+              <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
+          </div>
+          <div class="info-container">
+              <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @php
+                  echo Auth::user()->firstName." ".Auth::user()->lastName;
+                @endphp
+              </div>
+              <div class="email">Administrator</div>
+          </div>
+      </div>
+      <!-- #User Info -->
+      <!-- Menu -->
+      <div class="menu">
+
+        @php
+          $user = auth()->user();
+          $userId = $user->companyId;
+          $admins = User::all();
+          $CountMaturity = MaturityLevel::where('companyId', '=', $userId)->count();
+        @endphp
+        @if ($CountMaturity == 0)
+              <ul class="list">
+                <li class="header">MENU</li>
+              </ul>
+        @else
+            <ul class="list">
+                <li class="header">MENU</li>
+                <li id="Area" >
+                    <a href="#"  class="menu-toggle">
+                        <i class="material-icons">nature_people</i>
+                        <span>Areas</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li id="MostrarAreas">
+                            <a href="{{ url('/admin') }}">
+                              <i class="material-icons">nature</i>
+                                <span>Mostrar Areas</span>
+                            </a>
+                        </li>
+                        <li id="Agregar Area">
+                            <a href="#" onclick="CreaArea()">
+                              <i class="material-icons">nature_people</i>
+                                <span>Agregar Area</span>
+                            </a>                            
+                          </li>
+                    </ul>
+                </li> 
+                <li id="Usuarios">
+                    <a href="#" class="menu-toggle">
+                        <i class="material-icons">supervisor_account</i>
+                        <span>Usuarios</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li id="MostrarUsuarios">
+                            <a href="{{ url('/admins/user' ) }}">
+                              <i class="material-icons">supervisor_account</i>
+                                <span>Mostrar Usuarios</span>
+                            </a>
+                        </li>
+                        <li id="AgregarUsuario">
+                            <a href="{{url('/admins/createUser')}}">
+                              <i class="material-icons">group_add</i>
+                                <span>Agregar Usuario</span>
+                            </a>                            
+                          </li>
+                    </ul>
+                </li>
+                <li id="Pruebas">
+                    <a href="#" class="menu-toggle">
+                        <i class="material-icons">assignment</i>
+                        <span>Pruebas</span>
+                    </a>
+                    <ul class="ml-menu">
+                        <li id="MostrarPruebas">
+                            <a href="{{ url('/admin/pruebas') }}">
+                              <i class="material-icons">assignment_turned_in</i>
+                                <span>Mostrar Pruebas</span>
+                            </a>
+                        </li>
+                        <li id="AgregarPrueba">
+                            <a href="{{url('/admins/area/test/create')}}">
+                              <i class="material-icons">assignment</i>
+                                <span>Crear Prueba</span>
+                            </a>                            
+                          </li>
+                    </ul>
+                </li>
+                <li id="NivelesdeMadurez">
+                    <a href="{{ url('/admins/maturity/editML' ) }}">
+                        <i class="material-icons">insert_chart</i>
+                        <span>Niveles de Madurez</span>
+                    </a>
+                </li>
+                <li id="Historial">
+                    <a href="{{ url('/admins/history' ) }}">
+                        <i class="material-icons">history</i>
+                        <span>Hitorial</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="material-icons">input</i>
+                        <span>Salir</span>
+                    </a>
+                </li>
+            </ul>
+          @endif
+      </div>
+      <!-- #Menu -->
+      <!-- Footer -->
+      <div class="legal">
+          <div class="copyright">
+              &copy; 2020 <a href="javascript:void(0);">ICA</a>.
+          </div>
+          <div class="version">
+              <b>Version: </b> 2.0.5
+          </div>
+      </div>
+      <!-- #Footer -->
+  </aside>
+  <!-- #END# Left Sidebar -->
+
+</section> 
+<form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
+
+<section class="content">
+  @yield("content")
+</section>
+
+
+
+@endif
+
+@if(Auth::user()->hasRole('analista'))
+
+<nav class="navbar" style="background-color: #112d4e;">
+    <div class="container-fluid">
+          <div class="navbar-header">
+              <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+              <a href="javascript:void(0);" class="bars"></a>
+              <a class="navbar-brand" href="index.html" style="color: white;">ANALISTA</a>
+          </div>
+      </div>
+</nav>
+<section>
+  <!-- Left Sidebar -->
+  <aside id="leftsidebar" class="sidebar">
+      <!-- User Info -->
+      <div class="user-info">
+          <div class="image">
+              <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
+          </div>
+          <div class="info-container">
+              <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @php
+                  echo Auth::user()->firstName." ".Auth::user()->lastName;
+                @endphp
+              </div>
+              <div class="email">Analista</div>
+          </div>
+      </div>
+      <!-- #User Info -->
+      <!-- Menu -->
+      <div class="menu">
+          <ul class="list">
+              <li class="header">MENU</li>
+              <li>
+                  <a href="/analista">
+                      <i class="material-icons">home</i>
+                      <span>Inicio</span>
+                  </a>
+              </li>
+               <li>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <i class="material-icons">input</i>
+                      <span>Salir</span>
+                  </a>
+              </li>
+          </ul>
+
+      </div>
+      <!-- #Menu -->
+      <!-- Footer -->
+      <div class="legal">
+          <div class="copyright">
+              &copy; 2020 <a href="javascript:void(0);">ICA</a>.
+          </div>
+          <div class="version">
+              <b>Version: </b> 2.0.5
+          </div>
+      </div>
+      <!-- #Footer -->
+  </aside>
+  <!-- #END# Left Sidebar -->
+
+</section> 
+<form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
+
+<section class="content">
+  @yield("content")
+</section>
+
+
+
+@endif
+
+@if(Auth::user()->hasRole('comun'))
+
+<nav class="navbar" style="background-color: #112d4e;">
+    <div class="container-fluid">
+          <div class="navbar-header">
+              <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+              <a href="javascript:void(0);" class="bars"></a>
+              <a class="navbar-brand" href="index.html" style="color: white;">BIENVENIDO</a>
+          </div>
+      </div>
+</nav>
+<section>
+  <!-- Left Sidebar -->
+  <aside id="leftsidebar" class="sidebar">
+      <!-- User Info -->
+      <div class="user-info">
+          <div class="image">
+              <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
+          </div>
+          <div class="info-container">
+              <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @php
+                  echo Auth::user()->firstName." ".Auth::user()->lastName;
+                @endphp
+              </div>
+              <div class="email">Usuario Comun</div>
+          </div>
+      </div>
+      <!-- #User Info -->
+      <!-- Menu -->
+      <div class="menu">
+          <ul class="list">
+              <li class="header">MENU</li>
+              <li>
+                  <a href="/comun">
+                      <i class="material-icons">home</i>
+                      <span>Inicio</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <i class="material-icons">input</i>
+                      <span>Salir</span>
+                  </a>
+              </li>
+          </ul>
+      </div>
+      <!-- #Menu -->
+      <!-- Footer -->
+      <div class="legal">
+          <div class="copyright">
+              &copy; 2020 <a href="javascript:void(0);">ICA</a>.
+          </div>
+          <div class="version">
+              <b>Version: </b> 2.0.5
+          </div>
+      </div>
+      <!-- #Footer -->
+  </aside>
+  <!-- #END# Left Sidebar -->
+
+</section> 
+<form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
+
+<section class="content">
+  @yield("content")
+</section>
+
+
+
+@endif
 
     <!-- Jquery Core Js -->
     <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
@@ -266,14 +573,37 @@ use App\MaturityLevel;
     <!-- Sparkline Chart Plugin Js -->
     <script src="{{ asset('plugins/jquery-sparkline/jquery.sparkline.js') }}"></script>
 
+    <!-- Chart Plugins Js -->
+    <script src="{{ asset('plugins/chartjs/Chart.bundle.js') }}"></script>
+
+    <!-- Dropzone Plugin Js -->
+    <script src="{{ asset('plugins/dropzone/dropzone.js') }}"></script>
+
     <!-- Custom Js -->
     <script src="{{ asset('js/admin.js') }}"></script>
     <script src="{{ asset('js/pages/index.js') }}"></script>
+    <script src="{{ asset('js/pages/charts/chartjs.js') }}"></script>
 
     <!-- Demo Js -->
     <script src="{{ asset('js/demo.js') }}"></script>
 
     <!-- Propios Js-->
-    
+    <script src="{{ asset('js/customer.js') }}"></script>
+
+    <script type="text/javascript">
+      function  CreaArea() {
+        swal("Nombre del area nueva:", {
+            content: "input",
+          })
+          .then((value) => {
+                  $.ajax({
+                      type: "GET",
+                      url: "/AddArea/"+value,
+                      success: function(response){}
+                });
+                
+            });
+      }
+    </script>
 </body>
 </html>

@@ -9,7 +9,7 @@
                     <div class="card">
                         <div class="header" style="background-color: #112d4e;">
                             <h2 style="color: white;">
-                                <a href="#" style="color: white;">Compañias</a> > Añadir nueva compañia
+                                Nueva compañia
                             </h2>
                             <ul class="header-dropdown m-r--5">
                               
@@ -17,7 +17,7 @@
                         </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de la compañia:</h5> 
+                            <h5>Llena los campos con los datos de la compañia: <br> (*) Datos Obligatorios</h5> 
                             <h2 class="card-inside-title">Datos de la Compañia</h2>
                             <form id="from" method="POST" action="/CreateCompany/superAdmin" > 
                                 @method('PUT')
@@ -25,7 +25,7 @@
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Nombre</b>
+                                        <b>* Nombre</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -38,7 +38,7 @@
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>Telefono</b>
+                                        <b>* Telefono</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Email</b>
+                                        <b>* Email</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -70,7 +70,7 @@
                                 
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Dirreccion</b>
+                                        <b>* Dirreccion</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -86,12 +86,13 @@
                                 </div>
                                 
                             </div>
-                                        <div>
-                                            <button class="btn btn-info">Guardar</button>
+                                        <div  class="row clearfix">
+                                            <div class="col-sm-10"></div>
+                                            <div class="col-sm-2">
+                                                <button class="btn btn-info">Guardar</button>
+                                            </div>
                                         </div>
-                                        </td>
-                                    </tr>
-                                      
+                                        
                                     </form>
 
                         </div>
@@ -99,5 +100,8 @@
             </div>
         </div>
 
-
+<script type="text/javascript">
+    $("#Company").addClass('active');
+    $("#CompanyAdd").addClass('active');
+</script>
 @endsection

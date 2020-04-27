@@ -56,11 +56,11 @@ class AreaController extends Controller
         return view('/admins/area/Edit/editArea' ,compact('Area'));
     }
 
-    public function EditArea(Request $request, $id)
+    public function EditArea($id,$name)
     {
         DB::table('areas')
         ->where('areaId',$id)
-        ->update(['name' =>$request->name]);
+        ->update(['name' =>$name]);
 
         return redirect('/admin');
         //return back();
@@ -83,5 +83,47 @@ class AreaController extends Controller
         DB::table('areas') ->where('areaId',$id)->delete();
 
         return redirect('/admin');
+    }
+
+    public function areasFromAnalista($userId)
+    {
+        $areasIdFromAnalista = User_Area::where('userId',$userId)->get()->toArray();
+        $areasIdFromAnalista = array_column($areasIdFromAnalista,'areaId');
+        $areasFromAnalista = Area::whereIn('areaId',$areasIdFromAnalista)->get()->toArray();
+        $areas = $areasFromAnalista;
+        return $areas;
+    }
+    
+    public function Resultados($id)
+     {
+
+        $userId = Auth::user()->id;
+        $companyId = User::giveMeCompany(Auth::user());
+        $areas = $this->areasFromAnalista($userId);
+        $areasId = array_column($areas,'areaId');
+        $tests = Test::testFromAnAreaId($areaId);
+        $testsIds=array_column($tests,'testId');
+
+        $areaSeleccionada= Area::where('areaId',$areaId)->first();  //Me regresa el objeto del area que elegi
+        $maturityLevels = MaturityLevel::where('companyId',$companyId)->get()->toArray();
+
+        abort_if(!in_array($areaId,$areasId),403);//Si el area seleccionada no existe dentro de las areas del usuario no lo deja verla
+
+        $testsConcepts = Concept::ConceptsFromAnArrayOfTestsIds($testsIds);
+        $testsConceptsIds = array_column((array)$testsConcepts,'testConceptId');
+        $results = [];
+        foreach ((array) $testsConceptsIds as $item)
+        {
+            $conceptsResults[] = DB::select('call p_fetch_verified_evidences(?)',array($item));
+            $results[] = (array)$conceptsResults[array_search($item,$testsConceptsIds)][0];
+        }
+        return view('admins.viewResults.results',compact([
+            'areas',
+            'areaSeleccionada',
+            'tests',
+            'testsConcepts',
+            'maturityLevels',
+            'results'
+        ]));
     }
 }
