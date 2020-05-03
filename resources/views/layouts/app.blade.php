@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 ?>
 
 <head>
+
     @yield('head')
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -16,6 +17,12 @@ use Illuminate\Support\Facades\Auth;
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'ICA') }}</title>
+    
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.20/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.20/datatables.min.css"/>
+ 
+    
     <!-- Favicon-->
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 
@@ -60,20 +67,19 @@ use Illuminate\Support\Facades\Auth;
     <link href="{{ asset('css/themes/all-themes.css') }}" rel="stylesheet" />
 
      <!-- JQuery DataTable Css -->
-    <link href="{{ asset('../../plugins/jquery-datatable/skin/bootstrap/css/dataTables.bootstrap.css') }}" rel="stylesheet">
-     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    
 
-     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
-  
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    
+    
+
 
 
 </head>
-<body> 
+<body > 
 
    <!-- Page Loader -->
     <div class="page-loader-wrapper">
@@ -88,7 +94,7 @@ use Illuminate\Support\Facades\Auth;
                     </div>
                 </div>
             </div>
-            <p>Espero por favor ...</p>
+            <p>Cargado .....</p>
         </div>
     </div>
     <!-- #END# Page Loader -->
@@ -527,8 +533,7 @@ use Illuminate\Support\Facades\Auth;
 
 @endif
 
-    <!-- Jquery Core Js -->
-    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
+   
 
     <!-- Bootstrap Core Js -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>
@@ -604,6 +609,20 @@ use Illuminate\Support\Facades\Auth;
                 
             });
       }
+    </script>
+    <script type="text/javascript">
+                $('#dtBasicExample').DataTable({
+                    language: {
+                        url: '{{ asset('json/Spanish.json')}}'
+                    },
+                    "paging":   true,
+                    "ordering": false,
+                    "searching": true,
+                    "info":     true,
+                });
+          
+      
+  
     </script>
 </body>
 </html>

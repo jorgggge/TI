@@ -1,14 +1,6 @@
 
 
 
-$(document).ready(function () {
-  $("#myInput").on("keyup", function () {
-    var value = $(this).val().toLowerCase();
-    $("#myTable tr").filter(function () {
-      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    });
-  });
-});
 
 function Admin(Id) {
 var para = document.createElement("div");
@@ -42,23 +34,47 @@ var para = document.createElement("div");
     });
 }
 
-function Admin_Activa(Id,A) {
+function Admin_Activa(Id) {
 swal({
-  title: "Atecion",
-  text: "Se cambiara el status de este usuario, Estas seguro?!",
+  title: "Atención",
+  text: "Se cambiara el status de este usuario,¿Estas seguro?",
   icon: "warning",
-  buttons: true,
+  buttons: ["Cancelar", "Si"],
   dangerMode: true
 })
 .then((willDelete) => {
   if (willDelete) {
-  	window.location = "/superAdmin/viewcustomersuperadmin/delete/"+Id+"/"+A;
   
+    A = $("#btn-"+Id).hasClass("btn-success") ? 0 : 1;
+
+    $.ajax({
+      type: "GET",
+      url: "/superAdmin/viewcustomersuperadmin/delete/"+Id+"/"+A,
+      success: function(response) {
+        
+      }
+    });
+
+    if(A == 0){
+       $("#btn-"+Id).removeClass("btn-success");
+       $("#btn-"+Id).addClass("btn-warning");  
+       $("#mc-"+Id).text("lock");
+       $("#s-"+Id).text("Bloquear");
+
+    }else{
+       $("#btn-"+Id).addClass("btn-success");
+       $("#btn-"+Id).removeClass("btn-warning");
+       $("#mc-"+Id).text("work");
+       $("#s-"+Id).text("Habilitar");
+    } 
+
   } else {
   }
 });
 	
 }
+
+
 
 function AddAdmin() {
 

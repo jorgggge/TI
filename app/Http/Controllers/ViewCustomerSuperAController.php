@@ -34,6 +34,15 @@ class ViewCustomerSuperAController extends Controller
     {
         // $this->authorize('update', $request, $cid, $uid);
 
+
+        $request->validate([
+          'username' => 'required|string',
+          'lastName' => 'required|string',
+          'firstName' => 'required|string',
+          'emailuser' => 'required|string'
+        ]);
+
+
         User::find($uid)->update([
             'username' => $request->username,
             'lastName' => $request->lastName,
@@ -48,24 +57,18 @@ class ViewCustomerSuperAController extends Controller
             'email' => $request->emailcompany
         ]);
 
-        return back()->with('mensaje', 'Datos Actualizados');
-
     }
 
     public function delete($Id,$A)
     {
         
         User::find($Id)->update(['status' => intval($A)]);
-
-        return redirect("/superAdmin/admins");
     }
 
     public function Companydelete($Id,$A)
     {
         
         Company::find($Id)->update(['status' => intval($A)]);
-
-        return redirect("/superAdmin/company");
     }
     
 

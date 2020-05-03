@@ -7,19 +7,14 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            <h2 style="color: white;">
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 20px;">
                                 Nuevo administrador
-                            </h2>
-                            <ul class="header-dropdown m-r--5">
-                              
-                            </ul>
                         </div>
                         <div class="body">
                             
                             <h5>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</h5> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
-                            <form id="from" method="POST" action="/CreateAdmin/superAdmin"> 
+                            <form id="from" method="POST" action="/superAdmin/admin/new/add"> 
                                 @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -44,7 +39,7 @@
                                             <i class="material-icons">vpn_key</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="username" name="emailuser" id="emailUserS"  class="form-control" placeholder="Contraseña" required>
+                                            <input type="password" name="password" name="emailuser" id="emailUserS"  class="form-control" placeholder="Contraseña" required>
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +52,7 @@
                                             <i class="material-icons">vpn_key</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="phoneNumber" id="phoneNumberCS" class="form-control mobile-phone-number" placeholder="Contraseña" required>
+                                            <input type="password" name="passwordc" id="phoneNumberCS" class="form-control mobile-phone-number" placeholder="Contraseña" required>
                                         </div>
                                     </div>
                                 </div>
@@ -100,7 +95,7 @@
                                             <i class="material-icons">email</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="lastName" id="lastNameS"  class="form-control"  placeholder="Email" required>
+                                            <input type="text" name="email" id="lastNameS"  class="form-control"  placeholder="Email" required>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +136,9 @@
                              <div  class="row clearfix">
                                             <div class="col-sm-10"></div>
                                             <div class="col-sm-2">
-                                                <button class="btn btn-info">Guardar</button>
+                                                 <button class="btn btn-primary waves-effect" id="btn-form">
+                                                    <i class="material-icons">done</i> <span> Guardar </span> 
+                                                </button>
                                             </div>
                                         </div>
                           
@@ -156,4 +153,26 @@
     $("#Administradores").addClass('active');
     $("#AgregarAdmin").addClass('active');
 </script>
+
+
+
+@if (session()->has('success'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado una nueva compañia!", "success");
+    </script>
+@endif
+
+@if (session()->has('error_pass'))
+    <script type="text/javascript">
+        swal("Error", "Verifique la contraseña", "error");
+    </script>
+@endif
+
+@if ($errors->any())
+    <script type="text/javascript">
+         swal("Error", "Verifique los datos antes de guardar", "error");
+    </script>
+@endif
+
+
 @endsection

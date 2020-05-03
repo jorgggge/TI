@@ -14,27 +14,24 @@ Route::resource('superAdmin/addAdmin', 'AdminsController');
 Route::resource('superAdmin/addCompany', 'CompanyController');
 
 Route::get('/superAdmin/viewcustomersuperadmin/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
-Route::put('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
+Route::post('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
 Route::get('/superAdmin/companydelete/delete/{id}/{A}', 'ViewCustomerSuperAController@Companydelete');
 Route::get('/superAdmin/viewcustomersuperadmin/delete/{id}/{A}', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
 Route::get('/superAdmin/viewcustomersuperadmin', 'ViewCustomerSuperAController@create');
 Route::get('/superAdmin/create','SuperAdminController@create')->name('createAdmins');
 Route::prefix('CreateCompany')->group(function (){
-    Route::post('/superAdmin', 'SuperAdminController@storeCompany');
-    Route::get('/superAdmin', 'SuperAdminController@storeCompany');
     Route::get('/addCompany/create', 'SuperAdminController@createCompany');
 });
 Route::prefix('CreateAdmin')->group(function () {
     Route::post('/superAdmin', 'SuperAdminController@storeAdmin');
-    Route::get('/superAdmin', 'SuperAdminController@storeAdmin');
     Route::get('/addAdmin/create', 'SuperAdminController@createAdmin');
 });
 Route::get('/superAdmin/index', "SuperAdminController@index")->name('SAH');
 Route::get('/superAdmin/history','SuperAdminController@history')->name('HistoryS');
-Route::put('/superAdmin/history/delete','SuperAdminController@historydelete')->name('HistoryDelete');
+Route::post('/superAdmin/history/delete','SuperAdminController@historydelete')->name('HistoryDelete');
 Route::get('/superAdmin/viewCompanies/create','SuperAdminController@showCompany');
 Route::get('/superAdmin/viewCompanies/editCompany/{id}','SuperAdminController@showSA')->name('ShowCompanySA');
-Route::put('/superAdmin/viewCompanies/editCompany/showSA/{id}','SuperAdminController@editSA')->name('EditCompanySA');
+Route::post('/superAdmin/viewCompanies/editCompany/showSA/{id}','SuperAdminController@editSA')->name('EditCompanySA');
 Route::put('/superAdmin/viewCompanies/create/status/{id}','CompanyController@status')->name('status');
 
 
@@ -108,9 +105,20 @@ Route::get('/Beta2', "UserAreaController@index");
 Route::get('/superAdmin','SuperAdminController@Home');
 Route::get('/superAdmin/company','SuperAdminController@showCompany');
 Route::get('/superAdmin/admins','SuperAdminController@showAdmins');
+Route::post('/superAdmin/company/new/add','SuperAdminController@storeCompany');
+Route::post('/superAdmin/admin/new/add','SuperAdminController@storeAdmin');
+
+
+
 Route::get('/Datos/Admi/{id}','SuperAdminController@DatosAdmin');
 Route::put('/Admins/Activo/{id}', 'AdminsController@Activo');
 Route::get('/admin/pruebas', 'AdminsController@Pruebahome');
 Route::get('/admin/prueba/{TestId}/{ConceptId}/{UserId}', 'CreateTestController@EditarPrueba');
 Route::get('/admin/CreateTest', 'AdminsController@PruebaCreate');
 Route::put('/admin/Edit/Prueba', 'CreateTestController@PruebaEdit');
+
+
+
+// --------------------- Rutas de Ajax.
+
+
