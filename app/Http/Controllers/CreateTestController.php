@@ -59,14 +59,14 @@ class CreateTestController
         $muy_altos = $request->input('muy_alto');
         $dataConcept = $this->validatorConcept();
         $dataArea = $this->validatorArea();
-        $dataUser = $this->validatorUser();
+        //$dataUser = $this->validatorUser();
         $maturity = DB::table('maturity_levels')->where('maturity_levels.companyId','=',$companyId)->get()->toArray();
         $addTest = Test::create([
             'startedAt' => date('Y-m-d'),
             'areaId' => $dataArea['area'],
             'name' => $request['name']
         ]);
-        $addTest->test_user()->attach($dataUser);
+        //$addTest->test_user()->attach($dataUser);
 
         $conceptAdd = Concept::create([
             'description' => $dataConcept['concept']
@@ -139,7 +139,7 @@ class CreateTestController
             $concept_maturity_level = DB::table('concept_maturity_level')->get()->toArray();
             $addAttribute->concept_maturity_level_attribute()->attach(end($concept_maturity_level)->conceptMLId);        }
 
-        return redirect('/admin/pruebas');
+        return redirect('/admin/pruebas')->with('Test',true);
     }
 
     public function validatorConcept()
@@ -167,18 +167,9 @@ class CreateTestController
     }
 
 
-    public function EditarPrueba($TestId,$ConceptId,$UserId)
+    public function EditarPrueba($TestId,$ConceptId)
     {
         $test  = DB::table('tests') ->where('testId',$TestId)->get();
-
-        $List_User = DB::table('user_areas')->join('users','user_areas.userId','users.Id')
-        ->join('areas','user_areas.areaId','areas.areaId')
-        ->join('role_user','users.id','role_user.user_id')
-        ->where([
-                ['users.companyId',Auth::user()->companyId],
-                ['role_user.role_id','4']
-            ])->select('users.Id as userId','users.firstName','users.lastName','areas.name as area','user_areas.areaId as ua')
-        ->orderby('user_areas.areaId')->get();
 
         $concept = DB::table('concepts') ->where('conceptId',$ConceptId)->get();
 
@@ -193,23 +184,44 @@ class CreateTestController
         ->select('attributes.attributeId','attributes.description as AD','ML.description as ML')
         ->where('CML.conceptId',$ConceptId)->orderBy('attributes.attributeId')->get();
 
-        return view('admins.area.test.beta',compact('test','List_User','concept','mlevel','attributes','UserId'));
+        return view('admins.area.test.beta',compact('test','concept','mlevel','attributes'));
     }
 
     public function PruebaEdit(Request $request)
     {
 
+        $request->validate([
+            'testname' => 'required|string',
+            'concept' => 'required|string',
+            'Id1' => 'required|string',
+            'Attribute1' => 'required|string',
+            'Attribute2' => 'required|string',
+            'Attribute3' => 'required|string',
+            'Attribute4' => 'required|string',
+            'Attribute5' => 'required|string',
+            'Attribute6' => 'required|string',
+            'Attribute7' => 'required|string',
+            'Attribute8' => 'required|string',
+            'Attribute9' => 'required|string',
+            'Attribute10' => 'required|string',
+            'Attribute11' => 'required|string',
+            'Attribute12' => 'required|string',
+            'Attribute13' => 'required|string',
+            'Attribute14' => 'required|string',
+            'Attribute15' => 'required|string'
+        ]);
+
+        
 
         Test::find($request->testId)->update(['name' => $request->testname]);
         Concept::find($request->conceptId)->update(['description' => $request->concept]);
 
-        DB::table('test_user')->where('testId',$request->testId)->update(['userId' => $request->user]);        
+        // DB::table('test_user')->where('testId',$request->testId)->update(['userId' => $request->user]);        
 
         for ($i=1; $i < 16; $i++) { 
             Attribute::find($request->{"Id".$i})->update(['description' => $request->{"Attribute".$i}]);
         }
 
-        return redirect('/admin/pruebas');
     }
 
 }

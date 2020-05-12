@@ -12,23 +12,25 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            
-                            <h2 style="color: white;">
-                                Historial
-                            </h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 24px;">history</i>
+                           Historial
                         </div>
                         
                         <div class="body">
                          <div class="row clearfix">
-                                <div class="col-sm-4"></div>
+                                <div class="col-sm-4">
+                                  <b>Aqui se mostrar las acciones generadas por los usuarios.</b>
+                                </div>
                                 <div class="col-sm-6"></div>
                                 <div class="col-sm-1">
                                     
                                     <form action="{{ route('HistoryDeleteA') }}" id="fromhistory">
                                         @method('PUT')
                                         @csrf
-                                              <input type="submit" class="btn btn-lg btn-danger waves-effect" name="delete" value="Borrar Registro">
+                                        <button type="submit" class="btn btn-danger waves-effect">
+                                          <i class="material-icons">clear</i> <span>Borrar Historial</span> 
+                                        </button>
                                   </form>
                                 </div>
                                 

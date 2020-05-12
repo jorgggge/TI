@@ -5,16 +5,15 @@
             <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            <h2 style="color: white;">
-                            Agregar Niveles de Madurez de la Empresa
-                            </h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 24px;">insert_chart</i>
+                            Niveles de Madurez
                         </div>
                         <div class="body">
-                            <h5> Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
-                                <br> (*) Datos Obligatorios.</h5>
+                            Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
+                                <br> (*) Datos Obligatorios.
 
-                            <form name="addML" id="addML" method="POST" action="/admins/index">
+                            <form name="addML" id="form" method="POST" action="/admins/index">
                                 @csrf
 
                                 @foreach(range(0,4) as $x)   
@@ -63,18 +62,65 @@
                                                 </div>
                                         </div>
                                 </div>
-                                @endforeach
+                                @endforeach 
+                            </form>
                                 <div class="row clearfix">
-                                    <div class="col-sm-6"></div>
+                                    <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
-                                        <button type="submit" class="btn btn-primary">Agregar</button>
+                                        <button id="btn-form" class="btn btn-primary">
+                                            <i class="material-icons">done</i> <span>Guardar</span> 
+                                        </button>
                                     </div>
                                 </div>
-                            </form>
+                           
                             @include('errors')
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+<script type="text/javascript">
+
+    $("#btn-form").click(function(){
+        swal({
+          title: "Atención",
+          text: "Se ingresaran una nueva prueba,¿Estas seguro?",
+          icon: "warning",
+          buttons: ["Cancelar", "Si"],
+          dangerMode: true
+        })
+        .then((willDelete) => {
+
+            if (willDelete) {
+
+                $( "input[type='text']" ).each(function() {
+                    $( this ).css('border-color','#1F91F3');
+                });
+
+                var validar = true;
+                console.log(validar);
+                $( "input[type='text']" ).each(function() {
+                    if($(this).val() == null || $(this).val() == ""){
+                        $( this ).css('border-color','red');
+                        console.log($( this ));
+                       validar = false;
+                    }
+                });
+
+                console.log(validar);
+                if(validar){
+                   $( "#form" ).submit();
+                    swal("Espero un momento!", {
+                      buttons: false,
+                    });
+                }else{
+                    swal("Error", "Verifique los datos antes de actualizar", "error");
+                }
+            }
+           
+        });
+
+    });
+</script>
 @endsection

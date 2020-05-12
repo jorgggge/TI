@@ -83,6 +83,11 @@
 <script src="{{ asset('js/code.js') }}"></script>
 
 <script type="text/javascript">
+
+    
+
+
+
     $("#Company").addClass('active');
     $("#CompanySee").addClass('active');
 

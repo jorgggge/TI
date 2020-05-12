@@ -44,7 +44,7 @@ Route::get('/admins/area/Edit/editArea/EditArea/{id}/{name}', 'AreaController@Ed
 
 Route::get('/admin/viewResults/{id}','AdminsController@viewResults')->name('adminViewResults');
 Route::get('/admins/maturity/addML', 'AdminsController@storeMaturityLevel');
-Route::put('/admins/maturity/editML', 'AdminsController@UpdateMaturity')->name('UpdateMaturity');
+
 Route::get('/admins/maturity/editML', 'AdminsController@editMaturityLevel')->name('editMaturity');
 Route::get('/admins/createUser', 'AdminsController@createUser');
 Route::get('/AddArea/{name}','AdminsController@storeArea');
@@ -57,8 +57,9 @@ Route::post('/admins/user_new', 'AdminsController@storeUser');
 Route::post('/admins/index', 'AdminsController@storeMaturityLevel');
 Route::get('/admins/user','AdminsController@showUsers')->name('showUsers');
 Route::get('/admins/user/delete/{id}','AdminsController@DeleteUsers')->name('DeleteUsers');
-Route::put('/admins/user/{id}', 'AdminsController@UpdateUsers')->name('UpdateUsers'); //Cambios
 Route::get('/admins/user/{id}', 'AdminsController@show')->name('show'); //Mostrar
+
+
 Route::get('/analista/viewResults/{id}','AnalistaController@viewResults')->name('analistaViewResults');
 Route::prefix('createTest')->group(function () {
     Route::post('/admins', 'CreateTestController@store');
@@ -101,7 +102,7 @@ Route::get('/Beta2', "UserAreaController@index");
 
 
 
- // ---------------------- Nuevas Rutas
+// ---------------------- Nuevas Rutas
 Route::get('/superAdmin','SuperAdminController@Home');
 Route::get('/superAdmin/company','SuperAdminController@showCompany');
 Route::get('/superAdmin/admins','SuperAdminController@showAdmins');
@@ -113,12 +114,15 @@ Route::post('/superAdmin/admin/new/add','SuperAdminController@storeAdmin');
 Route::get('/Datos/Admi/{id}','SuperAdminController@DatosAdmin');
 Route::put('/Admins/Activo/{id}', 'AdminsController@Activo');
 Route::get('/admin/pruebas', 'AdminsController@Pruebahome');
-Route::get('/admin/prueba/{TestId}/{ConceptId}/{UserId}', 'CreateTestController@EditarPrueba');
+Route::get('/admin/prueba/{TestId}/{ConceptId}', 'CreateTestController@EditarPrueba');
 Route::get('/admin/CreateTest', 'AdminsController@PruebaCreate');
-Route::put('/admin/Edit/Prueba', 'CreateTestController@PruebaEdit');
-
-
+Route::post('/admin/Edit/Prueba', 'CreateTestController@PruebaEdit');
+Route::get('/Admin/up/{testId}/{areasId}', 'AdminsController@test_update');
 
 // --------------------- Rutas de Ajax.
-
+Route::get('/Test_User/{test}/{user}/{V}','AreaController@Users'); /// aunque 
+Route::get('/Test_User/{test}/{description}','AreaController@Test_update'); /// aunque 
+Route::post('/admins/user_up/{id}', 'AdminsController@UpdateUsers')->name('UpdateUsers'); //Cambios
+Route::get('/Area_User/{area}/{user}/{V}','AreaController@Area_User');
+Route::post('/admins/maturity/editML', 'AdminsController@UpdateMaturity')->name('UpdateMaturity');
 

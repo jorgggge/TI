@@ -47,7 +47,7 @@ class AdminsController extends Controller
         }
     }
 
-    public function viewResults(Request $request,$areaId)
+    public function VR(Request $request,$areaId)
     {
         $request->user()->authorizeRoles(['admin']);
         $companyId = User::giveMeCompany(Auth::user());
@@ -114,6 +114,16 @@ class AdminsController extends Controller
     public function storeUser(Request $request)
     {
         $request->user()->authorizeRoles(['admin']);
+
+        $request->validate([
+            'username' => ['required', 'string','max:255', 'unique:users'],
+            'firstName' => ['required', 'string', 'max:255'],
+            'lastName' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:50', 'unique:users', 'unique:companies'],
+            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed'],
+            'role' => ['required'],
+            'areas' => ['required']
+        ]);
         $user = auth()->user();
         $companyId = $user->companyId;
         $areas = $request->input('areas');
@@ -128,7 +138,6 @@ class AdminsController extends Controller
             'companyId' => $companyId,
             'status' => 1
         ]);
-
         foreach ($areas as $area) {
             $userAdd->areas()->attach($area);
         }
@@ -138,13 +147,13 @@ class AdminsController extends Controller
             'user_id' => $userAdd->id
         ]);
 
-        return redirect('/admins/user');
+        return redirect('/admins/user')->with('success', true);
     }
 
     public function show(Request $request,$id)
     {
         $request->user()->authorizeRoles(['admin']);
-        $User = User::find($id)->toArray();
+        $User = User::where('Id',$id)->toArray();
         $Areas = Area::where('companyId',$User['companyId'])
             ->get();
         $User_Area = Area::join('user_areas','user_areas.areaId','=','areas.areaId')
@@ -186,7 +195,7 @@ class AdminsController extends Controller
         }
         }while ($i < 6);
 
-        return view('admins.index', compact('areas'));
+        return redirect('/admin')->with('success',true);
     }
 
     public function validatorUser()
@@ -279,9 +288,13 @@ class AdminsController extends Controller
     public function UpdateUsers(Request $request, $id)
     {
 
-        User_Area::where('userId',$id)->delete();
+        $request->validate([
+          'username' => 'required|string',
+          'lastName' => 'required|string',
+          'firstName' => 'required|string',
+          'emailuser' => 'required|string'
+        ]);
 
-        //return view('admins/users/update');
         User::find($id)->update([
             'username' => $request->username,
             'lastName' => $request->lastName,
@@ -289,32 +302,28 @@ class AdminsController extends Controller
             'email' => $request->emailuser
 
         ]);
-
-        $A = $request->toArray();
-        $Count = 1;
-        foreach ($A as $Value) {
-
-            if($Count > 6){
-                User_Area::insert([
-                    'userId' => $id,
-                    'areaId' => $Value
-                ]);
-            }
-            $Count++;
-        }
-
-        return back()->with('status','kk');
     }
 
     public function UpdateMaturity(Request $request)
     {
+        $request->validate([
+            'maturityName1' => 'required|string',
+            'maturityName2' => 'required|string',
+            'maturityName3' => 'required|string',
+            'maturityName4' => 'required|string',
+            'maturityName5' => 'required|string',
+        ]);
+
         $id = Auth::user()->companyId;
-        $Cant = DB::table('maturity_levels') ->where('companyId',$id)->get();
+
+        $Cant = DB::table('maturity_levels')->where('companyId',$id)->get();
+        $c = 1;
         foreach ($Cant as $T)
         {
             DB::table('maturity_levels')
             ->where([['companyId','=',$id], ['maturityLevelId','=',$T->maturityLevelId]])
-            ->update(['description' =>$request->maturityName[$T->maturityLevelId]]);
+            ->update(['description' => $request->{"maturityName".$c}]);
+            $c++;
         }
         return back();
     }
@@ -400,15 +409,13 @@ class AdminsController extends Controller
     {
 
         $user = auth()->user();
-          $userId = $user->companyId;
+        $userId = $user->companyId;
 
         $Pruebas = Area::join('tests','areas.areaId','tests.areaId')
-                                    ->join('test_user','tests.testId','test_user.testId')
-                                    ->join('users','test_user.userId','users.Id')
-                                    ->join('test_concept','tests.testId','test_concept.testId')
-                                    ->join('concepts','test_concept.conceptId','concepts.conceptId')
-                                    ->select('users.username as user','areas.name as area','tests.name as test','concepts.description as concept','users.Id as userId','tests.testId as testId','concepts.conceptId as conceptId')->where('users.companyId',$userId )->get();
-
+                        ->join('test_concept','tests.testId','test_concept.testId')
+                        ->join('concepts','test_concept.conceptId','concepts.conceptId')
+                        ->select('areas.name as area','areas.areaId','tests.name as test','concepts.description as concept','tests.testId as testId','concepts.conceptId as conceptId')
+                        ->where('areas.companyId',$userId )->get();
 
 
         return view('admins.area.test.index',compact ('Pruebas'));
@@ -424,7 +431,90 @@ class AdminsController extends Controller
     {
         
         User::find($Id)->update(['status' => intval($A)]);
+    }
 
-        return redirect("/admins/user");
+
+    public function viewResults(Request $request,$areaId)
+    {
+
+        $Tests = Test::all()->where('areaId',$areaId);
+
+        foreach ($Tests as $T) {
+
+            $Concepts = DB::table('test_concept')->where('testId',$T->testId)->get();
+
+            $Acu = 0;
+
+            foreach ($Concepts as $value) {
+                
+                $Valores = Concept::join('concept_maturity_level', 'concepts.conceptId','concept_maturity_level.conceptId')
+                       ->join('concept_maturity_level_attribute','concept_maturity_level.conceptMLId','concept_maturity_level_attribute.conceptMLId')
+                       ->join('evidences','concept_maturity_level_attribute.attributeid','evidences.attributeid')
+                       ->where(
+                        ['concepts.conceptId' => $value->conceptId],
+                        ['evidences.verified'=> 1])
+                       ->select(DB::raw('Count(evidences.evidenceId) as Puntaje'))->get();
+
+                foreach ($Valores as $v) {
+                    $R = $v->Puntaje;
+
+                }
+
+                $Acu += $R;
+            }
+
+            $Count_Users = DB::table('test_user')->where('testId',$T->testId)->count();
+            $Count_Concepts = DB::table('test_concept')->where('testId',$T->testId)->count();
+
+            $companyId = User::giveMeCompany(Auth::user());
+
+            $Levels = MaturityLevel::all()->where('companyId',$companyId);
+
+
+            $Res = ($Acu / ( $Count_Users * $Count_Users * 15)) * 100;
+
+            $X = 20;
+            $L = "";
+
+            foreach ($Levels as $Level) {
+                
+                if($X >= $Res){
+                    $L = $Level->description;
+                    break;
+                }else{
+                    $X += 20;
+                }
+            }
+
+            $Resultados[] = array("Test" => $T->name,"Resultado" => $Res,"Nivel" => $L);
+
+        }
+
+
+         
+
+        return json_encode($Resultados);
+    }
+
+
+    public function test_update($testId,$areasId)
+    {
+
+        $users = User::join('user_areas','users.id','user_areas.userId')
+                     ->join('role_user','users.id','role_user.user_id')
+                     ->where('user_areas.areaId', $areasId)
+                     ->where('role_user.role_id', 4)
+                    ->get();
+
+        $test_users = DB::table('test_user')->where('testId',$testId)->get();
+
+        $test = Test::all()->where('testId',$testId);
+
+        foreach ($test as $value) {
+            $testname = $value->name;
+        }
+
+
+        return view('admins.area.test.edit', compact('users','testname','testId','test_users'));
     }
 }

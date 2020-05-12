@@ -110,9 +110,12 @@ class UserController extends Controller
     }
 
     public function success(User $user)
-{
-    $user = User::latest('created_at')->first();
-    return view('success', compact('user'));
-}
+    {
+        $user = User::latest('created_at')->first();
+        return view('success', compact('user'));
+    }
+
+
+    
 
 }

@@ -58,9 +58,12 @@ class AreaController extends Controller
 
     public function EditArea($id,$name)
     {
-        DB::table('areas')
-        ->where('areaId',$id)
-        ->update(['name' =>$name]);
+        if($name != "null"){
+             DB::table('areas')
+            ->where('areaId',$id)
+            ->update(['name' =>$name]);
+        }
+               
 
         return redirect('/admin');
         //return back();
@@ -126,4 +129,44 @@ class AreaController extends Controller
             'results'
         ]));
     }
+
+
+    public function Users($test,$user,$V)
+    {
+        if($V == 1){
+
+            if(DB::table('test_user')->where('testId',$test)->where('userId',$user)->first()){
+
+            }else{
+                Test::find($test)->test_user()->attach($user);
+            }
+        }else{
+
+            DB::table('test_user')->where('testId',$test)->where('userId',$user)->delete();
+        
+        }
+    }
+
+
+    public function Test_update($test,$description)
+    {
+        Test::where('testId',$test)->update(['name' => $description]);
+    }
+
+    public function Area_User($area,$user,$V)
+    {
+        if($V == 1){
+
+            if(DB::table('user_areas')->where('areaId',$area)->where('userId',$user)->first()){
+
+            }else{
+                User::find($user)->areas()->attach($area);
+            }
+        }else{
+
+            DB::table('user_areas')->where('areaId',$area)->where('userId',$user)->delete();
+        
+        }
+    }
+
 }

@@ -5039,11 +5039,11 @@ section.content {
   .input-group .form-line.warning:after {
     border-bottom: 2px solid #FFC107; }
   .input-group .form-line.focused:after {
-    -moz-transform: scaleX(1);
+   /* -moz-transform: scaleX(1);
     -ms-transform: scaleX(1);
     -o-transform: scaleX(1);
     -webkit-transform: scaleX(1);
-    transform: scaleX(1); }
+    transform: scaleX(1); */}
   .input-group .form-line.focused .form-label {
     bottom: 25px;
     left: 0;
@@ -5058,7 +5058,8 @@ section.content {
       color: #555; }
   .input-group input[type="text"],
   .input-group .form-control {
-    border: none;
+    border:0px;
+     border-bottom: 1px solid #1F91F3;
     box-shadow: none;
     padding-left: 0; }
   .input-group .form-control:focus {

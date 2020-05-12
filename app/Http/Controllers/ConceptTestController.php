@@ -132,7 +132,7 @@ class ConceptTestController
             $concept_maturity_level = DB::table('concept_maturity_level')->get()->toArray();
             $addAttribute->concept_maturity_level_attribute()->attach(end($concept_maturity_level)->conceptMLId);        }
 
-        return redirect('/admins/user/index');
+        return redirect('/admin/pruebas')->with('Concept',true);
     }
 
     public function validatorConcept()

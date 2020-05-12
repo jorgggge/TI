@@ -5,12 +5,11 @@
             <div class="row clearfix">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            <h2 style="color: white;">
-                                <a href="#" style="color: white;">Pruebas</a>
-                            </h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 24px;">assignment_turned_in</i>
+                            Pruebas
                         </div>
-                        <div class="body">
+                        <div class="body ">
                             @if(!empty($areas))
                                 <div class="alert alert-danger" >
                                     {{ 'Agrega un área para empezar a trabajar.' }}
@@ -18,41 +17,62 @@
                             @else
                              <div class="row clearfix">
                                 <div class="col-sm-8">
-                                    <h5>Aqui se muestras todas las pruebas para las areas de la compañia</h5>
+                                    Aqui se muestras todas las pruebas para las areas de la compañia.
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="input-group">
-                                         <span class="input-group-addon">
-                                            <i class="material-icons">search</i>
-                                        </span>
-                                        <div class="form-line">
-                                            <input type="text" id="myInput" class="form-control" placeholder="Buscar prueba" />
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                             <div class="table-responsive">
+                             <div class="table-responsive" >
                                     <table id="dtBasicExample" class="table table-hover">
                                         <thead> 
                                                 <tr>
                                                     <th>Área</th>
                                                     <th>Prueba</th>
                                                     <th>Concepto</th>
-                                                    <th>Usuaio</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                                $test = ""; 
+                                                $C = "";   
+                                            @endphp
                                         	@foreach ($Pruebas as $Prueba)
-                                            <tr>
+                                            @if ($test != $Prueba->test)
+                                             <tr>
                                                 <td>{{ $Prueba->area }}</td>
-                                              	<td>{{ $Prueba->test }}</td>
-                                                <td>{{ $Prueba->concept }}</td>
-                                                <td>{{ $Prueba->user }}</td>
+                                                <td>{{ $Prueba->test }}</td>
+                                                <td></td>
                                                 <td>
-                                                	<input type="button" class="btn btn-primary" name="" value="Editar" onclick="window.location='/admin/prueba/{{$Prueba->testId }}/{{ $Prueba->conceptId}}/{{ $Prueba->userId }}'">
+                                                    <button class="btn btn-primary" onclick="window.location='/Admin/up/{{$Prueba->testId }}/{{ $Prueba->areaId}}'">
+                                                         <i class="material-icons">edit</i> <span>Editar</span> 
+                                                    </button> 
                                                 </td>
-                                                <td><input type="button" class="btn btn-danger" name="" value="Eliminar" onclick="window.location='Test_Delete({{ $Prueba->testId }});"></td>
-                                            </tr>
+                                                <td></td>
+                                                @php
+                                                    $test = $Prueba->test;
+                                                @endphp
+
+                                            @endif
+                                                @if ($C != $Prueba->concept)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>{{ $Prueba->concept }}</td>
+                                                        <td>
+                                                            <button class="btn btn-primary" onclick="window.location='/admin/prueba/{{$Prueba->testId }}/{{ $Prueba->conceptId}}'">
+                                                                <i class="material-icons">edit</i> <span>Editar</span> 
+                                                            </button> 
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-danger" onclick="window.location='Test_Delete({{ $Prueba->testId }});">
+                                                                <i class="material-icons">clear</i> <span>Eliminar</span> 
+                                                            </button> 
+                                                        </td>
+                                                    </tr>
+                                                    @php
+                                                        $C = $Prueba->concept
+                                                    @endphp
+                                                @endif
                                             @endforeach
                                         </tbody>   
                                     </table>
@@ -62,6 +82,26 @@
                     </div>
             </div>
 </div>
+
+
+@if (session()->has('test_update'))
+    <script type="text/javascript">
+    swal("Listo!", "Actualización exisitosa de la Prueba!", "success");
+    </script>
+@endif
+
+@if (session()->has('Test'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado una nueva Prueba!", "success");
+    </script>
+@endif
+
+@if (session()->has('Concept'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado un nuevo Concepto!", "success");
+    </script>
+@endif
+
 
 <script type="text/javascript">
     $("#Pruebas").addClass('active');

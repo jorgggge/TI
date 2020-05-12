@@ -98,19 +98,6 @@ use Illuminate\Support\Facades\Auth;
         </div>
     </div>
     <!-- #END# Page Loader -->
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="START TYPING...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
   
 @if(Auth::user()->hasRole('superadmin'))
 
@@ -274,24 +261,10 @@ use Illuminate\Support\Facades\Auth;
             <ul class="list">
                 <li class="header">MENU</li>
                 <li id="Area" >
-                    <a href="#"  class="menu-toggle">
+                    <a href="{{ url('/admin') }}">
                         <i class="material-icons">nature_people</i>
                         <span>Areas</span>
                     </a>
-                    <ul class="ml-menu">
-                        <li id="MostrarAreas">
-                            <a href="{{ url('/admin') }}">
-                              <i class="material-icons">nature</i>
-                                <span>Mostrar Areas</span>
-                            </a>
-                        </li>
-                        <li id="Agregar Area">
-                            <a href="#" onclick="CreaArea()">
-                              <i class="material-icons">nature_people</i>
-                                <span>Agregar Area</span>
-                            </a>                            
-                          </li>
-                    </ul>
                 </li> 
                 <li id="Usuarios">
                     <a href="#" class="menu-toggle">
@@ -330,7 +303,13 @@ use Illuminate\Support\Facades\Auth;
                               <i class="material-icons">assignment</i>
                                 <span>Crear Prueba</span>
                             </a>                            
-                          </li>
+                        </li>
+                        <li id="AgregarConcepto">
+                            <a href="{{url('/admins/area/concept_test/create')}}">
+                              <i class="material-icons">assignment</i>
+                                <span>Agregar Concepto</span>
+                            </a>                            
+                        </li>
                     </ul>
                 </li>
                 <li id="NivelesdeMadurez">
@@ -595,21 +574,7 @@ use Illuminate\Support\Facades\Auth;
     <!-- Propios Js-->
     <script src="{{ asset('js/customer.js') }}"></script>
 
-    <script type="text/javascript">
-      function  CreaArea() {
-        swal("Nombre del area nueva:", {
-            content: "input",
-          })
-          .then((value) => {
-                  $.ajax({
-                      type: "GET",
-                      url: "/AddArea/"+value,
-                      success: function(response){}
-                });
-                
-            });
-      }
-    </script>
+    
     <script type="text/javascript">
                 $('#dtBasicExample').DataTable({
                     language: {
@@ -618,7 +583,7 @@ use Illuminate\Support\Facades\Auth;
                     "paging":   true,
                     "ordering": false,
                     "searching": true,
-                    "info":     true,
+                    "info":     false,
                 });
           
       

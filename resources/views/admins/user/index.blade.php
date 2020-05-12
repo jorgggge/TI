@@ -13,69 +13,60 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            
-                            <h2 style="color: white;">
-                                Usuarios
-                            </h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">supervisor_account</i>
+                            Usuarios
                         </div>
                         
                         <div class="body">
                          <div class="row clearfix">
                                 <div class="col-sm-8">
-                                    <h4 class="card-iniside-title">
                                         Aqui se mostrar los ususrios analistas y comunes.
-                                    </h4>
                                 </div>
                                 <div class="col-sm-4">
-                                    <div class="input-group">
-                                         <span class="input-group-addon">
-                                            <i class="material-icons">search</i>
-                                        </span>
-                                        <div class="form-line">
-                                            <input type="text" id="myInput" class="form-control" placeholder="Buscar Usuario" />
-                                        </div>
-                                    </div>
+                                   
                                 </div>
                             </div>
                             <div class="table-responsive">
                                 <table id="dtBasicExample" class="table table-hover">
                                 <thead>
                                   <tr>
-									<th>Status</th>
-								    <th>Nombre</th>
-								    <th>Usuario</th>
-								    <th>Rol</th>
-								    <th>Email</th>
-								    <th>Actulizacion</th>
-								</tr>
-                                </thead>
-                                <tbody id="myTable">
-                               @foreach ($Users as $user)
-							    		<tr> 
-                                            <td>
-                                                @if ($user->status != 0 )
-                                               <button type="button" class="btn btn-success  waves-effect" onclick="User_Delete({{ $user->id }},0)">
-                                                    Habilitado
+                  									<th>Status</th>
+                  								    <th>Nombre</th>
+                  								    <th>Usuario</th>
+                  								    <th>Rol</th>
+                  								    <th>Email</th>
+                  								    <th>Actulizacion</th>
+                  								</tr>
+                                                  </thead>
+                                                  <tbody id="myTable">
+                                                 @foreach ($Users as $user)
+                  							    		<tr> 
+                                                              <td>
+                                                                  @if ($user->status != 0 )
+                                                                 <button type="button"  id="btn-{{ $user->id }}"  class="btn btn-success  waves-effect" onclick="User_Delete({{ $user->id }},0)">
+                                                                       <i class="material-icons" id="mc-{{ $user->id }}">work</i> <span id="s-{{ $user->id }}">Habilitar</span>
+                                                                  </button>
+                                                                  @else
+                                                                  <button type="button"  id="btn-{{ $user->id }}" class="btn btn-warning waves-effect" onclick="User_Delete({{ $user->id }},1)">
+                                                                       <i class="material-icons" id="mc-{{ $user->id }}" id="s-{{ $user->id }}">lock</i> <span id="s-{{ $user->id }}">Bloquear</span> 
+                                                                  </button>
+                                                                  @endif
+                                                              </td>
+                  								    		<td>{{ $user->firstName." ".$user->lastName }}</td>
+                  								    		<td>{{ $user->username }}</td>
+                  								    		@if ($user->role_id == 3)
+                  								    			<td>Analista</td>
+                  								    		@endif
+                  								    		@if ($user->role_id == 4)
+                  								    			<td>Comun</td>
+                  								    		@endif
+                  								    		<td>{{ $user->email }}</td>
+                  								    		<td>
+
+                                                <button class="btn btn-primary waves-effect" onclick="window.location='/admins/user/{{ $user->id }}'">
+                                                    <i class="material-icons" >mode_edit</i> <span>Editar</span> 
                                                 </button>
-                                                @else
-                                                <button type="button" class="btn btn-warning waves-effect" onclick="User_Delete({{ $user->id }},1)">
-                                                    Deshabilitado
-                                                </button>
-                                                @endif
-                                            </td>
-								    		<td>{{ $user->firstName." ".$user->lastName }}</td>
-								    		<td>{{ $user->username }}</td>
-								    		@if ($user->role_id == 3)
-								    			<td>Analista</td>
-								    		@endif
-								    		@if ($user->role_id == 4)
-								    			<td>Comun</td>
-								    		@endif
-								    		<td>{{ $user->email }}</td>
-								    		<td>
-								    			<input type="button" class="btn btn-primary" name="" value="Editar" style="background-color: green;color: white;border:none;"
-												onclick="window.location='{{ route('UpdateUsers',$user->id) }}'">
 								    		</td>
                                            
 							    		</tr>
@@ -104,12 +95,45 @@ function User_Delete(Id,A) {
             })
             .then((willDelete) => {
               if (willDelete) {
-                window.location = "/Admin/Userdelete/delete/"+Id+"/"+A;
-              
+                
+                A = $("#btn-"+Id).hasClass("btn-success") ? 0 : 1;
+
+                $.ajax({
+                      type: "GET",
+                      url: "/Admin/Userdelete/delete/"+Id+"/"+A,
+                      success: function(response){}
+                });
+
+                
+                 if(A == 0){
+                   $("#btn-"+Id).removeClass("btn-success");
+                   $("#btn-"+Id).addClass("btn-warning");  
+                   $("#mc-"+Id).text("lock");
+                   $("#s-"+Id).text("Bloquear");
+
+                }else{
+                   $("#btn-"+Id).addClass("btn-success");
+                   $("#btn-"+Id).removeClass("btn-warning");
+                   $("#mc-"+Id).text("work");
+                   $("#s-"+Id).text("Habilitar");
+                } 
+
               } else {
               }
             });
                 
             }
 </script>
+
+@if (session()->has('success'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado un nuevo Usuario!", "success");
+    </script>
+@endif
+
+@if (session()->has('update'))
+    <script type="text/javascript">
+    swal("Listo!", "Actualización exisitosa!", "success");
+    </script>
+@endif
 @endsection
