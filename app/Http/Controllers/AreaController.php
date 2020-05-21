@@ -45,9 +45,9 @@ class AreaController extends Controller
 
     }
 
-    public function beta()
+    public function beta(Request $request)
     {
-      return view('admins.area.test.beta');
+        return $request->all();
     }
 
     public function showArea(Request $request,$id)

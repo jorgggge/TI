@@ -20,7 +20,7 @@
                                 <div class="row clearfix">
 
                                     <div class="col-sm-2"></div>
-
+        
                                     <?php
                                         $label = $x;
                                         if($label == 0){
@@ -67,9 +67,11 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
-                                        <button id="btn-form" class="btn btn-primary">
+                                        <center>
+                                            <button id="btn-form" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
+                                        </center>
                                     </div>
                                 </div>
                            

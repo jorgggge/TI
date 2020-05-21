@@ -49,7 +49,7 @@ class SuperAdminController extends Controller
        }
     }
 
-    public function createCompany()
+    public function createCompany() 
     {
         $this->authorize('view');
         return view('superAdmin.addCompany.create');
@@ -80,7 +80,7 @@ class SuperAdminController extends Controller
     
     public function createAdmin()
     {
-       $this->authorize('view');
+        
         $companies = Company::all(['companyId', 'name']);
         return view('superAdmin.addAdmin.create', compact('companies'));
     }
@@ -126,17 +126,16 @@ class SuperAdminController extends Controller
     public function showCompany()
     {
         $Com = DB::table('companies') ->get();
-
-        return view('/superAdmin/viewCompanies/create', compact('Com'));
+        return view('superAdmin.viewCompanies.index', compact('Com'));
     }
 
-    public function showSA($id)
+    public function showSA($id) // Edit Company
     {
         $Admin = DB::table('companies')
         ->where('companyId',$id)
         ->get();
 
-        return view('superAdmin/viewCompanies/editCompany', compact('Admin'));
+        return view('superAdmin.viewCompanies.editCompany', compact('Admin'));
     }
 
     public function editSA(Request $request,$id)

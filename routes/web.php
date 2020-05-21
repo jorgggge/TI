@@ -10,29 +10,6 @@ Route::resource('users', 'UserController');
 //pass in verify email opton
 Auth::routes(['verify' => true]);
 //----------------------------------------------SuperAdminRoutes----------------------------------------------------------------------
-Route::resource('superAdmin/addAdmin', 'AdminsController');
-Route::resource('superAdmin/addCompany', 'CompanyController');
-
-Route::get('/superAdmin/viewcustomersuperadmin/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
-Route::post('/superAdmin/viewcustomersuperadmin/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
-Route::get('/superAdmin/companydelete/delete/{id}/{A}', 'ViewCustomerSuperAController@Companydelete');
-Route::get('/superAdmin/viewcustomersuperadmin/delete/{id}/{A}', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
-Route::get('/superAdmin/viewcustomersuperadmin', 'ViewCustomerSuperAController@create');
-Route::get('/superAdmin/create','SuperAdminController@create')->name('createAdmins');
-Route::prefix('CreateCompany')->group(function (){
-    Route::get('/addCompany/create', 'SuperAdminController@createCompany');
-});
-Route::prefix('CreateAdmin')->group(function () {
-    Route::post('/superAdmin', 'SuperAdminController@storeAdmin');
-    Route::get('/addAdmin/create', 'SuperAdminController@createAdmin');
-});
-Route::get('/superAdmin/index', "SuperAdminController@index")->name('SAH');
-Route::get('/superAdmin/history','SuperAdminController@history')->name('HistoryS');
-Route::post('/superAdmin/history/delete','SuperAdminController@historydelete')->name('HistoryDelete');
-Route::get('/superAdmin/viewCompanies/create','SuperAdminController@showCompany');
-Route::get('/superAdmin/viewCompanies/editCompany/{id}','SuperAdminController@showSA')->name('ShowCompanySA');
-Route::post('/superAdmin/viewCompanies/editCompany/showSA/{id}','SuperAdminController@editSA')->name('EditCompanySA');
-Route::put('/superAdmin/viewCompanies/create/status/{id}','CompanyController@status')->name('status');
 
 
 //---------------------------------------------------Admin----------------------------------------------------------------------------
@@ -85,29 +62,46 @@ Route::get('/Area/Test/Concept/{id}', 'AdminsController@showconcept');
 Route::get('/Area/Test/Concept/MaturityL/{id}', 'AdminsController@showLevelM');
 Route::get('/Area/Test/Concept/Attributes/{id}', 'AdminsController@showAtributtes');
 //-----------------------------------------------File Upload----------------------------------------------------------------------------
-Route::get('/upload/{id}', 'Test\TestController@index');
-Route::resource('/upload', 'Test\TestController');
+Route::post('/upload', 'Test\TestController@index');
+Route::get('/download/{evidenceId}','Test\TestController@down');
+Route::get('/storage/app/public/upload/{archivo}','Test\TestController@view');
 //-------------------------------------------------Analista---------------------------------------------------------------------------
 Route::get('/analista', 'AnalistaController@index');
-Route::get('/analista/viewResults/{id}','AnalistaController@viewResults')->name('analistaViewResults');
-Route::get('/analista/test/{testId}/concepto/{conceptoId}', 'AnalistaController@test')->name('analistaTest');
+Route::get('/analista/pruebas/{testId}/{userId}', 'AnalistaController@test')->name('analistaTest');
 Route::post('test', 'AnalistaController@storeTest');
 //---------------------------------------------------Comun----------------------------------------------------------------------------
 Route::get('/comun', 'ComunController@index');
-Route::get('/comun/test/{testId}/concepto/{conceptoId}', 'ComunController@test')->name('comunTest');
+Route::get('/comun/prueba/{testId}/{conceptId}', 'ComunController@test')->name('comunTest');
+
+
 Route::get('/Areaf/{request}/{Test}/{concept}/{user}', 'AreaController@show');
-Route::get('/Beta', 'AreaController@beta');
+
+
+Route::post('/Beta', 'AreaController@beta');
 
 Route::get('/Beta2', "UserAreaController@index");
 
 
 
 // ---------------------- Nuevas Rutas
-Route::get('/superAdmin','SuperAdminController@Home');
 Route::get('/superAdmin/company','SuperAdminController@showCompany');
+Route::get('/superAdmin/company/{id}','SuperAdminController@showSA')->name('ShowCompanySA');
+Route::post('/superAdmin/viewCompanies/editCompany/showSA/{id}','SuperAdminController@editSA')->name('EditCompanySA');
+Route::get('/superadmin/company/create','SuperAdminController@createCompany');
+Route::post('/superAdmin/company/new/add','SuperAdminController@storeCompany')->name('NewCompany');
+
 Route::get('/superAdmin/admins','SuperAdminController@showAdmins');
-Route::post('/superAdmin/company/new/add','SuperAdminController@storeCompany');
-Route::post('/superAdmin/admin/new/add','SuperAdminController@storeAdmin');
+Route::get('/superAdmin/admins/create','SuperAdminController@createAdmin');
+Route::get('/superAdmin/admins/{id}', 'ViewCustomerSuperAController@show')->name('ViewCustomer');
+Route::post('/superAdmin/admins/update/{uid}/{cid}', 'ViewCustomerSuperAController@update')->name('UpdateCustomer');
+Route::post('/superAdmin/admin/new/add','SuperAdminController@storeAdmin')->name('NewAdmin');
+
+Route::get('/superAdmin/history','SuperAdminController@history')->name('HistoryS');
+Route::post('/superAdmin/history/delete','SuperAdminController@historydelete')->name('HistoryDelete');
+
+Route::get('/superAdmin/viewcustomersuperadmin/delete/{id}/{A}', 'ViewCustomerSuperAController@delete')->name('DeleteCustomer');
+Route::get('/superAdmin/companydelete/delete/{id}/{A}', 'ViewCustomerSuperAController@Companydelete');
+
 
 
 
@@ -119,10 +113,20 @@ Route::get('/admin/CreateTest', 'AdminsController@PruebaCreate');
 Route::post('/admin/Edit/Prueba', 'CreateTestController@PruebaEdit');
 Route::get('/Admin/up/{testId}/{areasId}', 'AdminsController@test_update');
 
+
+Route::get('/analista/pruebas', 'AnalistaController@Pruebahome');
 // --------------------- Rutas de Ajax.
 Route::get('/Test_User/{test}/{user}/{V}','AreaController@Users'); /// aunque 
 Route::get('/Test_User/{test}/{description}','AreaController@Test_update'); /// aunque 
 Route::post('/admins/user_up/{id}', 'AdminsController@UpdateUsers')->name('UpdateUsers'); //Cambios
 Route::get('/Area_User/{area}/{user}/{V}','AreaController@Area_User');
 Route::post('/admins/maturity/editML', 'AdminsController@UpdateMaturity')->name('UpdateMaturity');
+
+
+
+
+Route::get('/Validar/Evidences/{evidenceId}/{validar}','AnalistaController@ValidarEvidencia');
+Route::get('/Comentario/Evidences/{evidenceId}/{texto}','AnalistaController@ComentarioEvidencia');
+Route::get('/Analista/Prueba/Concepts/Attributes/{conceptId}','AnalistaController@Attributes');
+Route::get('/Analista/Prueba/Concepts/Evidences/{conceptId}/{userId}','AnalistaController@Evidences');
 

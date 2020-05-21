@@ -13,7 +13,7 @@
                         <div class="body">
                               <div class="row clearfix">
                                 <div class="col-sm-12">
-                                    Se mostrar las areas registradas de la empresa.
+                                    <b>Se mostrar las areas registradas de la empresa.</b>
                                 </div>
                       
                             </div>
@@ -75,8 +75,10 @@
                         <div class="body" id="result_body">
                           <div class="row clearfix">
                             <div class="col-sm-12">
-                                Selecciona una area para ver los resultdos de las pruebas asignadoas. <br>
+                                <b>
+                                  Selecciona una area para ver los resultdos de las pruebas asignadoas. <br>
                                   La notacion del puntaje sera en porcentaje 0% - 100%
+                                </b>
                             </div>
                           </div>
                           <div class="row clearfix">
@@ -93,8 +95,9 @@
                           </div>
                           
                           </div>
-                          <canvas id="miGrafico"></canvas> 
-          
+                          <div style="height: 300px">
+                            <canvas id="miGrafico"height="300"></canvas> 
+                          </div>
                         </div>
                     </div>
             </div>
@@ -104,17 +107,17 @@
 @if (session()->has('success'))
     <script type="text/javascript">
     swal("Listo!", "Se ingresanso los niveles de madurez", "success");
-    swal("Listo!", "Ya puedes agregar nuevas areas, pruebas y usuarios", "info");
+      swal("Listo!", "Ya puedes agregar nuevas areas, pruebas y usuarios", "info");
     </script>
 @endif
 
 
 <script type="text/javascript">
 
-
+var grafico;
+var table;
 
 function Ver_Resultados(Id,Name) {
-
   $.ajax({
     type: "GET",
     url: "/admin/viewResults/"+Id,
@@ -128,12 +131,13 @@ function Ver_Resultados(Id,Name) {
             
 
         var v = JSON.parse(response);
-        
+
         for (var i = v.length - 1; i >= 0; i--) {
           Test.push(v[i].Test);
           Resultado.push(v[i].Resultado);
           Nivel.push(v[i].Nivel);
         }
+
 
 
          var chartdata = {
@@ -151,11 +155,15 @@ function Ver_Resultados(Id,Name) {
  
             var mostrar = $("#miGrafico");
  
-            var grafico = new Chart(mostrar, {
+            if (grafico != null) {
+              grafico.clear();
+            }
+            grafico = new Chart(mostrar, {
                 type: 'bar',
                 data: chartdata,
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     legend: {
                         display: false,
                     },
@@ -164,7 +172,7 @@ function Ver_Resultados(Id,Name) {
                             ticks: {
                                 max: 100,
                                 min: 0,
-                                stepSize: 0
+                                beginAtZero: true
                             }
                         }]
                     },
@@ -175,19 +183,23 @@ function Ver_Resultados(Id,Name) {
                 }
             });
 
+          if(table != null){
+            table.destroy();
+          }
 
-
-            $('#TableRes').DataTable({
+          table = $('#TableRes').DataTable({
                 data : v,
                 "paging":   false,
                 "ordering": false,
                 "searching": false,
                 "info":     false,
+                "responsive": true,
                 columns: [
                     { 'data': 'Test'},
                     { 'data': 'Resultado'},
                     { 'data': 'Nivel'}
                   ]
+
             });
 
 

@@ -41,9 +41,11 @@
                                 <div class="col-sm-8">
                                 </div>
                                 <div class="col-sm-2">
-                                     <button class="btn btn-info" id="btn-form" type="submit">
+                                     <center>
+                                       <button class="btn btn-info" id="btn-form" type="submit">
                                        <i class="material-icons">done</i> <span>Guardar</span> 
                                      </button>
+                                     </center>
                                 </div>
                             </div>
                            

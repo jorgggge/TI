@@ -13,8 +13,8 @@
                         <div class="body">
                             <div class="row clearfix">
                                     <div class="col-sm-8">
-                                        Ingresa el nombre nuevo de esta prueba y/o asigna usuario a esta pruebas.
-                                        <br><b>(*) Datos Obligatorios</b> 
+                                        <b>Puede cambiar el nombre de esta prueba y/o cambia los atributos  
+                                        <br>(*) Datos Obligatorios</b> 
                                     </div>
                                 </div>
                             <form method="POST" action="/admin/Edit/Prueba">
@@ -110,9 +110,11 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
-                                        <button type="submit" id="btn-form" class="btn btn-primary">
+                                        <center>
+                                            <button type="submit" id="btn-form" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
+                                        </center>
 
                                     </div>
                                 </div>

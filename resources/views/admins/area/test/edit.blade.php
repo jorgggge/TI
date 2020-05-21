@@ -71,9 +71,11 @@
                                         @endforeach
                                     </div>
                                     <div class="col-sm-2">
-                                        <button type="submit" id="btn-form" class="btn btn-primary">
+                                       <center>
+                                            <button type="submit" id="btn-form" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
+                                       </center>
                                     </div>
                                 </div> 
                             @include('errors')

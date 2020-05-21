@@ -32,28 +32,16 @@ class AnalistaController extends Controller
         //Tenemos que regresarle las areas del analista
         $userId = Auth::user()->id;//Dame el id del usuario loggeado
         $areas = $this->areasFromAnalista($userId);
-        $areasId = array_column($areas,'areaId');
-        $tests = Test::whereIn('areaId',$areasId)->get()->toArray();
-        $testsId = array_column($tests,'testId');
 
-        $concepts = DB::table('concepts')
-            ->join('test_concept','test_concept.conceptId','=','concepts.conceptId')
-            ->join('tests','tests.testId','=','test_concept.testId')
-            ->join('areas','areas.areaId','=','tests.areaId')
-            ->select('areas.areaId','areas.name as areaName','tests.testId','tests.name as testName','concepts.conceptId','concepts.description')
-            ->whereIn('test_concept.testId',$testsId)
-            ->get()->toArray();
 
-        return view('analistas.index', compact('areas','concepts'));
+        return view('analistas.index', compact('areas'));
     }
 
     public function areasFromAnalista($userId)
     {
-        $areasIdFromAnalista = User_Area::where('userId',$userId)->get()->toArray();
-        $areasIdFromAnalista = array_column($areasIdFromAnalista,'areaId');
-        $areasFromAnalista = Area::whereIn('areaId',$areasIdFromAnalista)->get()->toArray();
-        $areas = $areasFromAnalista;
-        return $areas;
+        $areasIdFromAnalista = User_Area::join('areas','user_areas.areaId','areas.areaId')
+                                          ->where('userId',$userId)->get();
+        return $areasIdFromAnalista;
     }
 
     public function viewResults(Request $request,$areaId)
@@ -89,41 +77,20 @@ class AnalistaController extends Controller
         ]));
     }
 
-    public function test(Request $request, $testId,$conceptId)
+    public function test($testId,$userId)
     {
-        $request->user()->authorizeRoles(['analista']);
-        $userId = Auth::user()->id;
-        $areas = $this->areasFromAnalista($userId);
-        $areasId = array_column($areas,'areaId');
-        $testFromAreasOfTheUser = Test::whereIn('areaId',$areasId)->get()->toArray();
-        $testsIdFromAreasOfTheUser = array_column($testFromAreasOfTheUser,'testId');
-        $testFromUser = TestUser::where('testId',$testId)->get()->toArray()[0];
-        $commonUserId = $testFromUser['userId'];
-        $dataFromCommonUser = User::where('id', $commonUserId)->get()->toArray()[0];
-        $email = $dataFromCommonUser['email'];
-        $name = $dataFromCommonUser['firstName'];
-        $lastName = $dataFromCommonUser['lastName'];
-        $count = 0;
 
-        $request->attributes->add(['testId' => $request->testId]);
 
-        abort_if(!in_array($testId,$testsIdFromAreasOfTheUser),403);//Si el area seleccionada no existe dentro de las areas de la compania
-        $test = Test::where('testId',$testId)->get()->toArray()[0];
-        $testName = $test['name'];
+           $User = json_decode(User::where('id',$userId)->get()->toJson());
+           $User = $User[0];
 
-        $concepts = Concept::conceptsFromATestId($testId);
-        $conceptsIds = array_column($concepts,'conceptId');
+           $Test = json_decode(Test::where('testId',$testId)->get()->toJson());
+           $Test = $Test[0];
+           $Concepts = Concept::conceptsFromATestId($testId);
+           
+           
 
-        abort_if(!in_array($conceptId,$conceptsIds),403);//Si el conceptId que me estas pidiendo no esta dentro de los concepts del test no dejarlo entrar
-        $selectedConcept = Concept::where('conceptId',$conceptId)->get()->toArray()[0];
-
-        $maturityLevels = MaturityLevel::matLevFromAConceptId($conceptId);
-        $maturityLevelsId = array_column($maturityLevels,'conceptMLId');
-
-        $attributes = Attribute::attributesFromAnArrayOfMatLevels($maturityLevelsId);
-        $attributesWithEvidences = Attribute::attributesFromAnArrayOfMatLevelsWithEvidences($maturityLevelsId);
-
-        return view('analistas.test.test',compact('test','selectedConcept','concepts','maturityLevels','attributes','attributesWithEvidences','email', 'name', 'lastName', 'count', 'commonUserId', 'testName'));
+        return view('analistas.test.test',compact('User','Concepts','Test'));
     }
 
     public function storeTest(Request $request)
@@ -176,5 +143,41 @@ class AnalistaController extends Controller
         comment the return redirect and the Email::to lines when used */
 
         return redirect('/analista');
+    }
+
+    public function Pruebahome()
+    {
+
+        $_areas = DB::table('user_areas')->where('userId',auth()->user()->id)->select('areaId')->get();
+        foreach($_areas as $a)  $areas[] = $a->areaId;
+
+        $Pruebas = Test::join('test_user','tests.testId','test_user.testId')
+                        ->join('users','test_user.userId','users.id')
+                        ->select('tests.name','users.firstName','users.lastName','users.id','tests.testId')
+                        ->whereIn('tests.areaId',$areas)->get();
+
+        return view('analistas.test.index',compact ('Pruebas','areas'));
+    }
+
+    public function Attributes($conceptId)
+    {
+        $A = Attribute::get($conceptId);
+        return json_encode($A);     
+    }
+
+    public function Evidences($conceptId,$userId)
+    {
+        $E = Attribute::Evidences($conceptId,$userId);
+        return json_encode($E);
+    }
+
+    public function ValidarEvidencia($evidenceId,$validar)
+    {
+        DB::table('evidences')->where('evidenceId',$evidenceId)->update(['verified' => $validar]);
+    }
+
+    public function ComentarioEvidencia($evidenceId,$texto)
+    {
+        DB::table('evidences')->where('evidenceId',$evidenceId)->update(['comment' => $texto]);
     }
 }

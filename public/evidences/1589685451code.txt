@@ -1,0 +1,63 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Prolog
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(" -- Ingresa el precio de los burritos: ");
+            decimal Precio = Decimal.Parse(Console.ReadLine()); 
+            Console.WriteLine("----------------- Tabla de Precios ----------------------");
+
+            var Tabla_Precios = GetPercios(Precio);
+            int x = 1;
+            foreach (var _Precio in Tabla_Precios) {
+
+                if (x <= 15) Console.WriteLine(x + " * " + Precio + " = " + _Precio);
+                else break;
+
+                x++;
+            }
+
+            Console.ReadKey();
+        }
+
+        static IEnumerable<decimal> GetPercios(decimal Precio_Actual) {
+
+            yield return Precio_Actual;
+            decimal Aux = Precio_Actual;
+
+            while (true) {
+                Aux = Precio_Actual + Aux;
+                yield return Aux;
+            }
+        }
+
+    }
+}
+
+
+
+
+<div class="container mt-1">
+    <div class="dropdown">
+        <button class="btn dropdown-toggle dp-areas" type="button" id="dropdownMenu2" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false" style="}">
+           
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            @foreach($areas as $area)
+            <a href="{{route('analistaViewResults',$area['areaId'])}}">
+                <button class="dropdown-item " type="button">{{$area['name']}}
+                </button>
+            </a>
+            @endforeach
+        </div>
+    </div>
+</div>
+ 

@@ -40,4 +40,28 @@ class Attribute extends Model
             ->whereIn('concept_maturity_level_attribute.conceptMLId',$maturityLevelsId)
             ->get()->toArray();
     }
+
+    static function Evidences($conceptId,$userId)
+    {
+        return $attributes = DB::table('attributes')
+            ->join('evidences','evidences.attributeId','=','attributes.attributeId')
+            ->join('concept_maturity_level_attribute as cma','cma.attributeId','=','attributes.attributeId')
+            ->join('concept_maturity_level as cm','cma.conceptMLId','cm.conceptMLId')
+            ->join('maturity_levels','cm.maturityLevelId','maturity_levels.maturityLevelId')
+            ->where([
+            	'cm.conceptId' => $conceptId,
+            	'evidences.userId' => $userId
+            ])
+            ->select('evidences.*')->get();
+    }
+    
+    static function get($conceptId)
+    {
+        return $attributes = DB::table('attributes')
+            ->join('concept_maturity_level_attribute as cma','cma.attributeId','=','attributes.attributeId')
+            ->join('concept_maturity_level as cm','cma.conceptMLId','cm.conceptMLId')
+            ->join('maturity_levels','cm.maturityLevelId','maturity_levels.maturityLevelId')
+            ->where('cm.conceptId',$conceptId)
+            ->select('attributes.*','maturity_levels.description as Nivel')->get();
+    }
 }

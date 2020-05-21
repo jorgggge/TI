@@ -26,8 +26,7 @@ class ViewCustomerSuperAController extends Controller
         ->select('users.*','companies.*','users.email as emailuser','companies.email as emailcompany')
         ->where('users.id',$id)->get();
 
-    	return view('superAdmin/viewCostumers/viewcustomersuperadmin' ,compact('Admin'));
-    	//return view('superAdmin/viewcustomersuperadmin');
+    	return view('superAdmin.viewCostumers.viewcustomersuperadmin' ,compact('Admin'));
     }
 
     public function update(Request $request,$uid,$cid)

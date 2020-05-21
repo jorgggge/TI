@@ -10,11 +10,11 @@
                     <div class="card">
                          <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
                            <i class="material-icons" style="font-size: 24px;">assignment</i>
-                            Nueva Concepto 
+                            Nuevo Concepto 
                             
                         </div>
                         <div class="body">
-                            Llena los campos con los datos del nuevo concepto: <br> <b>(*) Datos Obligatorios</b><br>
+                            <b>Llena los campos con los datos del nuevo concepto: <br> (*) Datos Obligatorios</b><br>
                             <form method="POST" id="form" action="/conceptTest/admins">
                                 @csrf
                                 <br>
@@ -202,9 +202,11 @@
                                 <div class="form-group row mb-0">
                                     <div class="col-md-10"></div>
                                     <div class="col-md-2">
-                                        <button id="btn-form" class="btn btn-primary">
+                                        <center>
+                                            <button id="btn-form" class="btn btn-primary">
                                              <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
+                                        </center>
 
                                     </div>
                                 </div>

@@ -7,14 +7,15 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;color: white;font-size: 20px;">
-                                Nuevo administrador
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">person_add</i>
+                            Nuevo Administrador
                         </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</h5> 
+                            <b>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</b> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
-                            <form id="from" method="POST" action="/superAdmin/admin/new/add"> 
+                            <form id="from" method="POST" action="{{ route('NewAdmin') }}"> 
                                 @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -136,9 +137,11 @@
                              <div  class="row clearfix">
                                             <div class="col-sm-10"></div>
                                             <div class="col-sm-2">
-                                                 <button class="btn btn-primary waves-effect" id="btn-form">
+                                             <center>
+                                                     <button class="btn btn-primary waves-effect" id="btn-form">
                                                     <i class="material-icons">done</i> <span> Guardar </span> 
                                                 </button>
+                                             </center>
                                             </div>
                                         </div>
                           

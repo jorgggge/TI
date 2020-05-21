@@ -3,36 +3,24 @@
 @section('content')
 @php($count=1)
 
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>
-                    <!-- Administradores -->
-                    <small></small>
-                </h2>
-            </div>
-            <!-- Basic Examples -->
-            <div class="row clearfix">
+
+          
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;color: white;font-size: 20px;">
-                                Compañias
-                           
+                       <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">domain</i>
+                            Compañias
                         </div>
                         
                         <div class="body">
-                         <div class="row clearfix">
-                                <div class="col-sm-12">
-                                    <h5>Se mostrar todas la compañias registradas:</h5>
-
-                                </div>
+                         <b> Se mostrar todas la compañias registradas:</b>
                                 
-                            </div>
                              <div class="table-responsive">
                                 <table id="dtBasicExample" class="table table-hover">
                                    <thead >
                                         <tr>
-                                            <th >Estado</th>
                                             <th >Empresa</th>
+                                            <th >Estado</th>
                                             <th >Direccion</th>
                                             <th >Telefono</th>
                                             <th >Correo</th>
@@ -43,30 +31,32 @@
                                     @foreach($Com as $C)
                                         @if($C->companyId != 1)
                                         <tr>
+                                                    <td><p style="margin: auto 0px;">{{$C -> name}}</p></td>
                                             <td>
-                                                <form class='viewCompany form'  method="POST" action="{{ route('status',$C->companyId) }}">
-                                                    @method('PUT')
-                                                    @csrf
+                                                  
                                                     @if ($C->status != 0)
-                                                        <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-success waves-effect " onclick="Company_Activa({{ $C->companyId }});" style="width: 100%;">
+                                                        <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-success waves-effect " onclick="Company_Activa({{ $C->companyId }});">
                                                             <i class="material-icons" id="mc-{{ $C->companyId }}">work</i> <span id="s-{{ $C->companyId }}">Habilitar</span>
                                                         </button>
 
                                                     @endif
                                                     @if ($C->status == 0)
-                                                         <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-warning waves-effect" onclick="Company_Activa({{ $C->companyId }});" style="width: 100%;"> 
+                                                         <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-warning waves-effect" onclick="Company_Activa({{ $C->companyId }});"> 
                                                             <i class="material-icons" id="mc-{{ $C->companyId  }}" id="s-{{ $C->companyId }}">lock</i> <span id="s-{{ $errors->id }}">Bloquear</span> 
                                                         </button>
                                                     @endif
-                                                </form>
                                                 </td>
-                                                    <td><p style="margin: auto 0px;">{{$C -> name}}</p></td>
                                                     <td>{{$C -> address}}</td>
                                                     <td>{{$C -> phoneNumber}}</td>
                                                     <td>{{$C -> email}}</td>
-                                                    <td><a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary waves-effect" >
-                                                        <i class="material-icons">mode_edit</i> <span>Editar</span> 
-                                                    </a></td>
+                                                    <td>
+                                                      <a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary waves-effect" >
+                                                        <i class="material-icons">mode_edit</i>
+                                                    </a>
+                                                    <button class="btn btn-danger">
+                                                      <i class="material-icons">clear</i>
+                                                    </button>
+                                                  </td>
                                         </tr>
                                         @endif
                                         @php($count++)
@@ -77,9 +67,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+           
             <!-- #END# Basic Examples -->
-        </div>
+        
 <script src="{{ asset('js/code.js') }}"></script>
 
 <script type="text/javascript">

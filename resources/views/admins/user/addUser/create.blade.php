@@ -10,8 +10,8 @@
                         </div>
                         <div class="body">
                             
-                            Llena los campos con los datos del nuevo Usuario: <br>
-                            <b> (*) Datos Obligatorios <br> El usuario no se podrar cambiar despues</b>
+                             <b> Llena los campos con los datos del nuevo Usuario: <br>
+                           (*) Datos Obligatorios <br> El usuario no se podrar cambiar despues</b>
                             <h2 class="card-inside-title">Datos del Usuario:</h2>
                             <form method="POST" action="{{ url('/admins/user_new') }}" > 
                             @csrf
@@ -44,7 +44,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>* Confirmar Ccntraseña</b>
+                                        <b>* Confirmar Contraseña</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -138,9 +138,11 @@
                                 <div class="col-sm-8">
                                 </div>
                                 <div class="col-sm-4">
-                                     <button class="btn btn-primary waves-effect" type="submit">
+                                    <center>
+                                         <button class="btn btn-primary waves-effect" type="submit">
                                         <i class="material-icons" >mode_edit</i> <span>Guardar</span> 
                                     </button>
+                                    </center>
                                 </div>
                             </div>
                                        

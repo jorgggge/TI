@@ -13,7 +13,7 @@
                             
                         </div>
                         <div class="body">
-                            Llena los campos con los datos de la nueva prueba: <br> <b>(*) Datos Obligatorios</b><br>
+                            <b>Llena los campos con los datos de la nueva prueba: <br> (*) Datos Obligatorios</b><br>
                             <form id="form" method="POST" action="/createTest/admins">
                                 @csrf
                             <h2 class="card-inside-title"></h2>
@@ -227,9 +227,11 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
-                                        <button id="btn-form" class="btn btn-primary">
+                                        <center>
+                                            <button id="btn-form" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
+                                        </center>
 
                                     </div>
                                 </div>

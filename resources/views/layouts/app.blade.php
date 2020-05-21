@@ -20,7 +20,9 @@ use Illuminate\Support\Facades\Auth;
     
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.20/datatables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.4/js/dataTables.responsive.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jqc-1.12.4/dt-1.10.20/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.4/css/responsive.dataTables.min.css">
  
     
     <!-- Favicon-->
@@ -66,15 +68,16 @@ use Illuminate\Support\Facades\Auth;
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
     <link href="{{ asset('css/themes/all-themes.css') }}" rel="stylesheet" />
 
+
      <!-- JQuery DataTable Css -->
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-    
+     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
     
-    
+      
 
 
 
@@ -82,6 +85,8 @@ use Illuminate\Support\Facades\Auth;
 <body > 
 
    <!-- Page Loader -->
+
+   @if (!($errors->any()) && !(session()->has('success')))
     <div class="page-loader-wrapper">
         <div class="loader">
             <div class="preloader">
@@ -97,6 +102,8 @@ use Illuminate\Support\Facades\Auth;
             <p>Cargado .....</p>
         </div>
     </div>
+  @endif
+    
     <!-- #END# Page Loader -->
   
 @if(Auth::user()->hasRole('superadmin'))
@@ -104,17 +111,16 @@ use Illuminate\Support\Facades\Auth;
 <nav class="navbar" style="background-color: #112d4e;">
     <div class="container-fluid">
           <div class="navbar-header">
-              <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
               <a href="javascript:void(0);" class="bars"></a>
-              <a class="navbar-brand" href="index.html" style="color: white;">SUPER ADMIN</a>
+              <a class="navbar-brand" href="javascript:void(0);" style="color: white;">SUPER ADMIN</a>
           </div>
       </div>
 </nav>
 <section>
   <!-- Left Sidebar -->
-  <aside id="leftsidebar" class="sidebar">
+  <aside id="leftsidebar" class="sidebar" >
       <!-- User Info -->
-      <div class="user-info">
+      <div class="user-info" style="background:  #3f72af">
           <div class="image">
               <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
           </div>
@@ -145,7 +151,7 @@ use Illuminate\Support\Facades\Auth;
                           </a>
                       </li>
                       <li id="CompanyAdd">
-                          <a href="{{url('CreateCompany/addCompany/create')}}">
+                          <a href="{{url('/superadmin/company/create')}}">
                             <i class="material-icons">group_add</i>
                               <span>Agregar compañia</span>
                           </a>                            
@@ -165,7 +171,7 @@ use Illuminate\Support\Facades\Auth;
                           </a>
                       </li>
                       <li id="AgregarAdmin">
-                          <a href="{{url('CreateAdmin/addAdmin/create')}}">
+                          <a href="{{url('/superAdmin/admins/create')}}">
                             <i class="material-icons">person_add</i>
                               <span>Agregar Admins</span>
                           </a>                            
@@ -230,7 +236,7 @@ use Illuminate\Support\Facades\Auth;
   <!-- Left Sidebar -->
   <aside id="leftsidebar" class="sidebar">
       <!-- User Info -->
-      <div class="user-info">
+      <div class="user-info" style="background:  #3f72af">
           <div class="image">
               <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
           </div>
@@ -376,7 +382,7 @@ use Illuminate\Support\Facades\Auth;
   <!-- Left Sidebar -->
   <aside id="leftsidebar" class="sidebar">
       <!-- User Info -->
-      <div class="user-info">
+      <div class="user-info" style="background:  #3f72af">
           <div class="image">
               <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
           </div>
@@ -396,8 +402,14 @@ use Illuminate\Support\Facades\Auth;
               <li class="header">MENU</li>
               <li>
                   <a href="/analista">
-                      <i class="material-icons">home</i>
-                      <span>Inicio</span>
+                      <i class="material-icons">nature_people</i>
+                      <span>Areas</span>
+                  </a>
+              </li>
+              <li>
+                  <a href="/analista/pruebas">
+                      <i class="material-icons">assignment_turned_in</i>
+                      <span>Pruebas</span>
                   </a>
               </li>
                <li>
@@ -452,7 +464,7 @@ use Illuminate\Support\Facades\Auth;
   <!-- Left Sidebar -->
   <aside id="leftsidebar" class="sidebar">
       <!-- User Info -->
-      <div class="user-info">
+      <div class="user-info" style="background:#3f72af">
           <div class="image">
               <img src="{{ asset('images/user.png') }}" width="48" height="48" alt="User" />
           </div>
@@ -472,8 +484,8 @@ use Illuminate\Support\Facades\Auth;
               <li class="header">MENU</li>
               <li>
                   <a href="/comun">
-                      <i class="material-icons">home</i>
-                      <span>Inicio</span>
+                      <i class="material-icons">assignment_turned_in</i>
+                      <span>Pruebas</span>
                   </a>
               </li>
               <li>
@@ -504,7 +516,7 @@ use Illuminate\Support\Facades\Auth;
         @csrf
     </form>
 
-<section class="content">
+<section class="content" >
   @yield("content")
 </section>
 
@@ -584,10 +596,9 @@ use Illuminate\Support\Facades\Auth;
                     "ordering": false,
                     "searching": true,
                     "info":     false,
+                    "responsive": true
                 });
           
-      
-  
     </script>
 </body>
 </html>

@@ -21,7 +21,7 @@
                         <div class="body">
                          <div class="row clearfix">
                                 <div class="col-sm-8">
-                                        Aqui se mostrar los ususrios analistas y comunes.
+                                        <b>Aqui se mostrar los ususrios analistas y comunes de su compañia.</b>
                                 </div>
                                 <div class="col-sm-4">
                                    
@@ -31,17 +31,18 @@
                                 <table id="dtBasicExample" class="table table-hover">
                                 <thead>
                                   <tr>
-                  									<th>Status</th>
                   								    <th>Nombre</th>
+                  									<th>Status</th>
                   								    <th>Usuario</th>
                   								    <th>Rol</th>
                   								    <th>Email</th>
-                  								    <th>Actulizacion</th>
+                  								    <th>Editar</th>
                   								</tr>
                                                   </thead>
                                                   <tbody id="myTable">
                                                  @foreach ($Users as $user)
                   							    		<tr> 
+                  								    		<td>{{ $user->firstName." ".$user->lastName }}</td>
                                                               <td>
                                                                   @if ($user->status != 0 )
                                                                  <button type="button"  id="btn-{{ $user->id }}"  class="btn btn-success  waves-effect" onclick="User_Delete({{ $user->id }},0)">
@@ -53,7 +54,6 @@
                                                                   </button>
                                                                   @endif
                                                               </td>
-                  								    		<td>{{ $user->firstName." ".$user->lastName }}</td>
                   								    		<td>{{ $user->username }}</td>
                   								    		@if ($user->role_id == 3)
                   								    			<td>Analista</td>
@@ -65,7 +65,7 @@
                   								    		<td>
 
                                                 <button class="btn btn-primary waves-effect" onclick="window.location='/admins/user/{{ $user->id }}'">
-                                                    <i class="material-icons" >mode_edit</i> <span>Editar</span> 
+                                                    <i class="material-icons" >mode_edit</i>
                                                 </button>
 								    		</td>
                                            

@@ -153,8 +153,9 @@ class AdminsController extends Controller
     public function show(Request $request,$id)
     {
         $request->user()->authorizeRoles(['admin']);
-        $User = User::where('Id',$id)->toArray();
-        $Areas = Area::where('companyId',$User['companyId'])
+        $User = User::where('id',$id)->get()->toArray();
+
+        $Areas = Area::where('companyId',$User[0]['companyId'])
             ->get();
         $User_Area = Area::join('user_areas','user_areas.areaId','=','areas.areaId')
             ->where('userId',$id)
@@ -417,8 +418,13 @@ class AdminsController extends Controller
                         ->select('areas.name as area','areas.areaId','tests.name as test','concepts.description as concept','tests.testId as testId','concepts.conceptId as conceptId')
                         ->where('areas.companyId',$userId )->get();
 
+        $Concepts = Area::join('tests','areas.areaId','tests.areaId')
+                        ->select('areas.name as area','areas.areaId','tests.name as test','tests.testId as testId')
+                        ->where('areas.companyId',$userId )->get();
 
-        return view('admins.area.test.index',compact ('Pruebas'));
+
+
+        return view('admins.area.test.index',compact ('Pruebas','Concepts'));
     }
 
     public function PruebaCreate()
@@ -464,6 +470,8 @@ class AdminsController extends Controller
             }
 
             $Count_Users = DB::table('test_user')->where('testId',$T->testId)->count();
+
+
             $Count_Concepts = DB::table('test_concept')->where('testId',$T->testId)->count();
 
             $companyId = User::giveMeCompany(Auth::user());
@@ -471,7 +479,12 @@ class AdminsController extends Controller
             $Levels = MaturityLevel::all()->where('companyId',$companyId);
 
 
-            $Res = ($Acu / ( $Count_Users * $Count_Users * 15)) * 100;
+            if ($Count_Users != 0 && $Count_Concepts != 0) {
+                $Res = round(( $Acu /($Count_Concepts * $Count_Users * 15)*100),2);
+            }else{
+                $Res = 0;
+            }
+            
 
             $X = 20;
             $L = "";
@@ -486,7 +499,7 @@ class AdminsController extends Controller
                 }
             }
 
-            $Resultados[] = array("Test" => $T->name,"Resultado" => $Res,"Nivel" => $L);
+            $Resultados[] = array("Test" => $T->testId." ".$T->name,"Resultado" => $Res,"Nivel" => $L);
 
         }
 

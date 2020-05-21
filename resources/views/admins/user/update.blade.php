@@ -11,9 +11,9 @@
                         </div>
                         <div class="body">
                             
-                            Llena los campos con los datos del Usuario: <br> <b>(*) Datos Obligatorios </b>
+                            <b>Llena los campos con los datos del Usuario: <br> (*) Datos Obligatorios </b>
                             <h2 class="card-inside-title">Datos del Usuario:</h2>
-                             <form id="from" method="POST" action="/admins/user_up/{{$User['id']}}">
+                             <form id="from" method="POST" action="/admins/user_up/{[0]{$User['id']}}">
                               @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -25,7 +25,7 @@
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="username" class="form-control" placeholder="Usuario" required   readonly="true" value="{{ $User['username'] }}">
+                                            <input type="text" name="username" class="form-control" placeholder="Usuario" required   readonly="true" value="{{ $User[0]['username'] }}">
                                         </div>
                                     </div>
                                 </div> 
@@ -38,7 +38,7 @@
                                             <i class="material-icons">assignment</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="firstName" required id="lastNameS"  class="form-control" placeholder="Nombres"  value="{{ $User['firstName'] }}">
+                                            <input type="text" name="firstName" required id="lastNameS"  class="form-control" placeholder="Nombres"  value="{{ $User[0]['firstName'] }}">
                                         </div>
                                     </div>
                                 </div>
@@ -51,7 +51,7 @@
                                             <i class="material-icons">assignment</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="lastName" id="lastNameS"  class="form-control" placeholder="Apellidos" required value="{{ $User['lastName'] }}">
+                                            <input type="text" name="lastName" id="lastNameS"  class="form-control" placeholder="Apellidos" required value="{{ $User[0]['lastName'] }}">
                                         </div>
                                     </div>
                                 </div>
@@ -67,7 +67,7 @@
                                             <i class="material-icons">email</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="emailuser" id="lastNameS"  class="form-control" placeholder="email" required   value="{{ $User['email']  }}">
+                                            <input type="text" name="emailuser" id="lastNameS"  class="form-control" placeholder="email" required   value="{{ $User[0]['email']  }}">
                                         </div>
                                     </div>
                                 </div>
@@ -98,10 +98,12 @@
                                 <div class="col-sm-8">
                                 </div>
                                 <div class="col-sm-4">
-                                     <button id="btn-form" class="btn btn-primary" type="submit">
+                                     <center>
+                                         <button id="btn-form" class="btn btn-primary" type="submit">
                                          <i class="material-icons">done</i>
                                          <span>Guardar</span> 
                                      </button>
+                                     </center>
                                 </div>
                             </div>
                                        
@@ -146,7 +148,7 @@
                 let _token   = $('meta[name="csrf-token"]').attr('content');
 
                 $.ajax({
-                    url: "/admins/user_up/"+{{$User['id']}},
+                    url: "/admins/user_up/"+{{$User[0]['id']}},
                     type:"POST",
                     data:{
                       username:username,
@@ -183,7 +185,7 @@
 
         $.ajax({
               type: "GET",
-              url: "/Area_User/"+{{$User['id']}}+"/"+$input.val()+"/"+check,
+              url: "/Area_User/"+{{$User[0]['id']}}+"/"+$input.val()+"/"+check,
               success: function(response){}
         });
 

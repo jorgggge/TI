@@ -36,6 +36,6 @@ class Concept extends Model
                 $join->on('concepts.conceptId','=','test_concept.conceptId')
                     ->where('test_concept.testId','=',$testId);
             })
-            ->get()->toArray();
+            ->get();
     }
 }

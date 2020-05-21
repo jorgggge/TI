@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
-
+use Illuminate\Http\Response;
 
 class TestController extends Controller
 {
@@ -21,115 +21,69 @@ class TestController extends Controller
         $this->middleware(['auth',]);  //'verified'
     }
     //
-    public function index(Request $request , $attributeId)
+    public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['analista', 'comun']);
-        $user = auth()->user();
-        $userId = Auth::user()->id;
-        $testFromUser = Test::testFromUserId($userId);
-        $testsIds =array_column($testFromUser,'testId');
-        $concepts = Concept::ConceptsFromAnArrayOfTestsIds($testsIds);
-        $conceptsIds = array_column($concepts,'conceptId');
-        $maturityLevels = MaturityLevel::matLevFromAnArrayOfConceptsIds($conceptsIds);
-        $maturityLevelsIds = array_column($maturityLevels,'conceptMLId');
-        $attributes = Attribute::attributesFromAnArrayOfMatLevels($maturityLevelsIds);
-        $attributesIds = array_column($attributes,'attributeId');
-        abort_if(!in_array($attributeId,array_column($attributes,'attributeId')),403);
-        $selectedAttribute = Attribute::where('attributeId',$attributeId)->get()->toArray()[0];
-        $evidences = Evidences::whereIn('attributeId',$attributesIds)->get()->toArray();
+        
+        $v =  $request->valor;
 
-
-        return view('test.index', compact('selectedAttribute', 'evidences','user' ));
-
-    }
-
-    public function store(Request $request)
-    {
-        $request->user()->authorizeRoles(['analista', 'comun']);
-
-        if($request->hasFile('link'))
-        {
-            $fileName = time().$request->link->getClientOriginalName();
-            $request->link->storeAs('public/upload',$fileName);
-            $attributes = $this->validator();
-            $attributes['link'] = $fileName;
-            $evidences = Evidences::create($attributes);
-
-            $tesdIdAndConceptId = DB::table('attributes')
-                ->join('concept_maturity_level_attribute','concept_maturity_level_attribute.attributeId','=','attributes.attributeId')
-                ->join('concept_maturity_level','concept_maturity_level.conceptMLId','=','concept_maturity_level_attribute.conceptMLId')
-                ->join('test_concept','test_concept.conceptId','=','concept_maturity_level.conceptId')
-                ->select('test_concept.testId','test_concept.conceptId')
-                ->where('concept_maturity_level_attribute.attributeId',$attributes['attributeId'])
-                ->get()->toArray()[0];
-            if($evidences){
-                return redirect()->route('comunTest',[$tesdIdAndConceptId->testId,$tesdIdAndConceptId->conceptId]);
-            }else{
-                return redirect()->back()->with(['errors'=>$evidences->save()->errors()->all()]);
-            };
-        }
-    }
-    public function show(Request $request){
-        $request->user()->authorizeRoles(['analista', 'comun']);
-
-        $attributes = Attribute::get()->toArray();
-        $evidences = Evidences::get()->all();
-        $user = auth()->user();
-        $users = User::all();
-
-        return view('test.show', compact('attributes', 'evidences', 'user', 'users'));
-    }
-    public function edit($evidenceId)
-    {
-        $data = Evidences::findOrFail($evidenceId);
-        return view('test.edit', compact('data' ));
-    }
-
-    public function update(Request $request, $evidenceId)
-    {
-        $data = Evidences::findOrFail($evidenceId);
-
-        $user = auth()->user();
-
-
-        if($request->hasFile('link'))
-        {
-            Storage::delete("public/upload/$data->link");
-
-            $fileName = time().$request->link->getClientOriginalName();
-            $request->link->storeAs('public/upload',$fileName);
-            $attributes = $this->validator();
-            $evidences = Evidences::find($evidenceId)->update([
-                'link' => $fileName,
-                'attributeId' => $request->attributeId,
-                'userId' => $request->userId,
-                'companyId' => $request->companyId,
-                'verified' => $request->verified
-            ]);
-            $tesdIdAndConceptId = DB::table('attributes')
-                ->join('concept_maturity_level_attribute','concept_maturity_level_attribute.attributeId','=','attributes.attributeId')
-                ->join('concept_maturity_level','concept_maturity_level.conceptMLId','=','concept_maturity_level_attribute.conceptMLId')
-                ->join('test_concept','test_concept.conceptId','=','concept_maturity_level.conceptId')
-                ->select('test_concept.testId','test_concept.conceptId')
-                ->where('concept_maturity_level_attribute.attributeId',$attributes['attributeId'])
-                ->get()->toArray()[0];
-
-            if($evidences){
-                return redirect()->route('comunTest',[$tesdIdAndConceptId->testId,$tesdIdAndConceptId->conceptId]);
-            }else{
-                return redirect()->back()->with(['errors'=>$evidences->save()->errors()->all()]);
-            };
-        }
-    }
-    public function validator()
-    {
-        return request()->validate([
-            'link' => ['required','file', 'max:5120'],
-            'attributeId' => ['required', 'integer'],
-            'verified' => ['required', 'integer'],
-            'userId' => ['required', 'integer'],
-            'companyId' =>['required', 'integer']
+        $request->validate([
+            'file'.$v => 'required'
         ]);
+
+
+        $f = 'file'.$v;
+        if ($request->hasFile($f)) {
+
+            $file = $request->file($f);
+            $name = time().$file->getClientOriginalName();
+            $file->storeAs('public/upload', $name);
+
+            $Existe = Evidences::where([ 
+                                'attributeId' => $request->{'attributeId'.$v},
+                                'userId' => auth()->user()->id
+                                ])->count();
+            
+            if($Existe != 0){
+                Evidences::where([ 'attributeId' => $request->{'attributeId'.$v},'userId' => auth()->user()->id])->delete();
+            }
+
+            $Evidence = Evidences::create([
+                'link' => $name,
+                'attributeId' => $request->{'attributeId'.$v},
+                'verified' => 0,
+                'userId' => auth()->user()->id,
+                'companyId' => auth()->user()->companyId,
+                'comment' => ""
+            ]);
+
+            $Evidence->save();
+            
+            $A = json_decode(Attribute::where('attributeId',$request->{'attributeId'.$v})->get()->toJson());
+            $A = $A[0];
+            # $pathTofile =  public_path().'/evidences/'.$name;
+            // return $request->download('/public/evidences/'.$name);
+        }
+
+        return back()->with('success',true);
     }
+
+
+    public function down($evidenceId)
+    {
+        $Evidence = json_decode(Evidences::where("evidenceId",$evidenceId)->get()->toJson());
+        $Evidence = $Evidence[0];
+
+        $archivo = $Evidence->link;
+        // return  Storage::url("app/public/upload/$archivo");
+        return response()->download(storage_path("app/public/upload/$archivo"));
+    }
+
+    public function view($archivo)
+    {
+        // $archivo = storage_path("app/public/upload/$archivo");
+        return view('file',compact('archivo'));
+    }
+
+
 }
 

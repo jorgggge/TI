@@ -19,48 +19,46 @@
                         
                         <div class="body">
                          <div class="row clearfix">
-                                <div class="col-sm-4">
-                                  <b>Aqui se mostrar las acciones generadas por los usuarios.</b>
-                                </div>
-                                <div class="col-sm-6"></div>
-                                <div class="col-sm-1">
-                                    
-                                    <form action="{{ route('HistoryDeleteA') }}" id="fromhistory">
-                                        @method('PUT')
-                                        @csrf
-                                        <button type="submit" class="btn btn-danger waves-effect">
-                                          <i class="material-icons">clear</i> <span>Borrar Historial</span> 
-                                        </button>
-                                  </form>
-                                </div>
-                                
+                            <div class="col-sm-4">
+                              <b>Aqui se mostrar las acciones generadas por los usuarios.</b>
                             </div>
-                            <div class="table-responsive">
-                                <table id="dtBasicExample" class="table table-hover">
+                          </div>
+                          <div class="table-responsive">
+                                <table id="dtBasicExamplee" class="table table-hover">
                                   <thead>
-                      <tr>
+                                      <tr>
+                                        <th>Usurario</th>
+                                        <th>Empresa</th>
+                                        <th>Acción</th>
+                                        <th>Fecha</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody style="background: white;">
 
-                        <th>Usurario</th>
-                        <th>Empresa</th>
-                        <th>Acción</th>
-                        <th>Fecha</th>
-
-                      </tr>
-                    </thead>
-                    <tbody style="background: white;">
-
-                        @foreach ($Historial as $History)
-                         <tr>
-                          <td>{{ $History->username}}</td>
-                          <td>{{ $History->company }}</td>
-                          <td>{{ $History->action }}</td>
-                          <td>{{ $History->date }}</td>
-
-                          </tr>
-                        @endforeach
-
-                    </tbody>
+                                      @foreach ($Historial as $History)
+                                       <tr>
+                                          <td>{{ $History->username}}</td>
+                                          <td>{{ $History->company }}</td>
+                                          <td>{{ $History->action }}</td>
+                                          <td>{{ $History->date }}</td>
+                                        </tr>
+                                      @endforeach
+                                  </tbody>
                                 </table>
+                          </div>
+                            <div class="row clearfix">
+                                  <div class="col-sm-10"></div>
+                                  <div class="col-sm-2">
+                                    <form action="{{ route('HistoryDeleteA') }}" id="fromhistory">
+                                          @method('PUT')
+                                          @csrf
+                                          <center>
+                                            <button type="submit" class="btn btn-danger waves-effect">
+                                              <i class="material-icons">clear</i> <span>Borrar Historial</span> 
+                                            </button>
+                                          </center>
+                                    </form>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -72,4 +70,18 @@
 <script type="text/javascript">
   $("#History").addClass('active');
 </script>
+<script type="text/javascript">
+                $('#dtBasicExamplee').DataTable({
+                    language: {
+                        url: '{{ asset('json/Spanish.json')}}'
+                    },
+                    "paging":   true,
+                    "ordering": true,
+                    "searching": true,
+                    "info":     false,
+                    "responsive"    : true
+                });
+          
+  
+    </script>
 @endsection

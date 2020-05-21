@@ -1,16 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
-        <div class="container-fluid">
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;color: white;font-size: 20px;">
-                                <a href="#" style="color: white;">Administradores</a> \ Editar                        
-                            </div>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">edit</i>
+                            Editar Administrador
+                        </div>
                         <div class="body">
                             
-                            <h5>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</h5> 
+                            <b>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</b> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
                             @foreach ($Admin as $A)
                             <form id="from" method="POST" action="{{ route('UpdateCustomer',[$A->id,$A->companyId]) }}" > 
@@ -82,7 +80,7 @@
                                 </div>
                                 
                             </div>
-                            <h5>Solo se mostrar los datos de la compañia:</h5> 
+                            <b>Solo se mostrar los datos de la compañia:</b> 
                             <h2 class="card-inside-title">Datos del compañia</h2>
                             <div class="row clearfix">
                                 <div class="col-sm-4">

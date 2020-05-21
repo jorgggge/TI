@@ -3,21 +3,21 @@
 @section('content')
 <div class="container-fluid">
             <div class="row clearfix">
-            <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+            <div class="col-lg-4">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            <h2 style="color: white;">
-                                <a href="#" style="color: white;">Resultados</a>
-                            </h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">nature</i>
+                            Areas
                         </div>
                         <div class="body">
                             @if(empty($areas))
                                 <div class="alert alert-danger" >
-                                    {{ 'Agrega un área para empezar a trabajar.' }}
+                                    {{ 'No se ha asginado una Area. Porfavor aviso esto a su supervisor.' }}
                                 </div>
                             @else
+                            <b>Se mostrar las areas asignados para el usuario.</b><br><br>
                              <div class="table-responsive">
-                                    <table id="dtBasicExample" class="table table-hover">
+                                    <table id="" class="table table-hover">
                                         <thead> 
                                                 <tr>
                                                     <th>Área</th>
@@ -25,10 +25,14 @@
                                                 </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach((array)$areas as $area)
+                                        @foreach($areas as $area)
                                             <tr>
-                                                <td>{{$area['name']}}</td>
-                                                <td> <a href="{{route('analistaViewResults',$area['areaId'])}}" class="btn btn-primary" > Ver </a></td>
+                                                <td>{{$area->name}}</td>
+                                                <td> 
+                                                    <button type="button" class="btn btn-success waves-effect" onclick="Ver_Resultados({{ $area->areaId }},'{{$area->name }}');">
+                                                      <i class="material-icons">bar_chart</i>
+                                                  </button>
+                                                </td>
                                             </tr>
                                         @endforeach
                                         </tbody>   
@@ -38,45 +42,153 @@
                         </div>
                     </div>
             </div>
-             <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+            <div class="col-lg-8">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;">
-                            <h2 style="color:white;">Pruebas</h2>
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">bar_chart</i>
+                            Resultados
                         </div>
-                        <div class="body">
-                            @if(empty($areas))
-                                <div class="alert alert-danger" >
-                                    {{ 'Agrega un área para empezar a trabajar.' }}
-                                </div>
-                            @else
-                             <div class="table-responsive">
-                                    <table id="dtBasicExample" class="table table-hover">
-                                        <thead> 
-                                                <tr>
-                                                    <th>Área</th>
-                                                    <th>Prueba</th>
-                                                    <th>Concepto</th>
-                                                    <th>Evaluacion</th>
-                                                </tr>
-                                        </thead>
-                                        <tbody>
-                                         @foreach((array)$concepts as $concept)
-                                            <tr>
-                                                <td>{{$concept->areaName}}</td>
-                                                <td>{{$concept->testName}}</td>
-                                                <td>{{$concept->description}}</td>
-                                                <td > <a href="{{route('analistaTest',[$concept->testId,$concept->conceptId])}}" class="btn btn-primary"> Ver </a> </td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>   
-                                    </table>
+                        <div class="body" id="result_body">
+                          <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <b>
+                                  Selecciona una area para ver los resultdos de las pruebas asignadoas. <br>
+                                  La notacion del puntaje sera en porcentaje 0% - 100%
+                                </b>
                             </div>
-                            @endif
+                          </div>
+                          <div class="row clearfix">
+                            <div class="col-sm-12">
+                                <table class="table table-hover" id="TableRes">
+                                  <thead> 
+                                      <tr>
+                                          <th>Test</th>
+                                          <th>Puntaje (%)</th>
+                                          <th>Nivel de madurez</th>
+                                      </tr>
+                                  </thead>
+                                </table>
+                          </div>
+                          
+                          </div>
+                          <div style="height: 300px">
+                              <canvas id="miGrafico"></canvas>
+                          </div> 
+          
                         </div>
                     </div>
-                </div>
+            </div>
 </div>
 
+</div>
+
+@if (session()->has('success'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ingresanso los niveles de madurez", "success");
+      swal("Listo!", "Ya puedes agregar nuevas areas, pruebas y usuarios", "info");
+    </script>
+@endif
 
 
+<script type="text/javascript">
+
+
+var grafico;
+var table;
+
+function Ver_Resultados(Id,Name) {
+  $.ajax({
+    type: "GET",
+    url: "/admin/viewResults/"+Id,
+    success: function(response){
+
+      var Test = [];
+      var Resultado = [];
+      var Nivel = [];
+      var color = ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"];
+      var bordercolor = ['rgba(255,99,132,1)', 'rgba(54, 162, 235, 1)', 'rgba(255, 206, 86, 1)', 'rgba(75, 192, 192, 1)', 'rgba(153, 102, 255, 1)', 'rgba(255, 159, 64, 1)'];
+            
+
+        var v = JSON.parse(response);
+
+        for (var i = v.length - 1; i >= 0; i--) {
+          Test.push(v[i].Test);
+          Resultado.push(v[i].Resultado);
+          Nivel.push(v[i].Nivel);
+        }
+
+
+
+         var chartdata = {
+                labels: Test,
+                datasets: [{
+                    label: "Puntaje ",
+                    backgroundColor: color,
+                    borderColor: color,
+                    borderWidth: 2,
+                    hoverBackgroundColor: color,
+                    hoverBorderColor: bordercolor,
+                    data: Resultado
+                }]
+            };
+ 
+            var mostrar = $("#miGrafico");
+ 
+            if (grafico != null) {
+              grafico.clear();
+            }
+            grafico = new Chart(mostrar, {
+                type: 'bar',
+                data: chartdata,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false,
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                max: 100,
+                                min: 0,
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    title: {
+                      display: true,
+                      text: 'Puntaje de '+Name
+                    }
+                }
+            });
+
+          if(table != null){
+            table.destroy();
+          }
+
+          table = $('#TableRes').DataTable({
+                data : v,
+                "paging":   false,
+                "ordering": false,
+                "searching": false,
+                "info":     false,
+                columns: [
+                    { 'data': 'Test'},
+                    { 'data': 'Resultado'},
+                    { 'data': 'Nivel'}
+                  ]
+            });
+
+
+    },
+    error: function(response){
+        console.log(response);
+      swal("Lo siento!", "No hay ninguna prueba asignada para esta area.", "error");
+    }
+  });
+}
+
+</script>
 @endsection
+
+

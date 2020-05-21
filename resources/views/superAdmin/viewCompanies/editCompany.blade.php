@@ -6,16 +6,12 @@
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
-                        <div class="header" style="background-color: #112d4e;color: white;font-size: 20px;">
-                                <a href="#" style="color: white;">Compañias</a> \  Editar
+                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
+                           <i class="material-icons" style="font-size: 20px;">edit</i>
+                            Editar compañia
                         </div>
                         <div class="body">
-
-                             <div class="row clearfix">
-                                <div class="col-sm-12">
-                                    <h5>Se mostrar los datos actuales de la compañia. Por favor de llena los campos.</h5>
-                                </div>
-                            </div>
+                        Se mostrar los datos actuales de la compañia. Por favor de llena los campos.
                             <h2 class="card-inside-title">Datos de la Compañia</h2>
                             @foreach ($Admin as $A)
                             <form id="from" method="POST" action="{{  route('EditCompanySA',[$A->companyId]) }}" > 
@@ -93,9 +89,11 @@
                                 <div  class="row clearfix">
                                     <div class="col-sm-8"></div>
                                     <div class="col-sm-2">
-                                        <button class="btn btn-primary waves-effect" id="btn-form">
+                                        <center>
+                                            <button class="btn btn-primary waves-effect" id="btn-form">
                                             <i class="material-icons">done</i> <span> Actualizar </span> 
                                         </button>
+                                        </center>
                                     </div>
                                 </div>
                         </div>
