@@ -48,11 +48,14 @@ Route::prefix('conceptTest')->group(function () {
 Route::get('/admins/area/concept_test/create', 'ConceptTestController@create');
 Route::get('/admins/area/test/edit', 'AdminsController@EditTest')->name('editTest');
 Route::get('/admins/area/test/edit/delete/{id}','CreateTestController@DeleteTest') ->name('DeleteTest');
+
+Route::get('/admins/area/test/concept/edit/delete/{C}/{T}','CreateTestController@DeleteConcept') ->name('DeleteConcept');
+
 Route::get('/admins/area/Edit/editArea/delete/{id}', 'AreaController@DeleteArea')->name('DeleteArea');
 Route::get('/admins/history','AdminsController@history');
-Route::put('/admins/history/delete','AdminsController@historydelete')->name('HistoryDeleteA');
+Route::get('/admins/history/delete','AdminsController@historydelete')->name('HistoryDeleteA');
 //Route::delete('/admins/area/test/edit/delete/{id}', 'CreateTestController@DeleteTest')->name('DeleteTest');
-//---------------------------------------------------Comun----------------------------------------------------------------------------
+//------------------------------------------------get---Comun----------------------------------------------------------------------------
 Route::get('/comun', 'HomeController@index');
 Route::get('/admins/area/test/edit', 'AdminsController@EditTest')->name('editTest');
 
@@ -88,6 +91,7 @@ Route::get('/superAdmin/company','SuperAdminController@showCompany');
 Route::get('/superAdmin/company/{id}','SuperAdminController@showSA')->name('ShowCompanySA');
 Route::post('/superAdmin/viewCompanies/editCompany/showSA/{id}','SuperAdminController@editSA')->name('EditCompanySA');
 Route::get('/superadmin/company/create','SuperAdminController@createCompany');
+Route::get('/superadmin/company/delete/{id}','SuperAdminController@DeleteCompany');
 Route::post('/superAdmin/company/new/add','SuperAdminController@storeCompany')->name('NewCompany');
 
 Route::get('/superAdmin/admins','SuperAdminController@showAdmins');

@@ -7,6 +7,7 @@ use App\Role;
 use Illuminate\Http\Request;
 use App;
 use App\User;
+use App\Test;
 use App\History;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -74,7 +75,7 @@ class SuperAdminController extends Controller
         ]);
 
 
-        return back()->with('success', true);
+        return redirect('/superAdmin/company')->with('successAddCompany', true);
     }
 
     
@@ -113,7 +114,7 @@ class SuperAdminController extends Controller
 
             $admins->roles()->attach(Role::where('id', 2)->first());
             
-            return back()->with('success', true);
+            return redirect('/superAdmin/admins')->with('successAddAdmin', true);
 
         }else{
 
@@ -156,6 +157,8 @@ class SuperAdminController extends Controller
             'email' => $request->email
         ]);
 
+        return back()->with('successUpCompany',true);
+
     }
 
     public function history()
@@ -170,5 +173,32 @@ class SuperAdminController extends Controller
     {
         History::where('id','>', 0)->delete();
         return back()->with('success',true);
+    }
+
+    public function DeleteCompany($id)
+    {
+        $Areas = DB::table('areas')->where('companyId',$id)->get();
+        foreach ($Areas as $area) {
+            $Tests =  DB::table('tests')->where('areaId',$area->areaId);
+            foreach ($Tests as $Test) {
+                Test::DeleteTest($Test->testId);
+            }
+             DB::table('user_areas')->where('areaId',$area->areaId)->delete();
+        }
+
+        DB::table('maturity_levels')->where('companyId',$id)->delete();
+
+        $Users = DB::table('users')->where('companyId',$id)->get();
+
+    var_dump($Users);
+        foreach ($Users as $User) {
+             DB::table('role_user')->where('user_id',$User->id)->delete();
+        }
+        DB::table('areas')->where('companyId',$id)->delete();
+
+        DB::table('users')->where('companyId',$id)->delete();
+        DB::table('companies')->where('companyId',$id)->delete();
+
+
     }
 }

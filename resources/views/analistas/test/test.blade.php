@@ -24,7 +24,7 @@
                                     <div class="row">
                                         <div class="col-sm-1"></div>
                                         <div class="col-sm-7">
-                                            Conceptos: 
+                                           Primer elige el Concepto: 
                                             <select name="Concepts" class="form-control show-tick">
 
                                                 <option selected disabled>Selecciona un concepto</option>
@@ -58,7 +58,7 @@
                                                 <div class="form-line">
                                                      <input type="text" class="form-control" id="Coment{{ $i }}" name="Coment{{ $i }}" placeholder="Comentario ...">
                                                 </div>
-                                                <span class="input-group-addon" onclick="Comentario({{ $i }})">
+                                                <span class="input-group-addon" onclick="Comentario({{ $i }})" style="cursor: pointer;">
                                                     <i class="material-icons">send</i>
                                                 </span>
                                             </div>
@@ -153,6 +153,7 @@
                     $('label[for=Check'+(i+1)+']').css('display', 'none');
                     $("#Check"+(i+1)).css("display", "none");
                     $("#M"+(i+1)).css("display","none");                   
+                    $("#Coment"+(i+1)).val("");
                     
                     Evidence.forEach(function(Evidences){
                         if(Attributes[i].attributeId == Evidences.attributeId){

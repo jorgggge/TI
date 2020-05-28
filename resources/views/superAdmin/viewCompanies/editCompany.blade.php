@@ -15,7 +15,6 @@
                             <h2 class="card-inside-title">Datos de la Compañia</h2>
                             @foreach ($Admin as $A)
                             <form id="from" method="POST" action="{{  route('EditCompanySA',[$A->companyId]) }}" > 
-                                @method('PUT')
                                 @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -31,10 +30,17 @@
                                             <input type="text" name="name" class="form-control" value="{{ $A->name }}" placeholder="Usuario">
                                         </div>
                                     </div>
+                                 @error('name')
+                                            <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                        Verifique el nombre
+                                    </div>
+                                @enderror
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
-                                        <b>* Telefono</b>
+                                        <b>* Teléfono</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -45,6 +51,13 @@
                                                 value="{{ $A->phoneNumber }}" placeholder="Telefono">
                                         </div>
                                     </div>
+                                 @error('phoneNumber')
+                                    <div class="alert alert-danger alert-dismissible">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                        Verifique el numero de teléfono 
+                                    </div>
+                                @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -59,6 +72,13 @@
                                                 value="{{ $A->email }}" placeholder="Nombres">
                                         </div>
                                     </div>
+                                     @error('email')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -66,7 +86,7 @@
                                 
                                 <div class="col-sm-8">
                                     <p>
-                                        <b>* Dirreccion</b>
+                                        <b>* Dirección</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -77,6 +97,13 @@
                                                 value="{{ $A->address }}" placeholder="Apellidos">
                                         </div>
                                     </div>
+                                     @error('address')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique la dirección 
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                 </div>
@@ -101,6 +128,11 @@
             </div>
         </div>
 
+@if (session()->has('successUpCompany'))
+      <script type="text/javascript">
+    swal("Listo!", "Se ha actualizado los datos de la compañía!", "success");
+    </script>
+@endif
 
 <script type="text/javascript">
     $("#Company").addClass('active');
@@ -111,7 +143,7 @@
     $("#btn-form").click(function(){
         swal({
           title: "Atención",
-          text: "Se actualizara los datos de esta compañia ,¿Estas seguro?",
+          text: "Se actualizara los datos de esta compañía ,¿Estas seguro?",
           icon: "warning",
           buttons: ["Cancelar", "Si"],
           dangerMode: true
@@ -119,32 +151,7 @@
         .then((willDelete) => {
 
             if (willDelete) {
-                let name = $("input[name=name]").val();
-                let email = $("input[name=email]").val();
-                let address = $("input[name=address]").val();
-                let phoneNumber = $("input[name=phoneNumber]").val();
-                let _token   = $('meta[name="csrf-token"]').attr('content');
-
-                $.ajax({
-                    url: "/superAdmin/viewCompanies/editCompany/showSA/"+$("input[name=Id]").val(),
-                    type:"POST",
-                    data:{
-                      name:name,
-                      email:email,
-                      address:address,
-                      phoneNumber:phoneNumber,
-                      _token: _token
-                    },
-
-                    success:function(response){
-                      swal("Actualización", "Se ha actulizado los datos correctamente!", "success");
-                    },
-                    error:function(response){
-                        console.log(response);
-                      swal("Error", "Verifique los datos antes de actualizar", "error");
-                    }
-                   });
-
+                $("#from").submit();
             }
            
         });

@@ -35,10 +35,19 @@ class ConceptTestController
         $roles = Role::all(['id']);
         $users = User::all(['id', 'firstName', 'lastName', 'companyId']);
         $role_user = Role_User::all();
-        $tests = Test::all();
+        $tests = Area::join('tests','areas.areaId','tests.areaId')
+                    ->select('tests.*')
+                        ->where('areas.companyId',$userCompany )->get();
+
         $maturity_levels = DB::table('maturity_levels')->where('maturity_levels.companyId','=',$userCompany)->get()->toArray();
 
-        return view('admins.area.concept_test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests') );
+        $countAreas = Area::where('companyId','=',$userCompany)->count();
+        if($countAreas == 0){
+            return redirect('/admins/area/addArea');
+        }
+        else{
+            return view('admins.area.concept_test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests') );
+        }
     }
 
     public function store(Request $request)

@@ -10,16 +10,16 @@
                             Administradores
                         </div>
                         <div class="body">
-                            <b>Aqui se mostrar los administradores registrados:</b>
+                            <b>Aquí se mostrar los administradores registrados:</b><br><br>
                             <div class="table-responsive">
                                 <table id="dtBasicExample" class="table table-hover">
                                 <thead>
                                   <tr>
                                     <th>Nombre</th>
-                                    <th>Status</th>
-                                    <th>Compañia</th>
+                                    <th>Estatus</th>
                                     <th>Usuario</th>
-                                    <th>Telefono</th>
+                                    <th>Compañía</th>
+                                    <th>Tel. Compañía</th>
                                     {{-- <th>Correo</th> --}}
                                     <th>Editar</th>
                                   </tr>
@@ -71,6 +71,13 @@
             <!-- #END# Basic Examples -->
         </div>
 <script src="{{ asset('js/code.js') }}"></script>
+
+@if (session()->has('successAddAdmin'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado una nuevo administrador!", "success");
+    </script>
+@endif
+
 <script type="text/javascript">
     $("#Administradores").addClass('active');
     $("#MostrarAdmins").addClass('active');

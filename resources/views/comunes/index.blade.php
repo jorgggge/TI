@@ -18,7 +18,7 @@
                                 </div>
                             @else
                              <div class="">
-                             	Se mostrar todas las pruebas asignadas para usted. <br><br>
+                             	<b>Se mostrar todas las pruebas asignadas para usted.</b> <br><br>
                                     <table id="dtBasicExample" class="table">
                                         <thead> 
                                                 <tr>

@@ -12,14 +12,12 @@
                         <div class="body ">
                             @if(empty($areas))
                                 <div class="alert alert-danger" >
-                                    {{ 'No se asignado ninguna area.' }}
+                                    {{ 'No se asignado ninguna área.' }}
                                 </div>
                             @else
                              <div class="row clearfix">
-                                <div class="col-sm-8">
-                                    Aqui se muestras todas las pruebas para las areas de la compañia.
-                                </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-12">
+                                    <b>Aquí se muestras todas las pruebas para las áreas de la compañía.</b>
                                 </div>
                             </div>
                              <div class="table-responsive" >
@@ -28,7 +26,7 @@
                                                 <tr>
                                                     <th>Prueba</th>
                                                     <th>Usuario</th>
-                                                    <th></th>
+                                                    <th>Evaluar</th>
                                                 </tr>
                                         </thead>
                                         <tbody>
@@ -38,7 +36,7 @@
                                                 <td>{{ $Prueba->firstName." ".$Prueba->lastName }}</td>
                                                 <td>
                                                     <button class="btn btn-primary" onclick="window.location='/analista/pruebas/{{$Prueba->testId."/".$Prueba->id }}'">
-                                                        <i class="material-icons">edit</i> <span>Editar</span>
+                                                        <i class="material-icons">edit</i> <span>Evaluar</span>
                                                     </button>
                                                 </td>
                                              </tr>

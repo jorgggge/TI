@@ -13,7 +13,7 @@
                             
                             <b>Llena los campos con los datos del Usuario: <br> (*) Datos Obligatorios </b>
                             <h2 class="card-inside-title">Datos del Usuario:</h2>
-                             <form id="from" method="POST" action="/admins/user_up/{[0]{$User['id']}}">
+                             <form id="from" method="POST" action="/admins/user_up/{{$User[0]['id']}}">
                               @csrf
                             <div class="row clearfix">
                                 <div class="col-sm-4">
@@ -28,6 +28,13 @@
                                             <input type="text" name="username" class="form-control" placeholder="Usuario" required   readonly="true" value="{{ $User[0]['username'] }}">
                                         </div>
                                     </div>
+                                     @error('username')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el usuario
+                                            </div>
+                                        @enderror
                                 </div> 
                                 <div class="col-sm-4">
                                     <p>
@@ -41,6 +48,13 @@
                                             <input type="text" name="firstName" required id="lastNameS"  class="form-control" placeholder="Nombres"  value="{{ $User[0]['firstName'] }}">
                                         </div>
                                     </div>
+                                     @error('firstName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los nombres
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -54,6 +68,13 @@
                                             <input type="text" name="lastName" id="lastNameS"  class="form-control" placeholder="Apellidos" required value="{{ $User[0]['lastName'] }}">
                                         </div>
                                     </div>
+                                     @error('lastName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los apellidos
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -70,6 +91,13 @@
                                             <input type="text" name="emailuser" id="lastNameS"  class="form-control" placeholder="email" required   value="{{ $User[0]['email']  }}">
                                         </div>
                                     </div>
+                                     @error('emailuser')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email 
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -115,6 +143,12 @@
 </div>
 
 
+@if (session()->has('success'))
+    <script type="text/javascript">
+         swal("Error", "Se ha actualizado los datos de este usuario", "success");
+    </script>
+@endif
+
 @if ($errors->any())
     <script type="text/javascript">
          swal("Error", "Verifique los datos antes de guardar", "error");
@@ -137,41 +171,7 @@
 
             if (willDelete) {
                 
-                $( "input[type='text']" ).each(function() {
-                    $( this ).css('border-color','#1F91F3');
-                });
-
-                let username = $("input[name=username]").val();
-                let lastName = $("input[name=lastName]").val();
-                let firstName = $("input[name=firstName]").val();
-                let emailuser = $("input[name=emailuser]").val();
-                let _token   = $('meta[name="csrf-token"]').attr('content');
-
-                $.ajax({
-                    url: "/admins/user_up/"+{{$User[0]['id']}},
-                    type:"POST",
-                    data:{
-                      username:username,
-                      lastName:lastName,
-                      firstName:firstName,
-                      emailuser:emailuser,
-                      _token: _token
-                    },
-
-                    success:function(response){
-                      swal("Actualización", "Se ha actulizado los datos correctamente!", "success");
-                    },
-                    error:function(response){
-                      var v = JSON.parse(response.responseText);
-
-                        $.each(v.errors,function(index, value){
-                            $("input[name="+index+"]").css('border-color','red');
-                        });
-
-                      swal("Error", "Verifique los datos antes de actualizar", "error");
-                    }
-                   });
-
+                $("#from").submit();
             }
            
         });

@@ -49,15 +49,11 @@
                             <div class="row clearfix">
                                   <div class="col-sm-10"></div>
                                   <div class="col-sm-2">
-                                    <form action="{{ route('HistoryDeleteA') }}" id="fromhistory">
-                                          @method('PUT')
-                                          @csrf
-                                          <center>
-                                            <button type="submit" class="btn btn-danger waves-effect">
+                                    <center>
+                                            <button onclick="Historial();" class="btn btn-danger waves-effect">
                                               <i class="material-icons">clear</i> <span>Borrar Historial</span> 
                                             </button>
                                           </center>
-                                    </form>
                                   </div>
                             </div>
                         </div>
@@ -71,17 +67,45 @@
   $("#History").addClass('active');
 </script>
 <script type="text/javascript">
-                $('#dtBasicExamplee').DataTable({
-                    language: {
-                        url: '{{ asset('json/Spanish.json')}}'
-                    },
-                    "paging":   true,
-                    "ordering": true,
-                    "searching": true,
-                    "info":     false,
-                    "responsive"    : true
-                });
-          
+
+ function Historial() {
+    swal({
+      title: "Atención",
+      text: "Se eliminara todo el historial,¿Estas seguro?!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+         swal("Por favor espero un momento ...", {
+              button: false,
+            });
+        $.ajax({
+          url: "/admins/history/delete",
+          type: 'GET',
+          success: function (argument) {
+            location.reload();
+          }
+        });
+        
+      } else {
+      }
+    });
+        
+  }
+
+  $('#dtBasicExamplee').DataTable({
+      language: {
+          url: '{{ asset('json/Spanish.json')}}'
+      },
+      "paging":   true,
+      "ordering": true,
+      "searching": true,
+      "info":     false,
+      "responsive"    : true
+  });
+
   
-    </script>
+</script>
 @endsection

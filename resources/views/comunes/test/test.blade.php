@@ -24,7 +24,7 @@ input[type="file"] {
                             Evaluación 
                         </div>
                         <div class="body">
-                            Usuario! para subir sus evidencias haga clic en "Subir Archivo" y luego para enviala haga clic "Enviar".
+                           <b> Usuario, para subir sus evidencias haga clic en "Subir Archivo" y luego para enviala haga clic "Enviar".</b>
                             <h6><b>Prueba: {{ $Test->name }} <br> Usuario: {{ $User->firstName." ".$User->lastName }}</b></h6>
                                                    
                                     

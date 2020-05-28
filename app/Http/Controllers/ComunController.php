@@ -28,6 +28,7 @@ class ComunController extends Controller
         $tests = Test::join('test_user','tests.testId','test_user.testId')
                         ->where('userId',$userId)
         				->select('tests.*')->get();
+        $Test = null; 
 
         foreach ($tests as  $value){
             
@@ -36,6 +37,8 @@ class ComunController extends Controller
                 
                 $Count_Evidences = User::CountEvidencesRegular($userId,$value->testId,$v->conceptId);
                 $Progress = round(($Count_Evidences/15 * 100),2); 
+
+                echo $Progress."<br>";
                 $Test[] = array("TestId" => $value->testId,"Test" => $value->name,"Concept" => $v->description,"ConceptId" => $v->conceptId,"Progress" => $Progress);
                 $Progress = 0;
             }
@@ -57,7 +60,12 @@ class ComunController extends Controller
            $Test = json_decode(Test::where('testId',$testId)->get()->toJson());
            $Test = $Test[0];
            $Evidences = Attribute::Evidences($conceptId,Auth::user()->id);
-           $Atributos = Attribute::get($conceptId);
+           $Atributos = DB::table('attributes')
+            ->join('concept_maturity_level_attribute as cma','cma.attributeId','=','attributes.attributeId')
+            ->join('concept_maturity_level as cm','cma.conceptMLId','cm.conceptMLId')
+            ->join('maturity_levels','cm.maturityLevelId','maturity_levels.maturityLevelId')
+            ->where('cm.conceptId',$conceptId)
+            ->select('attributes.*','maturity_levels.description as Nivel')->get();
 
 
            foreach ($Atributos as $value) {
@@ -84,6 +92,7 @@ class ComunController extends Controller
 
 
            $i  = 0;
+           
         return view('comunes.test.test',compact('i','Test','Datos','User'));
     }
 }

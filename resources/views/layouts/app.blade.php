@@ -7,6 +7,15 @@ use Illuminate\Support\Facades\Auth;
 ?>
 
 <head>
+  <style type="text/css">
+    .bars{
+      color: white;
+    }
+
+    .table-responsive{
+      border: 0px;
+    }
+  </style>
 
     @yield('head')
     <meta charset="utf-8">
@@ -86,24 +95,15 @@ use Illuminate\Support\Facades\Auth;
 
    <!-- Page Loader -->
 
-   @if (!($errors->any()) && !(session()->has('success')))
+   @if (!($errors->any()) && !(session()->has('success')) && !(session()->has('successUpCompany')))
+    
+  @endif
     <div class="page-loader-wrapper">
         <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
+           <img src="{{ asset('../../images/ICA.png') }}" style="width: 100px;">
             <p>Cargado .....</p>
         </div>
     </div>
-  @endif
-    
     <!-- #END# Page Loader -->
   
 @if(Auth::user()->hasRole('superadmin'))
@@ -262,7 +262,17 @@ use Illuminate\Support\Facades\Auth;
         @if ($CountMaturity == 0)
               <ul class="list">
                 <li class="header">MENU</li>
+                <li>
+                  <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                      <i class="material-icons">input</i>
+                      <span>Salir</span>
+                  </a>
+              </li>
               </ul>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST"
+          style="display: none;">
+        @csrf
+    </form>
         @else
             <ul class="list">
                 <li class="header">MENU</li>
@@ -524,7 +534,34 @@ use Illuminate\Support\Facades\Auth;
 
 @endif
 
-   
+
+@if ($errors->any())
+    <script type="text/javascript">
+         swal("Error", "Oh no mal esta mal", "error");
+    </script>
+@endif
+
+<script type="text/javascript">
+  $( "#btn-form" ).click(function() {
+      var validator = true; 
+
+      $( "input[type='text']" ).each(function() {
+
+          if($(this).val() == "" || $(this).val() == null){
+            validator = false;
+          }    
+      });
+
+      if(validator){
+        swal({
+                title: "Espero un momento ...",
+                text: "Se cerrara automaticamente",
+                buttons: false
+                });
+      }
+  });
+
+</script>
 
     <!-- Bootstrap Core Js -->
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.js') }}"></script>

@@ -11,11 +11,11 @@
                             <b>Llena los campos con los datos de Administrador: <br> (*) Datos Obligatorios</b> 
                             <h2 class="card-inside-title">Datos del Administrador</h2>
                             @foreach ($Admin as $A)
-                            <form id="from" method="POST" action="{{ route('UpdateCustomer',[$A->id,$A->companyId]) }}" > 
+                            <form id="from" method="POST" action="{{ route('UpdateCustomer',[$A->id,$A->companyId]) }}" >  
+                                @csrf
                                 <input type="hidden" name="id_u" value="{{ $A->id }}">
                                 <input type="hidden" name="id_c" value="{{ $A->companyId }}">
-                                @method('PUT')
-                                @csrf
+                               
                             <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <p>
@@ -29,6 +29,13 @@
                                             <input type="text" name="username" class="form-control" value="{{ $A->username }}" placeholder="Usuario">
                                         </div>
                                     </div>
+                                     @error('username')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el nombre del usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-6">
                                     <p>
@@ -43,6 +50,13 @@
                                                     value="{{ $A->emailuser }}" placeholder="Email">
                                         </div>
                                     </div>
+                                     @error('emailuser')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email del usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                 
                             </div>
@@ -61,6 +75,13 @@
                                                 value="{{ $A->firstName }}" placeholder="Nombres">
                                         </div>
                                     </div>
+                                @error('firstName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los nombres del usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="col-sm-6">
                                     <p>
@@ -75,17 +96,24 @@
                                                 value="{{ $A->lastName }}" placeholder="Apellidos">
                                         </div>
                                     </div>
+                                @error('lastName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los apellidos del usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                 </div>
                                 
                             </div>
-                            <b>Solo se mostrar los datos de la compañia:</b> 
-                            <h2 class="card-inside-title">Datos del compañia</h2>
+                            <b>Solo se mostrar los datos de la compañía:</b> 
+                            <h2 class="card-inside-title">Datos del compañía</h2>
                             <div class="row clearfix">
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Compañia</b>
+                                        <b>Compañía</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -98,7 +126,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Telefono de la compañia</b>
+                                        <b>Tel. compañía</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -112,7 +140,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Email de la Compañia</b>
+                                        <b>Email de la Compañía</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -129,7 +157,7 @@
 
                                 <div class="col-sm-8">
                                     <p>
-                                        <b>Dirreccion</b>
+                                        <b>Dirección</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -158,6 +186,14 @@
                     </div>
             </div>
         </div>
+
+
+@if (session()->has('success'))
+      <script type="text/javascript">
+    swal("Listo!", "Se ha actualizado el usuario!", "success");
+    </script>
+@endif
+
 <script type="text/javascript">
     $("#Administradores").addClass('active');
     $("#MostrarAdmins").addClass('active');
@@ -165,7 +201,7 @@
      $("#btn-form").click(function(){
         swal({
           title: "Atención",
-          text: "Se actualizara los datos de esta compañia ,¿Estas seguro?",
+          text: "Se actualizara los datos de este usuario ,¿Estas seguro?",
           icon: "warning",
           buttons: ["Cancelar", "Si"],
           dangerMode: true
@@ -173,40 +209,7 @@
         .then((willDelete) => {
 
             if (willDelete) {
-                let username = $("input[name=username]").val();
-                let lastName = $("input[name=lastName]").val();
-                let firstName = $("input[name=firstName]").val();
-                let emailuser = $("input[name=emailuser]").val();
-                let name = $("input[name=name]").val();
-                let address = $("input[name=address]").val();
-                let phoneNumber = $("input[name=phoneNumber]").val();
-                let emailcompany = $("input[name=emailcompany]").val();
-                let _token   = $('meta[name="csrf-token"]').attr('content');
-
-                $.ajax({
-                    url: "/superAdmin/viewcustomersuperadmin/update/"+$("input[name=id_u]").val()+"/"+$("input[name=id_c]").val(),
-                    type:"POST",
-                    data:{
-                        username:username,
-                        lastName:lastName,
-                        firstName:firstName,
-                        emailuser:emailuser,
-                        name:name,
-                        address:address,
-                        phoneNumber:phoneNumber,
-                        emailcompany:emailcompany,
-                        _token:_token
-                    },
-
-                    success:function(response){
-                      swal("Actualización", "Se ha actulizado los datos correctamente!", "success");
-                    },
-                    error:function(response){
-                        console.log(response);
-                      swal("Error", "Verifique los datos antes de actualizar", "error");
-                    }
-                   });
-
+               $("#from").submit();
             }
            
         });

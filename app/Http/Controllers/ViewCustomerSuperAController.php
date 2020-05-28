@@ -56,6 +56,8 @@ class ViewCustomerSuperAController extends Controller
             'email' => $request->emailcompany
         ]);
 
+        return back()->with('success',true);
+
     }
 
     public function delete($Id,$A)

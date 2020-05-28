@@ -10,7 +10,7 @@
                             Pruebas
                         </div>
                         <div class="body ">
-                            <b> Aqui se muestras todas las pruebas para las areas de la compañia.</b>
+                            <b> Aquí se muestras todas las pruebas para las áreas de la compañía.</b>
                             <br><br>
                              <div class="table-responsive" >
                                     <table id="dtBasicExample" class="table table-hover" style="width: 100%;">
@@ -30,7 +30,7 @@
                                                     <button class="btn btn-primary" onclick="window.location='/Admin/up/{{$C->testId }}/{{ $C->areaId}}'">
                                                          <i class="material-icons">edit</i> 
                                                     </button> 
-                                                    <button class="btn btn-danger" onclick="window.location='Test_Delete({{ $C->testId }});">
+                                                    <button class="btn btn-danger" onclick="Test_Delete({{ $C->testId }});">
                                                         <i class="material-icons">clear</i> 
                                                     </button> 
                                                 </td>
@@ -50,7 +50,7 @@
                             Conceptos
                         </div>
                         <div class="body">
-                            <b> Aqui se muestras todas los conceptos de las pruebas de las areas de la compañia.</b>
+                            <b> Aquí se muestras todas los conceptos de las pruebas de las áreas de la compañía.</b>
                              <br><br>
                              <div  class="table-responsive" >
                                     <table id="dtBasicExamplee" class="table table-hover" style="width: 100%;">
@@ -71,7 +71,7 @@
                                                         <i class="material-icons">edit</i>
                                                     </button> 
                                         
-                                                    <button class="btn btn-danger" onclick="window.location='Test_Delete({{ $Prueba->testId }});">
+                                                    <button class="btn btn-danger" onclick="Test_Concept({{ $Prueba->conceptId}},{{ $Prueba->testId }});">
                                                         <i class="material-icons">clear</i> 
                                                     </button> 
                                                 </td>
@@ -89,7 +89,13 @@
 
 @if (session()->has('test_update'))
     <script type="text/javascript">
-    swal("Listo!", "Actualización exisitosa de la Prueba!", "success");
+    swal("Listo!", "Actualización exitosa de la Prueba!", "success");
+    </script>
+@endif
+
+@if (session()->has('successUpdateConcepto'))
+    <script type="text/javascript">
+    swal("Listo!", "Actualización exitosa del concepto !", "success");
     </script>
 @endif
 
@@ -104,6 +110,8 @@
     swal("Listo!", "Se ha ingresado un nuevo Concepto!", "success");
     </script>
 @endif
+
+
 
 <script type="text/javascript">
                 $('#dtBasicExamplee').DataTable({
@@ -125,16 +133,40 @@
 
     function Test_Delete(Id) {
             swal({
-              title: "Atecion",
-              text: "Se cambiara el status de este ususrio, Estas seguro?!",
+              title: "Atención",
+              text: "Se eliminara esta prueba,¿Estas seguro?!",
               icon: "warning",
               buttons: true,
               dangerMode: true
             })
             .then((willDelete) => {
               if (willDelete) {
-                window.location = "/admins/area/test/edit/delete"+Id;
+                 swal("Por favor espero un momento ...", {
+                      button: false,
+                    });
+                window.location = "/admins/area/test/edit/delete/"+Id;
               
+              } else {
+              }
+            });
+                
+            }
+
+    function Test_Concept(Id,prueba) {
+            swal({
+              title: "Atención",
+              text: "Se eliminara este concepto pero si es el único concepto también se eliminara la prueba ,¿Estas seguro?!",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                 swal("Por favor espero un momento ...", {
+                      button: false,
+                    });
+                window.location = "/admins/area/test/concept/edit/delete/"+Id+"/"+prueba;
+                
               } else {
               }
             });

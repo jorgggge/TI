@@ -28,14 +28,13 @@
                                             <i class="material-icons">insert_chart</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="maturityName{{ $M->maturityLevelId }}" id="{{$count}}" class="form-control" placeholder="Nivel" required value="{{ $M->description}}">
+                                            <input type="text" name="maturityName{{ ($count) + 1 }}" id="{{$count}}" class="form-control" placeholder="Nivel" required value="{{ $M->description}}">
                                         </div>
                                     </div>
                             </div>
                         </div>
                         @php($count++)
                         @endforeach     
-                      </form>   
                         <div class="row clearfix">
                                 <h2 class="card-inside-title"></h2>
                                 <div class="col-sm-8">
@@ -48,6 +47,7 @@
                                      </center>
                                 </div>
                             </div>
+                      </form>   
                            
 
                           </div> 
@@ -62,54 +62,5 @@
   
 $("#NivelesdeMadurez").addClass('active');
 
-$("#btn-form").click(function(){
-        swal({
-          title: "Atención",
-          text: "Se actualizara los datos los niveles de madurez,¿Estas seguro?",
-          icon: "warning",
-          buttons: ["Cancelar", "Si"],
-          dangerMode: true
-        })
-        .then((willDelete) => {
-
-            if (willDelete) {
-
-                $( "input[type='text']" ).each(function() {
-                    $( this ).css('border-color','#1F91F3');
-                });
-                
-
-                $.ajax({
-                    url: "/admins/maturity/editML",
-                    type:"POST",
-                    data:{
-                        maturityName1:  $("input[name=maturityName1]").val(),
-                        maturityName2:  $("input[name=maturityName2]").val(),
-                        maturityName3:  $("input[name=maturityName3]").val(),
-                        maturityName4:  $("input[name=maturityName4]").val(),
-                        maturityName5:  $("input[name=maturityName5]").val(),
-                        _token: $('meta[name="csrf-token"]').attr('content')
-                    },
-
-                    success:function(response){
-                      swal("Actualización", "Se ha actulizado los datos correctamente!", "success");
-                    },
-                    error:function(response){
-
-                        var v = JSON.parse(response.responseText);
-
-                        $.each(v.errors,function(index, value){
-                            $("input[name="+index+"]").css('border-color','red');
-                        });
-                        
-                      swal("Error", "Verifique los datos antes de actualizar", "error");
-                    }
-                   });
-
-            }
-           
-        });
-
-    });
 </script>
 @endsection

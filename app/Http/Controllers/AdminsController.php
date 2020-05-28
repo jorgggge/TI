@@ -303,6 +303,8 @@ class AdminsController extends Controller
             'email' => $request->emailuser
 
         ]);
+
+        return back()->with('success',true);
     }
 
     public function UpdateMaturity(Request $request)
@@ -331,10 +333,16 @@ class AdminsController extends Controller
 
     public function history()
     {
+        $id = Auth::user()->companyId;
 
-        $C = Company::find(Auth::user()->companyId)->toArray();
+        $C = DB::table('companies')->where('companyId',$id)->get(); 
+        $v ="";
+        foreach ($C as $T)
+        {
+            $v = $T->name;
+        }
 
-        $Historial = History::all()->where('company',$C['name']);
+        $Historial = History::all()->where('company',$v);
 
         return view('admins.history',compact('Historial'));
     }
@@ -526,7 +534,6 @@ class AdminsController extends Controller
         foreach ($test as $value) {
             $testname = $value->name;
         }
-
 
         return view('admins.area.test.edit', compact('users','testname','testId','test_users'));
     }

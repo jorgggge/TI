@@ -68,7 +68,7 @@
                                     <div class="col-sm-10"></div>
                                     <div class="col-sm-2">
                                         <center>
-                                            <button id="btn-form" class="btn btn-primary">
+                                            <button id="btn-form_2" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
                                         </center>
@@ -84,7 +84,7 @@
 
 <script type="text/javascript">
 
-    $("#btn-form").click(function(){
+    $("#btn-form_2").click(function(){
         swal({
           title: "Atención",
           text: "Se ingresaran una nueva prueba,¿Estas seguro?",
@@ -113,9 +113,12 @@
                 console.log(validar);
                 if(validar){
                    $( "#form" ).submit();
-                    swal("Espero un momento!", {
-                      buttons: false,
-                    });
+                      swal({
+                title: "Espero un momento ...",
+                text: "Se cerrara automaticamente",
+                buttons: false
+                });
+
                 }else{
                     swal("Error", "Verifique los datos antes de actualizar", "error");
                 }

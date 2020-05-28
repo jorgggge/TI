@@ -42,7 +42,15 @@ class CreateTestController
                                                                         ])->select('users.Id as userId','users.firstName','users.lastName','areas.name as area','user_areas.areaId as ua')
                                                                     ->orderby('user_areas.areaId')->get();
 
-        return view('admins.area.test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests','List_User') );
+        $countAreas = Area::where('companyId','=',$userCompany)->count();
+        if($countAreas == 0){
+            return redirect('/admins/area/addArea');
+        }
+        else{
+            return view('admins.area.test.create', compact('areas', 'userCompany', 'roles', 'role_user', 'users', 'maturity_levels', 'tests','List_User') );
+        }
+
+        
     }
 
     public function store(Request $request)
@@ -166,6 +174,23 @@ class CreateTestController
         return redirect("/admin/pruebas");
     }
 
+    public function DeleteConcept($C,$T)
+    {
+        echo $C. " => ".DB::table('test_concept')->where('testId',$T)->count();
+        echo "<pre>".DB::table('concepts')->where('conceptId',$C)->get();
+        Test::Concept(DB::table('concepts')->where('conceptId',$C)->get());
+        echo "hola";
+        $Conut_Concepts = DB::table('test_concept')->where('testId',$T)->count();
+       
+        if($Conut_Concepts == 0){
+            Test::DeleteTest($T);
+        }
+
+
+        return redirect("/admin/pruebas");
+
+    }
+
 
     public function EditarPrueba($TestId,$ConceptId)
     {
@@ -222,6 +247,8 @@ class CreateTestController
             Attribute::find($request->{"Id".$i})->update(['description' => $request->{"Attribute".$i}]);
         }
 
+
+        return redirect("/admin/pruebas")->with('successUpdateConcepto',true);
     }
 
 }

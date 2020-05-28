@@ -12,10 +12,10 @@
                         <div class="body">
                             @if(empty($areas))
                                 <div class="alert alert-danger" >
-                                    {{ 'No se ha asginado una Area. Porfavor aviso esto a su supervisor.' }}
+                                    {{ 'No se ha asignado una Área. Por favor aviso esto a su supervisor.' }}
                                 </div>
                             @else
-                            <b>Se mostrar las areas asignados para el usuario.</b><br><br>
+                            <b>Se mostrar las áreas asignados para el usuario.</b><br><br>
                              <div class="table-responsive">
                                     <table id="" class="table table-hover">
                                         <thead> 
@@ -52,8 +52,8 @@
                           <div class="row clearfix">
                             <div class="col-sm-12">
                                 <b>
-                                  Selecciona una area para ver los resultdos de las pruebas asignadoas. <br>
-                                  La notacion del puntaje sera en porcentaje 0% - 100%
+                                  Selecciona una área para ver los resultados de las pruebas asignados. <br>
+                                  La notación del puntaje sera en porcentaje 0% - 100%
                                 </b>
                             </div>
                           </div>
@@ -82,12 +82,6 @@
 
 </div>
 
-@if (session()->has('success'))
-    <script type="text/javascript">
-    swal("Listo!", "Se ingresanso los niveles de madurez", "success");
-      swal("Listo!", "Ya puedes agregar nuevas areas, pruebas y usuarios", "info");
-    </script>
-@endif
 
 
 <script type="text/javascript">
@@ -183,7 +177,7 @@ function Ver_Resultados(Id,Name) {
     },
     error: function(response){
         console.log(response);
-      swal("Lo siento!", "No hay ninguna prueba asignada para esta area.", "error");
+      swal("Lo siento!", "No hay ninguna prueba asignada para esta área.", "error");
     }
   });
 }

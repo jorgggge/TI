@@ -8,12 +8,12 @@
                     <div class="card">
                         <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
                            <i class="material-icons" style="font-size: 20px;">nature</i>
-                            Areas
+                            Áreas
                         </div>
                         <div class="body">
                               <div class="row clearfix">
                                 <div class="col-sm-12">
-                                    <b>Se mostrar las areas registradas de la empresa.</b>
+                                    <b>Se mostrar las áreas registradas de la empresa.</b>
                                 </div>
                       
                             </div>
@@ -23,7 +23,7 @@
                                 </div>
                                 <center>
                                   <button type="button" class="btn btn-success waves-effect" onclick="CreaArea();">
-                                    <i class="material-icons">add</i> <span>Agregar Area</span>
+                                    <i class="material-icons">add</i> <span>Agregar Área</span>
                                   </button>
                                 </center>
                             @else
@@ -76,8 +76,8 @@
                           <div class="row clearfix">
                             <div class="col-sm-12">
                                 <b>
-                                  Selecciona una area para ver los resultdos de las pruebas asignadoas. <br>
-                                  La notacion del puntaje sera en porcentaje 0% - 100%
+                                  Selecciona una área para ver los resultados de las pruebas asignados. <br>
+                                  La notación del puntaje sera en porcentaje 0% - 100%
                                 </b>
                             </div>
                           </div>
@@ -106,8 +106,8 @@
 
 @if (session()->has('success'))
     <script type="text/javascript">
-    swal("Listo!", "Se ingresanso los niveles de madurez", "success");
-      swal("Listo!", "Ya puedes agregar nuevas areas, pruebas y usuarios", "info");
+    swal("Listo!", "Se ingresando los niveles de madurez", "success");
+      swal("Listo!", "Ya puedes agregar nuevas áreas, pruebas y usuarios", "info");
     </script>
 @endif
 
@@ -206,7 +206,7 @@ function Ver_Resultados(Id,Name) {
     },
     error: function(response){
         console.log(response);
-      swal("Lo siento!", "No hay ninguna prueba asignada para esta area.", "error");
+      swal("Lo siento!", "No hay ninguna prueba asignada para esta área.", "error");
     }
   });
 }
@@ -241,7 +241,7 @@ function  EditarArea(Id,Name) {
 function Area_Delete(Id) {
             swal({
               title: "Alerta",
-              text: "Se eliminar el area con sus pruebas asociadas,   ¿Estas completamente seguro?!",
+              text: "Se eliminar el área con sus pruebas asociadas, ¿Estas completamente seguro?!",
               icon: "warning",
               buttons: true,
               dangerMode: true
@@ -258,7 +258,7 @@ function Area_Delete(Id) {
 </script>
 <script type="text/javascript">
       function  CreaArea() {
-        swal("Ingresa la area nueva:", {
+        swal("Ingresa la área nueva:", {
             content: "input",
           })
           .then((value) => {

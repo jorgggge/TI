@@ -198,7 +198,6 @@
                                     @endforeach
                                     @endif
                                     @endforeach 
-                                </form>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-10"></div>
                                     <div class="col-md-2">
@@ -210,6 +209,7 @@
 
                                     </div>
                                 </div>
+                                </form>
                            
                             @include('errors')
                         </div>
@@ -221,47 +221,5 @@
 <script type="text/javascript">
     $("#Pruebas").addClass('active');
     $("#AgregarConcepto").addClass('active');
-
-     $("#btn-form").click(function(){
-
-        swal({
-          title: "Atención",
-          text: "Se ingresaran un nuevo concepto,¿Estas seguro?",
-          icon: "warning",
-          buttons: ["Cancelar", "Si"],
-          dangerMode: true
-        })
-        .then((willDelete) => {
-
-            if (willDelete) {
-
-                $( "input[type='text']" ).each(function() {
-                    $( this ).css('border-color','#1F91F3');
-                });
-
-                var validar = true;
-                console.log(validar);
-                $( "input[type='text']" ).each(function() {
-                    if($(this).val() == null || $(this).val() == ""){
-                        $( this ).css('border-color','red');
-                        console.log($( this ));
-                       validar = false;
-                    }
-                });
-
-                console.log(validar);
-                if(validar){
-                   $( "#form" ).submit();
-                    swal("Espero un momento!", {
-                      buttons: false,
-                    });
-                }else{
-                    swal("Error", "Verifique los datos antes de actualizar", "error");
-                }
-            }
-           
-        });
-
-    });
 </script>
 @endsection

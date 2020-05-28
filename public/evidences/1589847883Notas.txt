@@ -1,4 +1,0 @@
-<a href="{{url('CreateCompany/addCompany/create')}}" >
-                        Añadir Empresa</a> 
-                <a href="{{url('CreateAdmin/addAdmin/create')}}">
-                        Añadir Administrador </a>

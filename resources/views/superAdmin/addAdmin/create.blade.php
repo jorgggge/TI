@@ -27,9 +27,16 @@
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="username" class="form-control"  placeholder="Usuario" required>
+                                            <input type="text" name="username" class="form-control"  placeholder="Usuario" required value="{{ old('username')}}">
                                         </div>
                                     </div>
+                                     @error('username')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
@@ -43,6 +50,13 @@
                                             <input type="password" name="password" name="emailuser" id="emailUserS"  class="form-control" placeholder="Contraseña" required>
                                         </div>
                                     </div>
+                                     @error('error_pass')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique la Contraseña
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
@@ -56,6 +70,13 @@
                                             <input type="password" name="passwordc" id="phoneNumberCS" class="form-control mobile-phone-number" placeholder="Contraseña" required>
                                         </div>
                                     </div>
+                                    @error('error_pass')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique la Contraseña
+                                            </div>
+                                        @enderror
                                 </div>
                                 
                             </div>
@@ -70,9 +91,16 @@
                                             <i class="material-icons">assignment</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="firstName" id="firstNameS"  class="form-control" placeholder="Nombres" required>
+                                            <input type="text" name="firstName" id="firstNameS"  class="form-control" placeholder="Nombres" required value="{{ old('firstName')}}">
                                         </div>
                                     </div>
+                                     @error('firstName')
+                                        <div class="alert alert-danger alert-dismissible">
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                            Verifique los nombres
+                                        </div>
+                                    @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -83,9 +111,16 @@
                                             <i class="material-icons">assignment</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="lastName" id="lastNameS"  class="form-control"  placeholder="Apellidos" required>
+                                            <input type="text" name="lastName" id="lastNameS"  class="form-control"  placeholder="Apellidos" required value="{{ old('lastName')}}">
                                         </div>
                                     </div>
+                                     @error('lastName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los apellidos
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
@@ -96,9 +131,16 @@
                                             <i class="material-icons">email</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="email" id="lastNameS"  class="form-control"  placeholder="Email" required>
+                                            <input type="text" name="email" id="lastNameS"  class="form-control"  placeholder="Email" required value="{{ old('email')}}">
                                         </div>
                                     </div>
+                                     @error('email')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email
+                                            </div>
+                                        @enderror
                                 </div>
                                 
                             </div>
@@ -159,11 +201,7 @@
 
 
 
-@if (session()->has('success'))
-    <script type="text/javascript">
-    swal("Listo!", "Se ha ingresado una nueva compañia!", "success");
-    </script>
-@endif
+
 
 @if (session()->has('error_pass'))
     <script type="text/javascript">

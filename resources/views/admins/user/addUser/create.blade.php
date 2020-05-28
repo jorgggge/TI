@@ -28,6 +28,13 @@
                                             <input type="text" name="username" class="form-control" placeholder="Usuario" value="{{ old('username') }}" required>
                                         </div>
                                     </div>
+                                    @error('username')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Usuario ya ultilizado. 
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                     <p>
@@ -41,6 +48,13 @@
                                             <input type="password" name="password" required id="phoneNumberCS" class="form-control mobile-phone-number"  placeholder="XXXXXXX" value="{{ old('password') }}">
                                         </div>
                                     </div>
+                                    @error('password')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email del contraseña
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -54,6 +68,13 @@
                                             <input type="password" name="password_confirmation" required id="firstNameS"  class="form-control" placeholder="XXXXXXX" value="{{ old('password_confirmation') }}">
                                         </div>
                                     </div>
+                                    @error('password_confirmation')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique la contraseña
+                                            </div>
+                                        @enderror
                                 </div>
                             </div>
                             <div class="row clearfix">
@@ -71,6 +92,13 @@
                                             <input type="text" name="firstName" required id="lastNameS"  class="form-control" placeholder="Nombres" value="{{ old('firstName') }}">
                                         </div>
                                     </div>
+                                     @error('firstName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los nombres
+                                            </div>
+                                        @enderror
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
@@ -84,6 +112,13 @@
                                             <input type="text" name="lastName" id="lastNameS"  class="form-control" placeholder="Apellidos" value="{{ old('lastName') }}" required>
                                         </div>
                                     </div>
+                                     @error('lastName')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique los apellidos
+                                            </div>
+                                        @enderror
                                 </div>
                                  <div class="col-sm-4">
                                      <p>
@@ -97,6 +132,13 @@
                                             <input type="text" name="email" id="lastNameS"  class="form-control" placeholder="Email" value="{{ old('email') }}" required>
                                         </div>
                                     </div>
+                                     @error('email')
+                                            <div class="alert alert-danger alert-dismissible">
+                                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+                                                Verifique el email del usuario
+                                            </div>
+                                        @enderror
                                 </div>
                                 
                             </div>

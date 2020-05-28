@@ -9,11 +9,11 @@
                     <div class="card">
                        <div class="header" style="background-color: #112d4e;color: white;font-size: 24px;">
                            <i class="material-icons" style="font-size: 20px;">domain</i>
-                            Compañias
+                            Compañías
                         </div>
                         
                         <div class="body">
-                         <b> Se mostrar todas la compañias registradas:</b>
+                         <b> Se mostrar todas la compañías registradas:</b>
                                 
                              <div class="table-responsive">
                                 <table id="dtBasicExample" class="table table-hover">
@@ -21,8 +21,8 @@
                                         <tr>
                                             <th >Empresa</th>
                                             <th >Estado</th>
-                                            <th >Direccion</th>
-                                            <th >Telefono</th>
+                                            <th >Dirección</th>
+                                            <th >Teléfono</th>
                                             <th >Correo</th>
                                             <th >Registro</th>
                                         </tr>
@@ -53,7 +53,7 @@
                                                       <a href="{{ route('ShowCompanySA',$C->companyId) }}" class="btn btn-primary waves-effect" >
                                                         <i class="material-icons">mode_edit</i>
                                                     </a>
-                                                    <button class="btn btn-danger">
+                                                    <button class="btn btn-danger" onclick="Company_Delete({{ $C->companyId }});">
                                                       <i class="material-icons">clear</i>
                                                     </button>
                                                   </td>
@@ -72,9 +72,42 @@
         
 <script src="{{ asset('js/code.js') }}"></script>
 
+@if (session()->has('successAddCompany'))
+    <script type="text/javascript">
+    swal("Listo!", "Se ha ingresado una nueva compañía!", "success");
+    </script>
+@endif
+
+
+
 <script type="text/javascript">
 
+    function Company_Delete(Id) {
+        swal({
+              title: "Atención",
+              text: "Se eliminara esta compañía, por lo que también todo los damos de ella, ¿Estas seguro?",
+              icon: "warning",
+              buttons: ["Cancelar", "Si"],
+              dangerMode: true
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+
+                $.ajax({
+                  type: "GET",
+                  url: "/superadmin/company/delete/"+Id,
+                  success: function(response) {
+                    location.reload();
+                  },
+                  error: function(response) {
+                    console.log(response);
+                  }
+                });
+
+                }
+            });
     
+    }
 
 
 
@@ -85,7 +118,7 @@
     function Company_Activa(Id) {
         swal({
               title: "Atención",
-              text: "Se cambiara el status de esta compañia, ¿Estas seguro?",
+              text: "Se cambiara el estatus de esta compañía, ¿Estas seguro?",
               icon: "warning",
               buttons: ["Cancelar", "Si"],
               dangerMode: true

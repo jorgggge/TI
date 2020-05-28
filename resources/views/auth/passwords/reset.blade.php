@@ -28,9 +28,12 @@ use App\MaturityLevel;
     <link href="{{ asset('../../css/style.css') }}" rel="stylesheet">
 </head>
 <body class="login-page">
+            
+                <center>
+                    <img src="{{ asset('../../images/ICA.png') }}" style="width:300px;"><br><br>
+                </center>
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);"><b>ICA</b></a>
             <small></small>
         </div>
         <div class="card">
@@ -83,9 +86,11 @@ use App\MaturityLevel;
 
                         <div class="row clearfix">
                             <div class="col-md-12">
-                                <button type="submit" class="btn btn-primary">
+                                <center>
+                                    <button type="submit" class="btn btn-primary">
                                     {{ __('Restablecer Contraseña') }}
                                 </button>
+                                </center>
                             </div>
                         </div>
                     </form>

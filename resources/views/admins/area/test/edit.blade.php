@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="col-sm-2">
                                        <center>
-                                            <button type="submit" id="btn-form" class="btn btn-primary">
+                                            <button type="submit" id="btn-form2" class="btn btn-primary">
                                             <i class="material-icons">done</i> <span>Guardar</span> 
                                         </button>
                                        </center>
@@ -93,7 +93,7 @@
     $("#MostrarPruebas").addClass('active');
 
 
-    $('#btn-form').click(function() {
+    $('#btn-form2').click(function() {
 
         swal({
               title: "Alerta",
