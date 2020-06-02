@@ -4,16 +4,6 @@
 <form id="sign_in" method="POST" action="{{ route('login') }}" style="height:270px;">
     @csrf  
                     <div class="msg">Solo personal autorizado</div>
-                    @error('username')
-                            <div class="alert alert-danger alert-dismissible" role="alert">
-                                <strong>Oh no!</strong> Usuario o contraseña incorrectos
-                            </div>
-                    @enderror 
-                    @error('password')
-                                 <div class="alert alert-danger alert-dismissible" role="alert">
-                                    <strong>Oh no!</strong> Usuario o contraseña incorrectos
-                                </div>
-                    @enderror
                     <div class="input-group">
                         <span class="input-group-addon">
                             <i class="material-icons">person</i>
@@ -50,6 +40,16 @@
                             <a href="{{ route('password.request') }}">Olvidé mi contraseña</a>
                         </div>
                     </div>
+                    @error('username')
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <strong>Oh no!</strong> Usuario o contraseña incorrectos
+                            </div>
+                    @enderror 
+                    @error('password')
+                                 <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <strong>Oh no!</strong> Usuario o contraseña incorrectos
+                                </div>
+                    @enderror
                 </form>
 
 
