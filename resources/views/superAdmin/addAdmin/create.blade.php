@@ -131,7 +131,7 @@
                                             <i class="material-icons">email</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="email" id="lastNameS"  class="form-control"  placeholder="Email" required value="{{ old('email')}}">
+                                            <input type="email" name="email" id="lastNameS"  class="form-control"  placeholder="Email" required value="{{ old('email')}}">
                                         </div>
                                     </div>
                                      @error('email')

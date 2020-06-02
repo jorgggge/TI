@@ -153,29 +153,5 @@ class AreaController extends Controller
         Test::where('testId',$test)->update(['name' => $description]);
     }
 
-    public function Area_User($area,$user,$V)
-    {
-        $a = $user;
-        $u = $area; 
-        if($V == 1){
-
-            if(DB::table('user_areas')->where('areaId',$a)->where('userId',$u)->first()){
-
-            }else{
-                 User::find($u)->areas()->attach($a);
-            }
-            
-        }else{
-            $tests = DB::table('tests')->where('areaId',$a)->get();
-
-            foreach ($tests as $test) {
-                DB::table('test_user')->where('testId',$test->testId)->where('userId',$u)->delete();
-            }
-
-            DB::table('evidences')->where('userId',$u)->delete();
-            DB::table('user_areas')->where('areaId',$a)->where('userId',$u)->delete();
-        
-        }
-    }
 
 }

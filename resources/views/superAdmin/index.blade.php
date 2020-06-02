@@ -31,7 +31,7 @@
                                             {{ $users->firstName." ".$users->lastName }}
                                         </td>
                                         <td>
-                                             @if ($users->S == 1)
+                                             @if ($users->S != 1)
                                                <button type="button" id="btn-{{ $users->id }}" class="btn btn-success  waves-effect" onclick="Admin_Activa({{ $users->id }})" >
                                                     <i class="material-icons" id="mc-{{ $users->id }}">work</i> <span id="s-{{ $users->id }}">Habilitar</span> 
                                                 </button>
@@ -50,11 +50,6 @@
                                         <td>
                                             {{ $users->phoneNumber }}
                                         </td>
-                                        {{-- <td>
-                                           {{ $users->email }}
-                                        </td> --}}
-                                        
-                                             <!-- button class="btn btn-primary" onclick="Admin({{ $users->id }});"> Ver </button -->
                                         
                                         <td> <a href="{{ route('ViewCustomer',[$users->id]) }}" class="btn btn-primary waves-effect">
                                             <i class="material-icons" id="mc-{{ $users->id }}">mode_edit</i> 

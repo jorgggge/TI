@@ -107,10 +107,10 @@
                                         @foreach ($Array_Areas as $UA)
 
                                         @if ($UA['validar'])
-                                        <input class="form-check-input" type="checkbox" name="checked{{ $UA['areaId']}}"
+                                        <input class="form-check-input" type="checkbox" name="areas[{{$UA['areaId']}}]"
                                             value="{{ $UA['areaId']}}" id="defaultCheck{{ $UA['areaId']}}" checked="true">
                                         @else
-                                        <input class="form-check-input" type="checkbox" name="checked{{ $UA['areaId']}}"
+                                        <input class="form-check-input" type="checkbox" name="areas[{{$UA['areaId']}}]"
                                             value="{{ $UA['areaId']}}" id="defaultCheck{{ $UA['areaId']}}">
                                         @endif
                                         <label class="form-check-label" for="defaultCheck{{ $UA['areaId']}}">
@@ -127,7 +127,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                      <center>
-                                         <button id="btn-form" class="btn btn-primary" type="submit">
+                                         <button id="btn-form2" class="btn btn-primary" type="submit">
                                          <i class="material-icons">done</i>
                                          <span>Guardar</span> 
                                      </button>
@@ -145,7 +145,7 @@
 
 @if (session()->has('success'))
     <script type="text/javascript">
-         swal("Error", "Se ha actualizado los datos de este usuario", "success");
+         swal("Listo!", "Se ha actualizado los datos de este usuario", "success");
     </script>
 @endif
 
@@ -159,7 +159,7 @@
     $("#Usuarios").addClass('active');
     $("#MostrarUsuarios").addClass('active');
 
-    $("#btn-form").click(function(){
+    $("#btn-form2").click(function(){
         swal({
           title: "Atención",
           text: "Se actualizara los datos de esta usuario ,¿Estas seguro?",
@@ -172,23 +172,16 @@
             if (willDelete) {
                 
                 $("#from").submit();
+                        swal({
+                title: "Espero un momento ...",
+                text: "Se cerrara automaticamente",
+                buttons: false
+                });
             }
            
         });
 
     });
 
-     $("input[type='checkbox']").change(function() {
-        var $input = $(this);
-        
-        var check =  $input.is(":checked") ? 1 : 0;
-
-        $.ajax({
-              type: "GET",
-              url: "/Area_User/"+{{$User[0]['id']}}+"/"+$input.val()+"/"+check,
-              success: function(response){}
-        });
-
-    }).change();
 </script>
 @endsection

@@ -10,8 +10,10 @@
                             Niveles de Madurez
                         </div>
                         <div class="body">
-                            Como primer paso, por favor debe ingresar los niveles de madurez segun su criterio.
+                            <b>
+                                Como primer paso, por favor debe ingresar los niveles de madurez según su criterio.
                                 <br> (*) Datos Obligatorios.
+                            </b>
 
                             <form name="addML" id="form" method="POST" action="/admins/index">
                                 @csrf
@@ -87,7 +89,7 @@
     $("#btn-form_2").click(function(){
         swal({
           title: "Atención",
-          text: "Se ingresaran una nueva prueba,¿Estas seguro?",
+          text: "Se ingresaran los niveles de madurez para su compañía,¿Estas seguro?",
           icon: "warning",
           buttons: ["Cancelar", "Si"],
           dangerMode: true
@@ -114,8 +116,8 @@
                 if(validar){
                    $( "#form" ).submit();
                       swal({
-                title: "Espero un momento ...",
-                text: "Se cerrara automaticamente",
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
                 buttons: false
                 });
 

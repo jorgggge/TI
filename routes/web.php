@@ -123,7 +123,6 @@ Route::get('/analista/pruebas', 'AnalistaController@Pruebahome');
 Route::get('/Test_User/{test}/{user}/{V}','AreaController@Users'); /// aunque 
 Route::get('/Test_User/{test}/{description}','AreaController@Test_update'); /// aunque 
 Route::post('/admins/user_up/{id}', 'AdminsController@UpdateUsers')->name('UpdateUsers'); //Cambios
-Route::get('/Area_User/{area}/{user}/{V}','AreaController@Area_User');
 Route::post('/admins/maturity/editML', 'AdminsController@UpdateMaturity')->name('UpdateMaturity');
 
 

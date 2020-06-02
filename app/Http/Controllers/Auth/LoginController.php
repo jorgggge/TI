@@ -52,12 +52,12 @@ class LoginController extends Controller
                         }
                 }else{
                         Auth::logout();
-                        return view('sorry');
+                        return view('sorry')->with('User',true);
                 }
         }
         else{
             Auth::logout();
-            return view('sorry');
+            return view('sorry')->with('Company',true);
         }
     }
     /**

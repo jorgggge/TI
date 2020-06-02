@@ -219,9 +219,11 @@ function  EditarArea(Id,Name) {
       })
       .then((value) => {
          if(value != null && value != ""){
-            swal("Espero un momento!", {
-                        buttons: false,
-                      });
+            swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
+                buttons: false
+                });
               $.ajax({
                     type: "GET",
                     url: "/admins/area/Edit/editArea/EditArea/"+Id+"/"+value,
@@ -241,13 +243,18 @@ function  EditarArea(Id,Name) {
 function Area_Delete(Id) {
             swal({
               title: "Alerta",
-              text: "Se eliminar el área con sus pruebas asociadas, ¿Estas completamente seguro?!",
+              text: "Se eliminar el área con sus pruebas asociadas,\n ¿Estas completamente seguro?!",
               icon: "warning",
-              buttons: true,
+              buttons: ["Cancelar", "Si"],
               dangerMode: true
             })
             .then((willDelete) => {
               if (willDelete) {
+                swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
+                buttons: false
+                });
                 window.location = "/admins/area/Edit/editArea/delete/"+Id;
               
               } else {
@@ -263,9 +270,11 @@ function Area_Delete(Id) {
           })
           .then((value) => {
                 if(value != null && value != ""){
-                  swal("Espero un momento!", {
-                      buttons: false,
-                    });
+                  swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
+                buttons: false
+                });
                     $.ajax({
                         type: "GET",
                         url: "/AddArea/"+value,

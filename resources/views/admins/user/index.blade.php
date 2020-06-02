@@ -21,7 +21,7 @@
                         <div class="body">
                          <div class="row clearfix">
                                 <div class="col-sm-8">
-                                        <b>Aqui se mostrar los ususrios analistas y comunes de su compañia.</b>
+                                        <b>Aquí se mostrar los usuarios analistas y comunes de su compañía.</b>
                                 </div>
                                 <div class="col-sm-4">
                                    
@@ -32,7 +32,7 @@
                                 <thead>
                                   <tr>
                   								    <th>Nombre</th>
-                  									<th>Status</th>
+                  									<th>Estatus</th>
                   								    <th>Usuario</th>
                   								    <th>Rol</th>
                   								    <th>Email</th>
@@ -44,7 +44,7 @@
                   							    		<tr> 
                   								    		<td>{{ $user->firstName." ".$user->lastName }}</td>
                                                               <td>
-                                                                  @if ($user->status != 0 )
+                                                                  @if ($user->status == 0 )
                                                                  <button type="button"  id="btn-{{ $user->id }}"  class="btn btn-success  waves-effect" onclick="User_Delete({{ $user->id }},0)">
                                                                        <i class="material-icons" id="mc-{{ $user->id }}">work</i> <span id="s-{{ $user->id }}">Habilitar</span>
                                                                   </button>
@@ -88,7 +88,7 @@
 function User_Delete(Id,A) {
             swal({
               title: "Atecion",
-              text: "Se cambiara el status de este ususrio, Estas seguro?!",
+              text: "Se cambiara el estatus de este usuario, Estas seguro?!",
               icon: "warning",
               buttons: true,
               dangerMode: true
@@ -96,7 +96,7 @@ function User_Delete(Id,A) {
             .then((willDelete) => {
               if (willDelete) {
                 
-                A = $("#btn-"+Id).hasClass("btn-success") ? 0 : 1;
+                A = $("#btn-"+Id).hasClass("btn-success") ? 1 : 0;
 
                 $.ajax({
                       type: "GET",
@@ -105,7 +105,7 @@ function User_Delete(Id,A) {
                 });
 
                 
-                 if(A == 0){
+                 if(A == 1){
                    $("#btn-"+Id).removeClass("btn-success");
                    $("#btn-"+Id).addClass("btn-warning");  
                    $("#mc-"+Id).text("lock");

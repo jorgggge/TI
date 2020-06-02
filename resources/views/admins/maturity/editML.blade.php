@@ -10,8 +10,8 @@
                             Niveles de Madurez
                         </div>
                         <div class="body">
-                          Aqui podras editar los nombres de los niveles de madurez.
-                                <br> <b>(*) Datos Obligatorios.</b>
+                         <br>  Aquí podrás editar los nombres de los niveles de madurez.
+                                <b>(*) Datos Obligatorios.</b>
                           <form id="from" method="POST"  action="{{ route('UpdateMaturity')}}">
                         @csrf
                         @php($count=0)

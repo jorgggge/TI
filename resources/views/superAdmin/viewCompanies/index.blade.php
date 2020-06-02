@@ -34,15 +34,15 @@
                                                     <td><p style="margin: auto 0px;">{{$C -> name}}</p></td>
                                             <td>
                                                   
-                                                    @if ($C->status != 0)
+                                                    @if ($C->status == 0)
                                                         <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-success waves-effect " onclick="Company_Activa({{ $C->companyId }});">
                                                             <i class="material-icons" id="mc-{{ $C->companyId }}">work</i> <span id="s-{{ $C->companyId }}">Habilitar</span>
                                                         </button>
 
                                                     @endif
-                                                    @if ($C->status == 0)
+                                                    @if ($C->status == 1)
                                                          <button type="button" id="btn-{{ $C->companyId }}" class="btn btn-warning waves-effect" onclick="Company_Activa({{ $C->companyId }});"> 
-                                                            <i class="material-icons" id="mc-{{ $C->companyId  }}" id="s-{{ $C->companyId }}">lock</i> <span id="s-{{ $errors->id }}">Bloquear</span> 
+                                                            <i class="material-icons" id="mc-{{ $C->companyId  }}">lock</i> <span id="s-{{$C->companyId  }}">Bloquear</span> 
                                                         </button>
                                                     @endif
                                                 </td>
@@ -85,7 +85,7 @@
     function Company_Delete(Id) {
         swal({
               title: "Atención",
-              text: "Se eliminara esta compañía, por lo que también todo los damos de ella, ¿Estas seguro?",
+              text: "Se eliminara esta compañía, ¿Estas seguro?",
               icon: "warning",
               buttons: ["Cancelar", "Si"],
               dangerMode: true
@@ -97,6 +97,11 @@
                   type: "GET",
                   url: "/superadmin/company/delete/"+Id,
                   success: function(response) {
+                       swal({
+                        title: "Espere un momento ...",
+                        text: "Se cerrara automáticamente",
+                        buttons: false
+                        });
                     location.reload();
                   },
                   error: function(response) {
@@ -126,7 +131,7 @@
             .then((willDelete) => {
               if (willDelete) {
               
-                A = $("#btn-"+Id).hasClass("btn-success") ? 0 : 1;
+                A = $("#btn-"+Id).hasClass("btn-success") ? 1 : 0;
 
                 $.ajax({
                   type: "GET",
@@ -136,7 +141,7 @@
                   }
                 });
 
-                if(A == 0){
+                if(A == 1){
                    $("#btn-"+Id).removeClass("btn-success");
                    $("#btn-"+Id).addClass("btn-warning");  
                    $("#mc-"+Id).text("lock");

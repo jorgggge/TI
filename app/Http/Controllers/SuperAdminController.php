@@ -178,19 +178,27 @@ class SuperAdminController extends Controller
     public function DeleteCompany($id)
     {
         $Areas = DB::table('areas')->where('companyId',$id)->get();
-        foreach ($Areas as $area) {
-            $Tests =  DB::table('tests')->where('areaId',$area->areaId);
-            foreach ($Tests as $Test) {
-                Test::DeleteTest($Test->testId);
+
+        if($Areas != null){
+            foreach ($Areas as $area) {
+
+                $Tests =  DB::table('tests')->where('areaId',$area->areaId)->get();
+
+                if($Tests != null){
+                    foreach ($Tests as $Test) {
+                        echo $Test->testId;
+                        Test::DeleteTest($Test->testId);
+                    }
+                }
+
+                DB::table('user_areas')->where('areaId',$area->areaId)->delete();
             }
-             DB::table('user_areas')->where('areaId',$area->areaId)->delete();
         }
 
         DB::table('maturity_levels')->where('companyId',$id)->delete();
 
         $Users = DB::table('users')->where('companyId',$id)->get();
 
-    var_dump($Users);
         foreach ($Users as $User) {
              DB::table('role_user')->where('user_id',$User->id)->delete();
         }

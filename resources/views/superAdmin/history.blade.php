@@ -59,12 +59,12 @@
                                     
                                         <form action="{{ route('HistoryDelete') }}" id="fromhistory" method="POST">
 											@csrf
+						            	</form>
 						            		<center>
                                             <button onclick="DeleteHistory();" class="btn btn-danger">
                                                 <i class="material-icons">clear</i> <span>Borrar Historial</span>       
                                             </button>                         
                                             </center>
-						            	</form>
                                 </div>
                                 
                             </div>
@@ -82,6 +82,28 @@
     </script>
 @endif
 <script type="text/javascript">
+
+    function DeleteHistory() {
+        swal({
+          title: "Atención",
+          text: "¿Estas seguro de borrar el historial?",
+          icon: "warning",
+          buttons: ["Cancelar", "Si"],
+          dangerMode: true
+        })
+        .then((willDelete) => {
+
+            if (willDelete) {
+               $("#fromhistory").submit();
+                       swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
+                buttons: false
+                });
+            }
+           
+        });
+    }
                 $('#dtBasicExamplee').DataTable({
                     language: {
                         url: '{{ asset('json/Spanish.json')}}'

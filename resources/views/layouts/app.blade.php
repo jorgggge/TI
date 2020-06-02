@@ -95,15 +95,15 @@ use Illuminate\Support\Facades\Auth;
 
    <!-- Page Loader -->
 
-   @if (!($errors->any()) && !(session()->has('success')) && !(session()->has('successUpCompany')))
+   @if (!($errors->any()))
     
-  @endif
     <div class="page-loader-wrapper">
         <div class="loader">
            <img src="{{ asset('../../images/ICA.png') }}" style="width: 100px;">
             <p>Cargado .....</p>
         </div>
     </div>
+  @endif
     <!-- #END# Page Loader -->
   
 @if(Auth::user()->hasRole('superadmin'))
@@ -228,7 +228,7 @@ use Illuminate\Support\Facades\Auth;
           <div class="navbar-header">
               <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
               <a href="javascript:void(0);" class="bars"></a>
-              <a class="navbar-brand" href="index.html" style="color: white;">ADMINTRADOR</a>
+              <a class="navbar-brand" href="javascript:void(0);" style="color: white;">ADMINISTRADOR</a>
           </div>
       </div>
 </nav>
@@ -384,7 +384,7 @@ use Illuminate\Support\Facades\Auth;
           <div class="navbar-header">
               <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
               <a href="javascript:void(0);" class="bars"></a>
-              <a class="navbar-brand" href="index.html" style="color: white;">ANALISTA</a>
+              <a class="navbar-brand" href="javascript:void(0);" style="color: white;">ANALISTA</a>
           </div>
       </div>
 </nav>
@@ -466,7 +466,7 @@ use Illuminate\Support\Facades\Auth;
           <div class="navbar-header">
               <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
               <a href="javascript:void(0);" class="bars"></a>
-              <a class="navbar-brand" href="index.html" style="color: white;">BIENVENIDO</a>
+              <a class="navbar-brand" href="javascript:void(0);" style="color: white;">BIENVENIDO</a>
           </div>
       </div>
 </nav>
@@ -537,12 +537,12 @@ use Illuminate\Support\Facades\Auth;
 
 @if ($errors->any())
     <script type="text/javascript">
-         swal("Error", "Oh no mal esta mal", "error");
+         swal("Error", "Oh no, Algo salio mal", "error");
     </script>
 @endif
 
 <script type="text/javascript">
-  $( "#btn-form" ).click(function() {
+  $( "#mn" ).click(function() {
       var validator = true; 
 
       $( "input[type='text']" ).each(function() {
@@ -554,8 +554,8 @@ use Illuminate\Support\Facades\Auth;
 
       if(validator){
         swal({
-                title: "Espero un momento ...",
-                text: "Se cerrara automaticamente",
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
                 buttons: false
                 });
       }

@@ -27,10 +27,9 @@
                                            Primer elige el Concepto: 
                                             <select name="Concepts" class="form-control show-tick">
 
-                                                <option selected disabled>Selecciona un concepto</option>
                                                 
                                                 @foreach ($Concepts as $Concept)
-                                                    <option value="{{ $Concept->conceptId }}">{{ $Concept->description}}</option>
+                                                    <option value="{{ $Concept->conceptId }}" selected>{{ $Concept->description}}</option>
                                                 @endforeach
                                             </select>   
                                         </div>
@@ -59,7 +58,9 @@
                                                      <input type="text" class="form-control" id="Coment{{ $i }}" name="Coment{{ $i }}" placeholder="Comentario ...">
                                                 </div>
                                                 <span class="input-group-addon" onclick="Comentario({{ $i }})" style="cursor: pointer;">
-                                                    <i class="material-icons">send</i>
+                                                    <button class="btn btn-info">
+                                                        <i class="material-icons" style="color:white;">send</i>
+                                                    </button>    
                                                 </span>
                                             </div>
                                         </div>

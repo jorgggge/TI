@@ -30,13 +30,13 @@ use App\MaturityLevel;
 <body class="login-page">
     <div class="login-box">
         <div class="logo">
-            <a href="javascript:void(0);"><b>ICA</b></a>
+            <a href="javascript:void(0);"></a>
             <small></small>
         </div>
         <div class="card">
             <div class="body">
-                <div class="alert bg-red">
-                               Lo sentimos, su cuenta ha sido deshabilitada, en caso de que se un error comunicase con los encargados de su compañia.
+                <div class="alert bg-red" style="text-align: justify;">
+                        Lo sentimos usuario, su cuenta ha sido deshabilitada o la compañía ha sido deshabilitada del sistema, en caso de que se un error comunicase con los encargados de su compañía.
                 </div>
             </div>
             <center>

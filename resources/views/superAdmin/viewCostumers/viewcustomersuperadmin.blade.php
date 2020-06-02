@@ -19,14 +19,14 @@
                             <div class="row clearfix">
                                 <div class="col-sm-6">
                                     <p>
-                                        <b>* Usuario</b>
+                                        <b>Usuario</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
                                             <i class="material-icons">person</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="username" class="form-control" value="{{ $A->username }}" placeholder="Usuario">
+                                            <input type="text" name="username" class="form-control" value="{{ $A->username }}" readonly>
                                         </div>
                                     </div>
                                      @error('username')
@@ -46,7 +46,7 @@
                                             <i class="material-icons">mail</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="emailuser" name="emailuser" id="emailUserS"  class="form-control"
+                                            <input type="email" name="emailuser" name="emailuser" id="emailUserS"  class="form-control"
                                                     value="{{ $A->emailuser }}" placeholder="Email">
                                         </div>
                                     </div>
@@ -140,7 +140,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <p>
-                                        <b>Email de la Compañía</b>
+                                        <b>Email</b>
                                     </p>
                                     <div class="input-group input-group-lg">
                                         <span class="input-group-addon">
@@ -177,7 +177,7 @@
                         <div class="row clearfix">
                             <div class="col-sm-10"></div>
                             <div class="col-sm-2">
-                                <button class="btn btn-primary waves-effect" id="btn-form">
+                                <button class="btn btn-primary waves-effect" id="btn-form2">
                                     <i class="material-icons">done</i> <span> Actualizar </span> 
                                 </button>
                             </div>
@@ -198,7 +198,7 @@
     $("#Administradores").addClass('active');
     $("#MostrarAdmins").addClass('active');
 
-     $("#btn-form").click(function(){
+     $("#btn-form2").click(function(){
         swal({
           title: "Atención",
           text: "Se actualizara los datos de este usuario ,¿Estas seguro?",
@@ -210,6 +210,11 @@
 
             if (willDelete) {
                $("#from").submit();
+                       swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automáticamente",
+                buttons: false
+                });
             }
            
         });

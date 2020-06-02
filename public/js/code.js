@@ -3,7 +3,7 @@
 function Admin_Activa(Id) {
 swal({
   title: "Atención",
-  text: "Se cambiara el status de este usuario,¿Estas seguro?",
+  text: "Se cambiara el estatus de este usuario,¿Estas seguro?",
   icon: "warning",
   buttons: ["Cancelar", "Si"],
   dangerMode: true
@@ -11,7 +11,7 @@ swal({
 .then((willDelete) => {
   if (willDelete) {
   
-    A = $("#btn-"+Id).hasClass("btn-success") ? 0 : 1;
+    A = $("#btn-"+Id).hasClass("btn-success") ? 1 : 0;
 
     $.ajax({
       type: "GET",
@@ -21,7 +21,7 @@ swal({
       }
     });
 
-    if(A == 0){
+    if(A == 1){
        $("#btn-"+Id).removeClass("btn-success");
        $("#btn-"+Id).addClass("btn-warning");  
        $("#mc-"+Id).text("lock");

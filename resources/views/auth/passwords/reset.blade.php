@@ -38,7 +38,7 @@ use App\MaturityLevel;
         </div>
         <div class="card">
             <div class="body">
-                <div class="msg">Para recuperación de contraseña, ingrese su correo para enviar un mensaje para restablecer su contraseña</div>
+                <div class="msg">Para recuperación de contraseña, ingrese su correo y la nueva contraseña dos veces</div>
                 @error('email')
                               <div class="alert alert-danger">
                                   <strong>{{ $message }}</strong>

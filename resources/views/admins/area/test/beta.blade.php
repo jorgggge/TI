@@ -76,7 +76,7 @@
                                         <div class="col-sm-1"></div>
                                         <div class="col-sm-10">
                                             <p>
-                                                <b>Nivel de Madurez: {{$x->ML}}  <br>* Atritubo:</b>
+                                                <b>Nivel de Madurez: {{$x->ML}}  <br>* Atributo:</b>
                                             </p>
                                              <div class="input-group input-group-lg">
                                                 <span class="input-group-addon">

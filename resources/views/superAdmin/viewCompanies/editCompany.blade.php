@@ -68,7 +68,7 @@
                                             <i class="material-icons">email</i>
                                         </span>
                                         <div class="form-line">
-                                            <input type="text" name="email" id="firstNameS"  class="form-control"
+                                            <input type="email" name="email" id="firstNameS"  class="form-control"
                                                 value="{{ $A->email }}" placeholder="Nombres">
                                         </div>
                                     </div>
@@ -151,6 +151,11 @@
         .then((willDelete) => {
 
             if (willDelete) {
+                swal({
+                title: "Espere un momento ...",
+                text: "Se cerrara automaticamente",
+                buttons: false
+                });
                 $("#from").submit();
             }
            

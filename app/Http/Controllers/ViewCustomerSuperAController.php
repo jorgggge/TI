@@ -43,7 +43,6 @@ class ViewCustomerSuperAController extends Controller
 
 
         User::find($uid)->update([
-            'username' => $request->username,
             'lastName' => $request->lastName,
             'firstName' => $request->firstName,
             'email' => $request->emailuser

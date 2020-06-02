@@ -138,6 +138,7 @@ class AdminsController extends Controller
             'companyId' => $companyId,
             'status' => 1
         ]);
+
         foreach ($areas as $area) {
             $userAdd->areas()->attach($area);
         }
@@ -222,7 +223,7 @@ class AdminsController extends Controller
     public function editMaturityLevel(Request $request)
     {
         $id = Auth::user()->companyId;
-        $Mad = DB::table('maturity_levels') ->where('companyId',$id)->orderby('level')->get();
+        $Mad = DB::table('maturity_levels')->where('companyId',$id)->orderby('level')->get();
         $Comp = DB::table('companies') ->where('companyId',$id)->get();
 
         return view('admins/maturity/editML',compact('Mad','Comp'));
@@ -296,7 +297,9 @@ class AdminsController extends Controller
           'emailuser' => 'required|string'
         ]);
 
-        User::find($id)->update([
+        $areas = $request->input('areas');
+
+        $user = User::find($id)->update([
             'username' => $request->username,
             'lastName' => $request->lastName,
             'firstName' => $request->firstName,
@@ -304,7 +307,56 @@ class AdminsController extends Controller
 
         ]);
 
+        if($areas != null){
+            $Areas_Company = Area::all()->where('companyId',Auth::user()->companyId);
+            foreach ($Areas_Company as $A_C) {
+                
+                $Validar = false;
+                foreach ($areas as $a_u) {
+                    
+                    if($a_u == $A_C->areaId){
+                        $Validar = true;
+                    }
+                }
+
+                if($Validar){
+                    $this->Area_User($A_C->areaId,$id,1);
+                }else{
+                    $this->Area_User($A_C->areaId,$id,0);
+                } 
+
+            }
+        }
+
+
         return back()->with('success',true);
+    }
+
+
+    public function Area_User($a,$u,$V)
+    {
+         
+        if($V == 1){
+
+            if(DB::table('user_areas')->where('areaId',$a)->where('userId',$u)->first()){
+
+            }else{
+                 User::find($u)->areas()->attach($a);
+            }
+            
+        }else{
+            $tests = DB::table('tests')->where('areaId',$a)->get();
+
+           if($tests != null){
+                 foreach ($tests as $test) {
+                    DB::table('test_user')->where('testId',$test->testId)->where('userId',$u)->delete();
+                }
+
+                DB::table('evidences')->where('userId',$u)->delete();
+                DB::table('user_areas')->where('areaId',$a)->where('userId',$u)->delete();
+           }
+        
+        }
     }
 
     public function UpdateMaturity(Request $request)
@@ -464,17 +516,13 @@ class AdminsController extends Controller
                 $Valores = Concept::join('concept_maturity_level', 'concepts.conceptId','concept_maturity_level.conceptId')
                        ->join('concept_maturity_level_attribute','concept_maturity_level.conceptMLId','concept_maturity_level_attribute.conceptMLId')
                        ->join('evidences','concept_maturity_level_attribute.attributeid','evidences.attributeid')
-                       ->where(
-                        ['concepts.conceptId' => $value->conceptId],
-                        ['evidences.verified'=> 1])
-                       ->select(DB::raw('Count(evidences.evidenceId) as Puntaje'))->get();
+                       ->where('concepts.conceptId',$value->conceptId)
+                       ->where('evidences.verified',1)
+                       ->select('evidences.*')->get();
+        
 
-                foreach ($Valores as $v) {
-                    $R = $v->Puntaje;
+                $Acu += count($Valores);
 
-                }
-
-                $Acu += $R;
             }
 
             $Count_Users = DB::table('test_user')->where('testId',$T->testId)->count();
@@ -513,7 +561,6 @@ class AdminsController extends Controller
 
 
          
-
         return json_encode($Resultados);
     }
 
@@ -534,7 +581,7 @@ class AdminsController extends Controller
         foreach ($test as $value) {
             $testname = $value->name;
         }
-
+        
         return view('admins.area.test.edit', compact('users','testname','testId','test_users'));
     }
 }
